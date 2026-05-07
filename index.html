@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yewon Shin</title>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Archivo:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+:root {
+  --w: #ffffff;
+  --off: #f5f4f2;
+  --ink: #0e0e0e;
+  --mid: #444444;
+  --sub: #888888;
+  --line: rgba(14,14,14,0.12);
+  --serif: 'Libre Baskerville', Georgia, serif;
+  --sans: 'Archivo', sans-serif;
+}
+html { scroll-behavior:smooth; }
+body { background:var(--w); color:var(--ink); font-family:var(--sans); font-weight:400; -webkit-font-smoothing:antialiased; overflow-x:hidden; }
+a { color:inherit; text-decoration:none; }
+button { all:unset; }
+
+/* ── LEFT NAV ── */
+#sidenav {
+  position: fixed; left:0; top:0; bottom:0;
+  width: 160px; z-index:200;
+  padding: 36px 28px;
+  display: flex; flex-direction:column;
+  border-right: 1px solid var(--line);
+  background: var(--w);
+}
+.nav-name {
+  font-family: var(--serif); font-size:14px;
+  font-weight:700; letter-spacing:-.01em;
+  margin-bottom: 40px; cursor:pointer;
+  line-height:1.3;
+}
+.nav-name:hover { opacity:.6; }
+.nav-list { display:flex; flex-direction:column; gap:4px; list-style:none; }
+.nav-list li {
+  font-size:13px; font-weight:400;
+  color: var(--sub); cursor:pointer;
+  padding: 4px 0;
+  transition: color .18s;
+  letter-spacing:.005em;
+}
+.nav-list li:hover, .nav-list li.active { color:var(--ink); }
+.nav-list li.active { font-weight:500; }
+.nav-footer {
+  margin-top:auto;
+  font-size:11px; color:var(--sub);
+  line-height:1.7;
+}
+.nav-footer a { transition:color .18s; }
+.nav-footer a:hover { color:var(--ink); }
+
+/* ── MAIN ── */
+#main {
+  margin-left: 160px;
+  min-height: 100vh;
+}
+
+/* ── PAGE ── */
+.page { display:none; }
+.page.active { display:block; }
+
+/* ── HOME ── */
+#page-home {
+  display:flex; flex-direction:column;
+  justify-content:center; min-height:100vh;
+  padding: 80px 72px;
+}
+.home-name {
+  font-family: var(--serif);
+  font-size: clamp(48px, 6vw, 84px);
+  font-weight:700; line-height:.95;
+  letter-spacing:-.03em;
+  margin-bottom:36px;
+  opacity:0; animation:up .7s .1s forwards;
+}
+.home-name em { font-style:italic; font-weight:400; }
+.home-desc {
+  font-size:15px; line-height:1.85;
+  color:var(--mid); max-width:380px;
+  margin-bottom:52px;
+  opacity:0; animation:up .7s .25s forwards;
+  font-weight:400;
+}
+.home-nav {
+  display:flex; gap:28px;
+  opacity:0; animation:up .7s .38s forwards;
+}
+.home-nav span {
+  font-size:12px; font-weight:500;
+  letter-spacing:.1em; text-transform:uppercase;
+  color:var(--sub); cursor:pointer;
+  transition:color .18s; padding-bottom:2px;
+  border-bottom:1px solid transparent;
+}
+.home-nav span:hover { color:var(--ink); border-color:var(--ink); }
+
+/* ── SECTION HEADER ── */
+.sec-head {
+  padding: 52px 72px 32px;
+  display:flex; justify-content:space-between; align-items:baseline;
+  border-bottom: 1px solid var(--line);
+}
+.sec-title { font-family:var(--serif); font-size:13px; font-style:italic; color:var(--mid); }
+.sec-count { font-size:11px; color:var(--sub); letter-spacing:.05em; }
+
+/* ── WORK ── */
+#page-work { padding-bottom:120px; }
+.proj-list { padding: 0 72px; }
+
+.proj-row {
+  border-bottom:1px solid var(--line);
+  opacity:0; transform:translateY(12px);
+  transition:opacity .5s ease, transform .5s ease;
+}
+.proj-row.in { opacity:1; transform:translateY(0); }
+
+.proj-top {
+  display:grid;
+  grid-template-columns: 44px 1fr auto;
+  align-items:center; gap:0 24px;
+  padding: 22px 0;
+  cursor:pointer;
+}
+.proj-top:hover .proj-title-s { text-decoration:underline; text-decoration-thickness:1px; text-underline-offset:3px; }
+
+.proj-n { font-size:11px; color:var(--sub); font-weight:400; letter-spacing:.05em; }
+.proj-client-s {
+  font-size:10px; letter-spacing:.15em; text-transform:uppercase;
+  color:var(--sub); margin-bottom:5px; font-weight:500;
+}
+.proj-title-s {
+  font-family:var(--serif); font-size:21px;
+  font-weight:700; letter-spacing:-.02em; line-height:1.15;
+}
+.proj-title-s em { font-style:italic; font-weight:400; }
+.proj-yr { font-size:11px; color:var(--sub); }
+
+/* Detail panel */
+.proj-detail { max-height:0; overflow:hidden; transition:max-height .65s cubic-bezier(.16,1,.3,1); }
+.proj-detail.open { max-height:1000px; }
+
+.detail-wrap {
+  display:grid;
+  grid-template-columns: 44px 1fr 200px;
+  gap:0 24px;
+  padding:4px 0 52px;
+}
+.d0 {}
+.d-body {}
+.d-tags { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:24px; }
+.d-tag {
+  font-size:10px; letter-spacing:.1em; text-transform:uppercase;
+  border:1px solid var(--line); padding:3px 10px;
+  color:var(--mid); font-weight:500;
+}
+
+/* Image slot */
+.d-img-slot {
+  width:100%; aspect-ratio:16/9;
+  background:var(--off);
+  display:flex; align-items:center; justify-content:center;
+  margin-bottom:24px; overflow:hidden;
+}
+.d-img-slot img { width:100%; height:100%; object-fit:cover; }
+.d-img-ph {
+  font-size:10px; letter-spacing:.15em; text-transform:uppercase;
+  color:var(--sub);
+}
+
+.d-sec { margin-bottom:20px; }
+.d-lbl {
+  font-size:9px; letter-spacing:.2em; text-transform:uppercase;
+  color:var(--sub); margin-bottom:8px; font-weight:500;
+}
+.d-txt {
+  font-family:var(--serif); font-size:16px;
+  line-height:1.85; color:var(--mid);
+}
+.d-txt.ital { font-style:italic; color:var(--mid); font-size:17px; }
+.d-txt strong { color:var(--ink); font-weight:700; }
+.d-link {
+  display:inline-flex; align-items:center; gap:5px;
+  margin-top:14px; font-size:11px; letter-spacing:.1em;
+  text-transform:uppercase; font-weight:500;
+  color:var(--ink); border-bottom:1px solid var(--ink);
+  padding-bottom:2px; transition:opacity .18s;
+}
+.d-link:hover { opacity:.5; }
+
+.d-side { padding-top:2px; }
+.d-period { font-size:11px; color:var(--sub); margin-bottom:18px; line-height:1.7; }
+.d-role {
+  font-size:12px; line-height:1.9; color:var(--mid);
+  border-left:2px solid var(--ink); padding-left:12px;
+  margin-bottom:20px; font-weight:400;
+}
+.d-metrics { display:flex; flex-direction:column; gap:2px; }
+.d-metric { background:var(--off); padding:12px 14px; }
+.d-mval {
+  font-family:var(--serif); font-size:22px;
+  font-weight:700; letter-spacing:-.02em; line-height:1;
+}
+.d-mval small { font-size:15px; font-weight:400; font-style:italic; }
+.d-mlbl {
+  font-size:9px; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--sub); margin-top:3px; font-weight:500;
+}
+
+/* ── WRITING ── */
+#page-writing { padding-bottom:120px; }
+.writing-list { padding:0 72px; }
+.w-item {
+  display:grid; grid-template-columns:44px 1fr 100px;
+  gap:0 24px; padding:28px 0;
+  border-bottom:1px solid var(--line);
+  cursor:pointer;
+  opacity:0; transform:translateY(12px);
+  transition:opacity .5s, transform .5s;
+}
+.w-item.in { opacity:1; transform:translateY(0); }
+.w-item:hover .w-title { text-decoration:underline; text-decoration-thickness:1px; text-underline-offset:3px; }
+.w-n { font-size:11px; color:var(--sub); padding-top:2px; }
+.w-tag { font-size:10px; letter-spacing:.15em; text-transform:uppercase; color:var(--sub); margin-bottom:7px; font-weight:500; }
+.w-title { font-family:var(--serif); font-size:22px; font-weight:700; letter-spacing:-.02em; margin-bottom:10px; }
+.w-title em { font-style:italic; font-weight:400; }
+.w-excerpt { font-size:13px; line-height:1.8; color:var(--mid); max-width:480px; }
+.w-date { font-size:11px; color:var(--sub); text-align:right; padding-top:3px; }
+
+/* Writing modal */
+.w-modal { display:none; position:fixed; inset:0; background:var(--w); z-index:300; overflow-y:auto; padding:80px 72px 120px 232px; }
+.w-modal.open { display:block; }
+.m-close { position:fixed; top:28px; right:52px; font-size:11px; letter-spacing:.15em; text-transform:uppercase; font-weight:500; color:var(--sub); cursor:pointer; transition:color .18s; }
+.m-close:hover { color:var(--ink); }
+.m-inner { max-width:600px; }
+.m-tag { font-size:10px; letter-spacing:.2em; text-transform:uppercase; color:var(--sub); margin-bottom:20px; font-weight:500; }
+.m-title { font-family:var(--serif); font-size:clamp(28px,4vw,48px); font-weight:700; letter-spacing:-.025em; line-height:1.05; margin-bottom:10px; }
+.m-title em { font-style:italic; font-weight:400; }
+.m-date { font-size:11px; color:var(--sub); margin-bottom:48px; }
+.m-body { font-family:var(--serif); font-size:18px; line-height:2; color:var(--mid); }
+.m-body p { margin-bottom:24px; }
+.m-body em { font-style:italic; }
+
+/* ── PHOTOGRAPHY ── */
+#page-photo { padding-bottom:120px; }
+.film-wrap {
+  overflow-x:auto; overflow-y:hidden;
+  cursor:grab; user-select:none;
+  padding:40px 72px;
+  scrollbar-width:none;
+}
+.film-wrap::-webkit-scrollbar { display:none; }
+.film-wrap:active { cursor:grabbing; }
+.film-strip { display:flex; gap:10px; width:max-content; }
+.f-frame {
+  flex-shrink:0; width:320px; height:240px;
+  background:var(--off); overflow:hidden;
+  position:relative; cursor:pointer;
+}
+.f-frame:hover .f-caption-bar { opacity:1; }
+.f-caption-bar {
+  position:absolute; bottom:0; left:0; right:0;
+  background:rgba(14,14,14,.7); padding:10px 14px;
+  opacity:0; transition:opacity .25s;
+}
+.f-cap-text { font-size:11px; color:rgba(255,255,255,.85); letter-spacing:.08em; }
+.f-img { width:100%; height:100%; object-fit:cover; transition:transform .5s cubic-bezier(.16,1,.3,1); }
+.f-frame:hover .f-img { transform:scale(1.03); }
+.f-ph { width:100%; height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:10px; }
+.f-num { font-size:12px; letter-spacing:.15em; color:var(--sub); font-family:var(--sans); }
+.f-loc { font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:var(--sub); }
+.film-hint-bar { padding:0 72px; font-size:11px; color:var(--sub); letter-spacing:.1em; }
+
+/* Lightbox */
+.lb { display:none; position:fixed; inset:0; background:rgba(255,255,255,.98); z-index:400; flex-direction:column; align-items:center; justify-content:center; }
+.lb.open { display:flex; }
+.lb-close { position:fixed; top:28px; right:52px; font-size:11px; letter-spacing:.15em; text-transform:uppercase; font-weight:500; color:var(--sub); cursor:pointer; transition:color .18s; }
+.lb-close:hover { color:var(--ink); }
+.lb-ph { width:72vw; height:62vh; background:var(--off); display:flex; align-items:center; justify-content:center; }
+.lb-ph span { font-size:11px; letter-spacing:.15em; color:var(--sub); text-transform:uppercase; }
+.lb-real { max-width:80vw; max-height:72vh; object-fit:contain; }
+.lb-nav { display:flex; gap:40px; margin-top:20px; font-size:11px; letter-spacing:.1em; text-transform:uppercase; font-weight:500; color:var(--sub); }
+.lb-nav span { cursor:pointer; transition:color .18s; }
+.lb-nav span:hover { color:var(--ink); }
+.lb-cap { margin-top:8px; font-size:11px; color:var(--sub); letter-spacing:.08em; }
+
+/* ── CODE ── */
+#page-code { padding-bottom:120px; }
+.code-grid { display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--line); border:1px solid var(--line); margin:0 72px; }
+.c-item { background:var(--w); padding:40px 36px; display:block; transition:background .18s; }
+.c-item:hover { background:var(--off); }
+.c-lang { font-size:10px; letter-spacing:.15em; text-transform:uppercase; color:var(--sub); margin-bottom:14px; font-weight:500; }
+.c-name { font-family:var(--serif); font-size:22px; font-weight:700; letter-spacing:-.02em; margin-bottom:12px; }
+.c-name em { font-style:italic; font-weight:400; }
+.c-desc { font-size:13px; line-height:1.8; color:var(--mid); }
+.c-arrow { margin-top:20px; font-size:11px; letter-spacing:.1em; color:var(--sub); font-weight:500; transition:color .18s; }
+.c-item:hover .c-arrow { color:var(--ink); }
+
+/* ── ABOUT ── */
+#page-about { padding-bottom:120px; }
+.about-inner { padding:0 72px; margin-top:52px; display:grid; grid-template-columns:1fr 1fr; gap:80px; }
+.a-intro { font-family:var(--serif); font-size:clamp(22px,2.8vw,34px); font-weight:700; letter-spacing:-.025em; line-height:1.4; margin-bottom:32px; }
+.a-intro em { font-style:italic; font-weight:400; }
+.a-body { font-size:14px; line-height:2; color:var(--mid); margin-bottom:24px; }
+.a-contact { font-size:12px; letter-spacing:.1em; text-transform:uppercase; font-weight:500; }
+.a-contact a { color:var(--mid); border-bottom:1px solid var(--line); padding-bottom:1px; transition:color .18s, border-color .18s; }
+.a-contact a:hover { color:var(--ink); border-color:var(--ink); }
+.cv-sec { margin-bottom:36px; }
+.cv-lbl { font-size:9px; letter-spacing:.22em; text-transform:uppercase; color:var(--sub); padding-bottom:10px; border-bottom:1px solid var(--line); font-weight:500; }
+.cv-row { display:flex; justify-content:space-between; align-items:baseline; padding:10px 0; border-bottom:1px solid var(--line); font-size:13px; gap:12px; }
+.cv-role { color:var(--ink); font-weight:500; flex-shrink:0; }
+.cv-org { color:var(--mid); font-size:12px; }
+.cv-yr { color:var(--sub); font-size:11px; flex-shrink:0; }
+
+/* ANIMATIONS */
+@keyframes up { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
+
+/* MOBILE */
+@media(max-width:768px){
+  #sidenav { position:relative; width:100%; border-right:none; border-bottom:1px solid var(--line); flex-direction:row; padding:20px 24px; flex-wrap:wrap; gap:12px; }
+  .nav-name { margin-bottom:0; }
+  .nav-list { flex-direction:row; gap:16px; }
+  .nav-footer { display:none; }
+  #main { margin-left:0; }
+  #page-home, .sec-head, .proj-list, .writing-list, .film-hint-bar, .code-grid, .about-inner { padding-left:24px; padding-right:24px; }
+  .detail-wrap { grid-template-columns:1fr; }
+  .d0 { display:none; }
+  .w-item { grid-template-columns:36px 1fr; }
+  .w-date { display:none; }
+  .code-grid { grid-template-columns:1fr; }
+  .about-inner { grid-template-columns:1fr; gap:48px; }
+  .proj-top { grid-template-columns:36px 1fr auto; }
+  .film-wrap { padding:40px 24px; }
+  .w-modal { padding:80px 24px 80px; }
+}
+</style>
+</head>
+<body>
+
+<!-- LEFT NAV -->
+<nav id="sidenav">
+  <div class="nav-name" onclick="goTo('home')">Yewon<br>Shin</div>
+  <ul class="nav-list">
+    <li onclick="goTo('work')" id="nl-work">Work</li>
+    <li onclick="goTo('writing')" id="nl-writing">Writing</li>
+    <li onclick="goTo('photo')" id="nl-photo">Photography</li>
+    <li onclick="goTo('code')" id="nl-code">Code</li>
+    <li onclick="goTo('about')" id="nl-about">About</li>
+  </ul>
+  <div class="nav-footer">
+    <a href="mailto:yshin31@alumni.jh.edu">Email</a><br>
+    <a href="https://github.com/shinyeone" target="_blank">GitHub</a><br>
+    Seoul — New York
+  </div>
+</nav>
+
+<div id="main">
+
+<!-- HOME -->
+<div class="page active" id="page-home">
+  <h1 class="home-name">Yewon<br><em>Shin</em></h1>
+  <p class="home-desc">Brand experience producer and photographer. Working at the intersection of culture, space, and brand.</p>
+  <div class="home-nav">
+    <span onclick="goTo('work')">Work</span>
+    <span onclick="goTo('writing')">Writing</span>
+    <span onclick="goTo('photo')">Photography</span>
+    <span onclick="goTo('code')">Code</span>
+  </div>
+</div>
+
+<!-- WORK -->
+<div class="page" id="page-work">
+  <div class="sec-head">
+    <span class="sec-title">Selected Work</span>
+    <span class="sec-count">10 projects · 2022–2026</span>
+  </div>
+  <div class="proj-list" id="proj-container"></div>
+</div>
+
+<!-- WRITING -->
+<div class="page" id="page-writing">
+  <div class="sec-head">
+    <span class="sec-title">Writing</span>
+    <span class="sec-count">Essays & notes</span>
+  </div>
+  <div class="writing-list" id="writing-list"></div>
+</div>
+<div class="w-modal" id="w-modal">
+  <div class="m-close" onclick="closeW()">Close ✕</div>
+  <div class="m-inner" id="m-inner"></div>
+</div>
+
+<!-- PHOTOGRAPHY -->
+<div class="page" id="page-photo">
+  <div class="sec-head" style="margin-bottom:0;">
+    <span class="sec-title">Photography</span>
+    <span class="sec-count">Drag · click to open</span>
+  </div>
+  <div class="film-wrap" id="filmWrap">
+    <div class="film-strip" id="filmStrip"></div>
+  </div>
+  <div class="film-hint-bar">← drag to explore · ← → to navigate when open</div>
+</div>
+<div class="lb" id="lb">
+  <div class="lb-close" onclick="closeLB()">Close ✕</div>
+  <div class="lb-ph" id="lb-content"><span id="lb-label">—</span></div>
+  <div class="lb-nav">
+    <span onclick="lbNav(-1)">← Prev</span>
+    <span onclick="lbNav(1)">Next →</span>
+  </div>
+  <div class="lb-cap" id="lb-cap"></div>
+</div>
+
+<!-- CODE -->
+<div class="page" id="page-code">
+  <div class="sec-head" style="margin-bottom:24px;">
+    <span class="sec-title">Code</span>
+    <span class="sec-count">Projects & experiments</span>
+  </div>
+  <div class="code-grid" id="code-grid"></div>
+</div>
+
+<!-- ABOUT -->
+<div class="page" id="page-about">
+  <div class="sec-head"><span class="sec-title">About</span></div>
+  <div class="about-inner">
+    <div>
+      <p class="a-intro">I make things happen in <em>space, culture,</em> and brand.</p>
+      <p class="a-body">Currently at One RX, Seoul — producing Samsung brand experience projects globally. Previously at TMN Agency, where I led activations for Tekla Fabrics, Birkenstock Korea, and the Joopiter × G-Dragon auction.</p>
+      <p class="a-body">B.S. Computer Science, Johns Hopkins University 2023. Minors in Financial Economics and Entrepreneurship.</p>
+      <div class="a-contact">
+        <a href="mailto:yshin31@alumni.jh.edu">yshin31@alumni.jh.edu</a>
+        &nbsp;·&nbsp;
+        <a href="https://github.com/shinyeone" target="_blank">GitHub</a>
+      </div>
+    </div>
+    <div>
+      <div class="cv-sec">
+        <div class="cv-lbl">Experience</div>
+        <div class="cv-row"><span class="cv-role">BX AE</span><span class="cv-org">One RX</span><span class="cv-yr">2025–</span></div>
+        <div class="cv-row"><span class="cv-role">Freelance PM</span><span class="cv-org">Fastpaper, Doosan</span><span class="cv-yr">2025</span></div>
+        <div class="cv-row"><span class="cv-role">Marketing & PR Manager</span><span class="cv-org">TMN Agency</span><span class="cv-yr">2023–24</span></div>
+        <div class="cv-row"><span class="cv-role">Research Intern</span><span class="cv-org">Viva Innovation</span><span class="cv-yr">2022</span></div>
+        <div class="cv-row"><span class="cv-role">Client Solutions Intern</span><span class="cv-org">Partners Group PE</span><span class="cv-yr">2021</span></div>
+      </div>
+      <div class="cv-sec">
+        <div class="cv-lbl">Education</div>
+        <div class="cv-row"><span class="cv-role">B.S. Computer Science</span><span class="cv-org">Johns Hopkins University</span><span class="cv-yr">2023</span></div>
+      </div>
+      <div class="cv-sec">
+        <div class="cv-lbl">Languages & Skills</div>
+        <div class="cv-row"><span class="cv-role">Korean</span><span class="cv-org">Native</span></div>
+        <div class="cv-row"><span class="cv-role">English</span><span class="cv-org">Fluent (OPIC AL)</span></div>
+        <div class="cv-row"><span class="cv-role">Japanese</span><span class="cv-org">Learning (JLPT in progress)</span></div>
+        <div class="cv-row"><span class="cv-role">Code</span><span class="cv-org">JavaScript, React, Python, SQL</span></div>
+        <div class="cv-row"><span class="cv-role">Design</span><span class="cv-org">Figma, Adobe Illustrator</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /main -->
+
+<script>
+/* ── DATA: latest first ── */
+const PROJECTS = [
+  { n:'01', yr:'2026', client:'Samsung × Devil Wears Prada 2 · One RX',
+    title:'World Premiere — <em>Runway Cam</em>',
+    tags:['Fashion × Tech','Brand Concept','Global Partnership','Content Production'],
+    challenge:'Creating a Samsung tech activation at the world premiere of The Devil Wears Prada 2 that felt native to fashion media — a brand presence that belonged at the event rather than sponsoring it.',
+    participation:'Conceptualized and managed the Runway Cam — a Samsung-branded camera experience positioned along the red carpet to capture behind-the-scenes, runway-style content. Owned end-to-end project management: proposal writing, operations manual, scheduling. Managed communications with Samsung Korea, Cheil US, and logistics partners. Coordinated production of brand photo wall, in-film product rendering, and BTS sketch film.',
+    result:'Activation executed at the New York world premiere. Branded content distributed across Samsung\'s global channels.',
+    role:'Concept Development\nProject Management\nCheil US Coordination\nProduction Communications',
+    metrics:[{v:'NYC',l:'World Premiere'},{v:'Global',l:'Samsung Distribution'}],
+    img:null, imgAlt:'Devil Wears Prada 2 activation',
+    link:null, period:'Mar – Apr 2026 · New York' },
+
+  { n:'02', yr:'2026', client:'Samsung Olympics · One RX',
+    title:'Galaxy Z Flip7 Olympic Edition — <em>Open Station, Italy</em>',
+    tags:['Global Sports Activation','On-site Operations','Athlete Engagement','Multi-venue'],
+    challenge:'Moving beyond passive device distribution at the Winter Games — the goal was genuine athlete adoption, turning an issued product into a tool athletes actively valued during competition.',
+    participation:'Deployed on-site in Antholz-Anterselva, Italy as local promotion operations lead for the Samsung Open Station within the athletes\' village. Managed daily athlete interactions and brand touchpoints. Coordinated charging station installation across two venues (Anterselva and Cortina). Supported content shoot management and oversaw Victory Selfie device retrieval site-wide.',
+    result:'Device activation rate rose from 63% (Paris \'24) to 87% (Milan \'26), +24pp. Active feature usage up from 27% to 37% (+10pp). Galaxy Athlete Card reached 4,202 cumulative users. Athletes\' village program ranked TOP 1 in preference among all Samsung Olympic activations.',
+    role:'Open Station Operations Lead\nCharging Station Coordination\nContent Shoot Management',
+    metrics:[{v:'+24pp',l:'Activation Rate 63→87%'},{v:'4,202',l:'Galaxy Athlete Card Users'},{v:'TOP 1',l:'Village Program'}],
+    img:null, imgAlt:'Samsung Open Station Anterselva',
+    link:null, period:'Jan – Mar 2026 · Antholz-Anterselva, Italy' },
+
+  { n:'03', yr:'2026', client:'Samsung First Look · One RX',
+    title:'First Look — <em>VIP Tour Operations</em>',
+    tags:['Event Production','VIP Experience','Staff Operations','Bilingual'],
+    challenge:'Delivering a consistent, premium Samsung brand experience to over 2,000 VIP guests — heads of industry, government ministers, and global press — across bilingual tours over four consecutive days.',
+    participation:'Sourced and trained Tour Assistants through a local staffing agency, managing the full pipeline from candidate screening to live supervision. Designed the training framework covering brand tone, product narrative, and guest protocol for Korean and English sessions. Stepped in personally as Tour Assistant on peak days.',
+    result:'208 tours completed, 2,158 attendees over 4 days. Surpassed client target of 200 tours. Guests included Euisun Chung (Chairman, Hyundai Motor Group), Korean Minister of Land, and C-suite from Doosan, Woongiin, and Reliance. No major operational issues.',
+    role:'VIP Tour Operations Lead\nStaff Sourcing & Training\nOn-site Supervision\nBilingual Coordination',
+    metrics:[{v:'208',l:'Tours · Target 200'},{v:'2,158',l:'Total Attendees'},{v:'KO+EN',l:'Bilingual'}],
+    img:null, imgAlt:'Samsung First Look VIP tour',
+    link:null, period:'Nov 2025 – Jan 2026 · Seoul' },
+
+  { n:'04', yr:'2025', client:'Samsung Galaxy XR · One RX',
+    title:'Galaxy XR — <em>Product Launch Keynote</em>',
+    tags:['Tech Launch','Keynote Production','Artist Collaboration'],
+    challenge:'Translating a first-of-category XR product into an emotionally resonant launch — communicating brand aspiration alongside technical specification without one overshadowing the other.',
+    participation:'Managed keynote scripts across multiple presenters. Participated in presenter delivery training to align pacing, tone, and messaging. Coordinated with overseas agencies to bridge global creative direction with local execution. Led talent sourcing for the Hémé artist collaboration — whose work became the visual centerpiece of the launch, framing XR as a creative instrument.',
+    result:'Successful product category launch to press and industry audiences in Korea. Hémé collaboration generated organic creative community coverage.',
+    role:'Script Management\nPresenter Training Support\nOverseas Agency Coordination\nArtist Talent Sourcing (Hémé)',
+    metrics:[{v:'XR',l:'New Samsung Category'}],
+    img:null, imgAlt:'Galaxy XR launch keynote',
+    link:null, period:'Jul – Oct 2025 · Seoul' },
+
+  { n:'05', yr:'2024', client:'Tekla Fabrics · via TMN',
+    title:'Seongsu Pop-Up — <em>PR Coordination</em>',
+    tags:['PR','Press Activation','KOL Management','Event Production'],
+    challenge:'Executing a press and KOL activation for Tekla\'s Seongsu pop-up that felt editorial and intimate — not a standard brand launch.',
+    participation:'Led PR coordination, executing in-store press activations with Korean media, KOLs, and creative partners. Hosted a press breakfast and dinner experience blending Copenhagen storytelling with local cultural elements. Managed all editorial communications and on-site production.',
+    result:'141 attendees across events. 467 UGC posts. Estimated reach 1.38 million.',
+    role:'PR Lead\nPress & KOL Coordination\nEvent Production',
+    metrics:[{v:'1.38M',l:'Estimated Reach'},{v:'467',l:'UGC Posts'},{v:'141',l:'Attendees'}],
+    img:null, imgAlt:'Tekla Seongsu pop-up',
+    link:'https://teklafabrics.com/projects/tekla-seongsu', linkLabel:'View Project',
+    period:'Sep 2024 · Seongsu, Seoul' },
+
+  { n:'06', yr:'2024', client:'Birkenstock Korea · via TMN',
+    title:'Apgujeong Pop-Up — <em>Flagship Launch</em>',
+    tags:['Pop-up','PR & Events','VIP Production'],
+    challenge:'Launching Birkenstock\'s first flagship pop-up in Korea with a VIP opening that honored the brand\'s global heritage while building genuine local industry relationships.',
+    participation:'Planned content production and space coordination. Hosted the VIP opening event — managing RSVPs, catering, and live interpretation for global executives. Coordinated vendors and Birkenstock\'s international HQ. Optimized spatial layout and guest flow within physical constraints.',
+    result:'134 industry professionals and 33 key media editors attended. Strong fashion and lifestyle press coverage.',
+    role:'PR & Event Coordination\nVIP Production\nHQ Communications\nLive Interpretation (EN/KR)',
+    metrics:[{v:'134',l:'Industry Professionals'},{v:'33',l:'Key Media Editors'}],
+    img:null, imgAlt:'Birkenstock Apgujeong pop-up',
+    link:'https://www.birkenstock.com/kr/pop-up-store/', linkLabel:'View Pop-Up',
+    period:'Oct 2024 · Apgujeong, Seoul' },
+
+  { n:'07', yr:'2024', client:'Tekla Fabrics · via TMN',
+    title:'Talo Jeju — <em>Guesthouse Activation</em>',
+    tags:['Brand Experience','Community Activation','Influencer Strategy','Content Production'],
+    challenge:'Introducing Tekla\'s Copenhagen brand philosophy to Korea through a pre-launch activation that felt culturally specific — not an imported template dropped into Jeju.',
+    participation:'Proposed and led Tekla\'s first guesthouse experience in Korea — pairing a traditional Jeju stone house with Nordic vintage furniture. Curated four creative guests: 100K–300K followers, 3–5% engagement rate, non-commercial aesthetic. Managed on-site content production and coordinated with Tekla\'s Copenhagen HQ. The activation preceded the Seoul pop-up.',
+    result:'1.12M Instagram reach. Dedicated Vogue Korea feature (8.1M circulation). Highest-performing community activation of Tekla\'s Korea year. Evaluated as a model for global expansion.',
+    role:'Campaign Concept\nInfluencer Curation\nOn-site Production\nCopenhagen HQ Liaison',
+    metrics:[{v:'1.12M',l:'Instagram Reach'},{v:'Vogue KR',l:'8.1M Circulation'}],
+    img:null, imgAlt:'Tekla Talo Jeju guesthouse',
+    link:'https://www.vogue.co.kr/?p=507800', linkLabel:'Read Vogue Korea Feature',
+    period:'Jul 2024 · Jeju, Korea' },
+
+  { n:'08', yr:'2024', client:'Joopiter × G-Dragon · via TMN',
+    title:'Collaborative Auction — <em>Joopiter × Peaceminusone</em>',
+    tags:['Luxury Auction','Brand Localization','Cross-cultural Production'],
+    challenge:'Bridging Pharrell Williams\' auction house Joopiter (NYC) with G-Dragon\'s Peaceminusone universe — ensuring global brand integrity while localizing all creative assets for a Korean audience.',
+    participation:'Served as primary liaison between Joopiter (New York) and G-Dragon\'s team (Seoul). Directed photoshoots for auction lots and Peaceminusone merchandise, aligning both brand narratives. Oversaw contract coordination, auction documentation, and high-priority communications through to launch.',
+    result:'Successful global launch September 2024. All assets delivered on schedule. No brand misalignment between teams.',
+    role:'Project Manager\nCreative Direction (Shoots)\nBrand Asset Localization\nJoopiter NYC Liaison',
+    metrics:[{v:'NYC↔SEL',l:'Cross-cultural Production'},{v:'Sep \'24',l:'Global Launch'}],
+    img:null, imgAlt:'Joopiter G-Dragon auction',
+    link:'https://www.joopiter.com/auctions/g-dragon', linkLabel:'View Auction',
+    period:'May – Sep 2024 · Seoul' },
+
+  { n:'09', yr:'2023', client:'Hitchhikers Performance',
+    title:'Dancing with A.I. — <em>Developer & Artist</em>',
+    tags:['Generative Art','Machine Learning','Live Performance','p5.js'],
+    challenge:'Can machine learning respond to a human body in real time — not as a tool, but as a co-performer? The project explored the boundary between choreography and algorithm.',
+    participation:'Developed a real-time generative visual system using motion data and machine learning in p5.js. Visuals responded live to dancer movement on stage. Participated as both developer and artist.',
+    result:'Live performance presented in Seoul. Featured as a case study in AI-arts collaboration.',
+    role:'Developer\nGenerative Visual System\nLive Performance', metrics:[],
+    img:null, imgAlt:'Hitchhikers AI performance',
+    link:'https://youtu.be/i16nxyii728?si=oz-7CjlSFvGxQiVB&t=1837', linkLabel:'Watch Performance',
+    period:'Sep – Oct 2023 · Seoul' },
+
+  { n:'10', yr:'2022–23', client:'HopBox · JHU Spark Showcase',
+    title:'HopBox — <em>Co-Founder</em>',
+    tags:['Product','UX/UI Design','Branding','Front-end Dev'],
+    challenge:'University students have nowhere affordable to store belongings during dorm move-out — a recurring, seasonal pain point with no elegant solution.',
+    participation:'Proposed the service concept from user research. Designed UI/UX and information architecture, co-developed the front-end demo, led pitch deck creation. Built the full visual identity: logo, brand guidelines, merchandise.',
+    result:'Judges\' Award out of 28 teams at JHU Spark Showcase. $2,500 prize.',
+    role:'Co-Founder · Strategy & Product\nBrand Identity · Front-end Dev',
+    metrics:[{v:'$2,500',l:'Judges\' Award'},{v:'28',l:'Teams Competing'}],
+    img:null, imgAlt:'HopBox web app',
+    link:'https://drive.google.com/file/d/17kYbRaj9kNsG2u_GiwGp_cNMAgnbrb9l/view?usp=sharing', linkLabel:'View Demo Deck',
+    period:'Dec 2022 – May 2023 · Baltimore' },
+];
+
+const WRITINGS = [
+  { tag:'Essay', title:'Coming <em>soon</em>', date:'—',
+    excerpt:'New essays coming. Check back shortly.',
+    body:`<p>Essays coming soon.</p>` },
+];
+
+const PHOTOS = [
+  {label:'Italy, 2026', cap:'Anterselva — between competitions'},
+  {label:'Jeju, 2024', cap:'Talo Guesthouse activation'},
+  {label:'Seoul, 2024', cap:'Seongsu pop-up, press morning'},
+  {label:'New York, 2026', cap:'World premiere, backstage'},
+  {label:'Seoul, 2025', cap:'Galaxy XR launch'},
+  {label:'Jeju, 2024', cap:'Stone house, early light'},
+  {label:'Italy, 2026', cap:'Cortina d\'Ampezzo'},
+  {label:'Seoul, 2023', cap:'Hitchhikers performance'},
+  {label:'Seoul, 2024', cap:'Birkenstock Apgujeong opening'},
+  {label:'Baltimore, 2023', cap:'HopBox showcase night'},
+  // 사진 추가: {label:'...', cap:'...', src:'photos/11.jpg'}
+];
+
+const CODE_ITEMS = [
+  { lang:'JavaScript · React · HTML/CSS', name:'HopBox — <em>Web App</em>',
+    desc:'Student storage marketplace. Co-built the front-end demo for the JHU Spark Showcase — Judges\' Award winner.',
+    link:'https://drive.google.com/file/d/17kYbRaj9kNsG2u_GiwGp_cNMAgnbrb9l/view?usp=sharing', arrow:'View Demo Deck ↗' },
+  { lang:'p5.js · Machine Learning', name:'Dancing with A.I.',
+    desc:'Real-time generative visual system responding to dancer motion data. Built for the Hitchhikers live performance, Seoul 2023.',
+    link:'https://youtu.be/i16nxyii728?si=oz-7CjlSFvGxQiVB&t=1837', arrow:'Watch Performance ↗' },
+  { lang:'Python · Pandas · SQL', name:'Data Projects — <em>Various</em>',
+    desc:'Data cleaning, analysis, and database work from coursework and personal experiments.',
+    link:'https://github.com/shinyeone', arrow:'GitHub ↗' },
+  { lang:'HTML · CSS · JavaScript', name:'This Site — <em>Hand-coded</em>',
+    desc:'Personal creative space. Single-page application with film-strip gallery, modal writing system, and project archive.',
+    link:'https://github.com/shinyeone', arrow:'View Source ↗' },
+];
+
+/* ── RENDER ── */
+function renderProjects(){
+  const c=document.getElementById('proj-container');
+  PROJECTS.forEach((p,i)=>{
+    const r=document.createElement('div'); r.className='proj-row';
+    const imgSlot = p.img
+      ? `<div class="d-img-slot"><img src="${p.img}" alt="${p.imgAlt}"></div>`
+      : `<div class="d-img-slot"><span class="d-img-ph">Image coming</span></div>`;
+    r.innerHTML=`
+      <div class="proj-top" onclick="toggleP(${i})">
+        <span class="proj-n">${p.n}</span>
+        <div><div class="proj-client-s">${p.client}</div><div class="proj-title-s">${p.title}</div></div>
+        <span class="proj-yr">${p.yr}</span>
+      </div>
+      <div class="proj-detail" id="pd${i}">
+        <div class="detail-wrap">
+          <div class="d0"></div>
+          <div class="d-body">
+            <div class="d-tags">${p.tags.map(t=>`<span class="d-tag">${t}</span>`).join('')}</div>
+            ${imgSlot}
+            <div class="d-sec"><div class="d-lbl">The Challenge</div><div class="d-txt ital">${p.challenge}</div></div>
+            <div class="d-sec"><div class="d-lbl">My Participation</div><div class="d-txt">${p.participation}</div></div>
+            <div class="d-sec"><div class="d-lbl">Result</div><div class="d-txt">${p.result}</div></div>
+            ${p.link?`<a class="d-link" href="${p.link}" target="_blank">${p.linkLabel} ↗</a>`:''}
+          </div>
+          <div class="d-side">
+            <div class="d-period">${p.period}</div>
+            <div class="d-role">${p.role.replace(/\n/g,'<br>')}</div>
+            <div class="d-metrics">${p.metrics.map(m=>`<div class="d-metric"><div class="d-mval">${m.v}</div><div class="d-mlbl">${m.l}</div></div>`).join('')}</div>
+          </div>
+        </div>
+      </div>`;
+    c.appendChild(r);
+  });
+}
+
+let openP=null;
+function toggleP(i){
+  if(openP!==null&&openP!==i) document.getElementById(`pd${openP}`).classList.remove('open');
+  const el=document.getElementById(`pd${i}`);
+  el.classList.toggle('open');
+  openP=el.classList.contains('open')?i:null;
+}
+
+function renderWriting(){
+  const c=document.getElementById('writing-list');
+  WRITINGS.forEach((w,i)=>{
+    const el=document.createElement('div'); el.className='w-item';
+    el.innerHTML=`<span class="w-n">0${i+1}</span><div><div class="w-tag">${w.tag}</div><div class="w-title">${w.title}</div><div class="w-excerpt">${w.excerpt}</div></div><div class="w-date">${w.date}</div>`;
+    el.onclick=()=>openW(i); c.appendChild(el);
+  });
+}
+function openW(i){
+  const w=WRITINGS[i];
+  document.getElementById('m-inner').innerHTML=`<div class="m-tag">${w.tag}</div><h1 class="m-title">${w.title}</h1><div class="m-date">${w.date}</div><div class="m-body">${w.body}</div>`;
+  document.getElementById('w-modal').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeW(){ document.getElementById('w-modal').classList.remove('open'); document.body.style.overflow=''; }
+
+function renderPhotos(){
+  const s=document.getElementById('filmStrip');
+  PHOTOS.forEach((p,i)=>{
+    const f=document.createElement('div'); f.className='f-frame';
+    if(p.src){
+      f.innerHTML=`<img class="f-img" src="${p.src}" alt="${p.cap}"><div class="f-caption-bar"><span class="f-cap-text">${p.cap}</span></div>`;
+    } else {
+      f.innerHTML=`<div class="f-ph"><span class="f-num">${String(i+1).padStart(2,'0')}</span><span class="f-loc">${p.label}</span></div><div class="f-caption-bar"><span class="f-cap-text">${p.cap}</span></div>`;
+    }
+    f.onclick=()=>openLB(i); s.appendChild(f);
+  });
+  // Drag
+  const w=document.getElementById('filmWrap');
+  let dn=false,sx,sl;
+  w.addEventListener('mousedown',e=>{dn=true;sx=e.pageX-w.offsetLeft;sl=w.scrollLeft;});
+  w.addEventListener('mouseleave',()=>dn=false);
+  w.addEventListener('mouseup',()=>dn=false);
+  w.addEventListener('mousemove',e=>{if(!dn)return;e.preventDefault();w.scrollLeft=sl-(e.pageX-w.offsetLeft-sx);});
+  let tx;
+  w.addEventListener('touchstart',e=>{tx=e.touches[0].clientX;sl=w.scrollLeft;},{passive:true});
+  w.addEventListener('touchmove',e=>{w.scrollLeft=sl-(e.touches[0].clientX-tx);},{passive:true});
+}
+
+let lbI=0;
+function openLB(i){ lbI=i; updateLB(); document.getElementById('lb').classList.add('open'); document.body.style.overflow='hidden'; }
+function updateLB(){
+  const p=PHOTOS[lbI];
+  const c=document.getElementById('lb-content');
+  if(p.src){ c.outerHTML=`<img class="lb-real" id="lb-content" src="${p.src}" alt="${p.cap}">`; }
+  else { document.getElementById('lb-label').textContent=p.label; }
+  document.getElementById('lb-cap').textContent=p.cap;
+}
+function lbNav(d){ lbI=(lbI+d+PHOTOS.length)%PHOTOS.length; updateLB(); }
+function closeLB(){ document.getElementById('lb').classList.remove('open'); document.body.style.overflow=''; }
+
+function renderCode(){
+  const g=document.getElementById('code-grid');
+  CODE_ITEMS.forEach(p=>{
+    const el=document.createElement('a'); el.className='c-item'; el.href=p.link; el.target='_blank';
+    el.innerHTML=`<div class="c-lang">${p.lang}</div><div class="c-name">${p.name}</div><div class="c-desc">${p.desc}</div><div class="c-arrow">${p.arrow}</div>`;
+    g.appendChild(el);
+  });
+}
+
+function goTo(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-list li').forEach(l=>l.classList.remove('active'));
+  document.getElementById(`page-${id}`).classList.add('active');
+  const nl=document.getElementById(`nl-${id}`); if(nl) nl.classList.add('active');
+  window.scrollTo(0,0);
+  setTimeout(observe,80);
+}
+
+function observe(){
+  const io=new IntersectionObserver(entries=>{
+    entries.forEach((e,i)=>{ if(e.isIntersecting) setTimeout(()=>e.target.classList.add('in'),i*45); });
+  },{threshold:0.04});
+  document.querySelectorAll('.proj-row:not(.in),.w-item:not(.in)').forEach(el=>io.observe(el));
+}
+
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'){ closeW(); closeLB(); }
+  if(document.getElementById('lb').classList.contains('open')){
+    if(e.key==='ArrowLeft') lbNav(-1);
+    if(e.key==='ArrowRight') lbNav(1);
+  }
+});
+
+renderProjects(); renderWriting(); renderPhotos(); renderCode();
+setTimeout(observe,100);
+</script>
+</body>
+</html>
