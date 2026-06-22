@@ -66,8 +66,13 @@ img{display:block;max-width:100%;}
 /* ── HOME ── */
 #page-home{
   display:flex;flex-direction:column;
-  justify-content:center;
+  align-items:center;justify-content:center;
+  text-align:center;
   min-height:100vh;padding:0 56px 80px;
+}
+.home-content{
+  display:flex;flex-direction:column;
+  align-items:center;
 }
 .home-eyebrow{
   font-family:var(--mono);font-size:11px;
@@ -90,13 +95,13 @@ img{display:block;max-width:100%;}
 }
 .home-nav-row{
   display:flex;gap:32px;flex-wrap:wrap;
+  justify-content:center;
   opacity:0;animation:fadeUp .8s .45s forwards;
 }
 .home-nav-item{
   font-family:var(--mono);font-size:11px;
   letter-spacing:.12em;text-transform:uppercase;
   color:var(--mid);cursor:pointer;
-  transition:color .2s;
   padding-bottom:2px;
   border-bottom:1px solid transparent;
   transition:color .2s, border-color .2s;
@@ -405,121 +410,163 @@ img{display:block;max-width:100%;}
 /* ── WRITING: BOOK SCENE (old - remove) ── */
 .book-scene{}
 
-/* ── PHOTOGRAPHY: FILM STRIP ── */
+/* ── PHOTOGRAPHY ── */
 #page-photo{
   padding-top:56px;
   min-height:100vh;
   background:var(--white);
+}
+#page-photo.active{
   display:flex;flex-direction:column;
 }
-.film-header{
-  display:flex;justify-content:space-between;align-items:baseline;
-  padding:18px 56px;
-  border-bottom:1px solid var(--line);
-}
-.film-label{
-  font-family:var(--mono);font-size:11px;
-  letter-spacing:.12em;text-transform:uppercase;color:var(--mid);
-}
-.film-hint{
-  font-family:var(--mono);font-size:10px;
-  color:var(--taupe);letter-spacing:.06em;
-}
 
-/* 35mm strip */
-.film-stage{
-  flex:1;display:flex;flex-direction:column;
-  justify-content:center;
-  padding:40px 0;
-  overflow:hidden;
+/* Landing: big film frame */
+.photo-landing{
+  flex:1;
+  display:flex;align-items:center;justify-content:center;
+  padding:40px 56px;
   position:relative;
 }
-.film-strip-outer{
-  overflow-x:auto;overflow-y:hidden;
-  cursor:grab;user-select:none;
-  scrollbar-width:none;
-  padding:0 56px;
+.film-big-frame{
+  position:relative;
+  width:min(640px, 80vw);
+  cursor:pointer;
+  transition:transform .4s cubic-bezier(.16,1,.3,1);
 }
-.film-strip-outer:active{cursor:grabbing;}
-.film-strip-outer::-webkit-scrollbar{display:none;}
+.film-big-frame:hover{ transform:scale(1.015); }
 
-/* Film border top & bottom */
-.film-strip{
-  display:flex;gap:3px;
-  align-items:center;
-  width:max-content;
+/* Sprocket holes top & bottom */
+.film-big-sprockets{
+  height:22px;background:var(--black);
+  display:flex;align-items:center;
+  padding:0 12px;gap:10px;
   position:relative;
-  padding:28px 0;
-  /* sprocket holes via pseudo on parent */
+  z-index:2;
 }
-/* Sprocket hole rows via wrapper */
-.film-strip-wrap{
-  position:relative;
-  padding:28px 0;
-}
-.film-sprockets{
-  position:absolute;left:0;right:0;
-  display:flex;gap:3px;
-  width:max-content;
-  align-items:center;
-}
-.film-sprockets.top{top:6px;}
-.film-sprockets.bottom{bottom:6px;}
-.film-sprocket-group{
-  display:flex;gap:3px;
-  padding:0 3px;
-}
-.sprocket{
-  width:16px;height:10px;
-  border:1px solid var(--line);
-  border-radius:2px;
+.film-big-sprockets.top{ border-radius:3px 3px 0 0; }
+.film-big-sprockets.bottom{ border-radius:0 0 3px 3px; }
+.film-sprocket-hole{
+  width:14px;height:10px;
   background:var(--white);
-}
-.sprocket.blank{
-  visibility:hidden;
+  border-radius:2px;flex-shrink:0;
+  opacity:.85;
 }
 
-.film-frame{
-  flex-shrink:0;
-  width:240px;height:320px;
+/* The image area */
+.film-big-image{
+  width:100%;
+  aspect-ratio:3/2;
   background:var(--off);
   overflow:hidden;
   position:relative;
-  cursor:pointer;
+  border-left:8px solid var(--black);
+  border-right:8px solid var(--black);
 }
-.film-frame img{
+.film-big-image img{
   width:100%;height:100%;
   object-fit:cover;
-  transition:transform .5s cubic-bezier(.16,1,.3,1);
-  filter:grayscale(20%);
+  transition:opacity .8s ease;
 }
-.film-frame:hover img{
-  transform:scale(1.04);
-  filter:grayscale(0%);
-}
-.film-ph{
+.film-big-image .film-placeholder{
   width:100%;height:100%;
   display:flex;flex-direction:column;
   align-items:center;justify-content:center;
-  gap:8px;
+  gap:10px;
 }
-.film-ph-num{
-  font-family:var(--mono);font-size:11px;
+.film-placeholder-num{
+  font-family:var(--mono);font-size:14px;
   color:var(--taupe);letter-spacing:.1em;
 }
-.film-ph-loc{
-  font-size:10px;letter-spacing:.1em;
+.film-placeholder-loc{
+  font-size:11px;letter-spacing:.12em;
   text-transform:uppercase;color:var(--mid);
 }
-.film-frame-label{
-  position:absolute;bottom:0;left:0;right:0;
-  padding:10px 14px;
-  background:rgba(17,17,17,.65);
-  opacity:0;transition:opacity .25s;
-  font-size:10px;letter-spacing:.08em;
-  color:rgba(255,255,255,.85);
+
+/* Film caption strip */
+.film-big-caption{
+  background:var(--black);
+  padding:10px 20px;
+  display:flex;justify-content:space-between;align-items:center;
+  border-radius:0 0 3px 3px;
 }
-.film-frame:hover .film-frame-label{opacity:1;}
+.film-caption-text{
+  font-family:var(--mono);font-size:10px;
+  color:rgba(255,255,255,.6);letter-spacing:.08em;
+}
+.film-caption-counter{
+  font-family:var(--mono);font-size:10px;
+  color:rgba(255,255,255,.35);letter-spacing:.06em;
+}
+
+/* Nav dots under frame */
+.film-nav{
+  display:flex;align-items:center;justify-content:center;
+  gap:16px;margin-top:20px;
+}
+.film-nav-arrow{
+  font-family:var(--mono);font-size:11px;
+  color:var(--mid);cursor:pointer;
+  transition:color .2s;letter-spacing:.05em;
+  user-select:none;padding:4px 8px;
+}
+.film-nav-arrow:hover{color:var(--black);}
+.film-nav-arrow.dim{opacity:.25;pointer-events:none;}
+.film-dots{display:flex;gap:6px;}
+.film-dot{
+  width:5px;height:5px;border-radius:50%;
+  background:var(--faint);cursor:pointer;transition:background .3s;
+}
+.film-dot.active{background:var(--taupe);}
+
+/* Open gallery button */
+.film-gallery-btn{
+  display:block;text-align:center;
+  font-family:var(--mono);font-size:10px;
+  letter-spacing:.14em;text-transform:uppercase;
+  color:var(--mid);margin-top:10px;cursor:pointer;
+  transition:color .2s;
+  padding-bottom:1px;border-bottom:1px solid transparent;
+}
+.film-gallery-btn:hover{color:var(--black);border-color:var(--black);}
+
+/* Gallery grid (shown on click) */
+.photo-gallery{
+  display:none;
+  padding:0 56px 80px;
+}
+.photo-gallery.open{display:block;}
+.gallery-back{
+  font-family:var(--mono);font-size:10px;
+  letter-spacing:.12em;text-transform:uppercase;
+  color:var(--mid);cursor:pointer;transition:color .2s;
+  padding:18px 0;display:inline-block;
+  border-bottom:1px solid var(--line);
+  width:100%;margin-bottom:24px;
+}
+.gallery-back:hover{color:var(--black);}
+.gallery-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill, minmax(220px,1fr));
+  gap:3px;
+}
+.gallery-item{
+  aspect-ratio:3/2;
+  background:var(--off);
+  overflow:hidden;cursor:pointer;position:relative;
+}
+.gallery-item img{width:100%;height:100%;object-fit:cover;transition:transform .4s ease;}
+.gallery-item:hover img{transform:scale(1.04);}
+.gallery-item-ph{
+  width:100%;height:100%;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:6px;
+}
+.gallery-item-ph span:first-child{
+  font-family:var(--mono);font-size:10px;color:var(--taupe);
+}
+.gallery-item-ph span:last-child{
+  font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--mid);
+}
 
 /* Lightbox */
 .lb{
@@ -785,15 +832,17 @@ img{display:block;max-width:100%;}
 
 <!-- HOME -->
 <div class="page active" id="page-home">
-  <div class="home-eyebrow">Seoul — New York</div>
-  <h1 class="home-name">Yewon Shin</h1>
-  <p class="home-desc">Brand experience producer and photographer. Working at the intersection of culture, space, and brand.</p>
-  <div class="home-nav-row">
-    <span class="home-nav-item" onclick="goTo('work')">Work</span>
-    <span class="home-nav-item" onclick="goTo('writing')">Writing</span>
-    <span class="home-nav-item" onclick="goTo('photo')">Photography</span>
-    <span class="home-nav-item" onclick="goTo('code')">Code</span>
-    <span class="home-nav-item" onclick="goTo('about')">About</span>
+  <div class="home-content">
+    <div class="home-eyebrow">Seoul — New York</div>
+    <h1 class="home-name">Yewon Shin</h1>
+    <p class="home-desc">Brand experience producer and photographer. Working at the intersection of culture, space, and brand.</p>
+    <div class="home-nav-row">
+      <span class="home-nav-item" onclick="goTo('work')">Work</span>
+      <span class="home-nav-item" onclick="goTo('writing')">Writing</span>
+      <span class="home-nav-item" onclick="goTo('photo')">Photography</span>
+      <span class="home-nav-item" onclick="goTo('code')">Code</span>
+      <span class="home-nav-item" onclick="goTo('about')">About</span>
+    </div>
   </div>
 </div>
 
@@ -849,16 +898,38 @@ img{display:block;max-width:100%;}
   </div>
 </div>
 
-<!-- PHOTOGRAPHY: FILM STRIP -->
+<!-- PHOTOGRAPHY -->
 <div class="page" id="page-photo">
-  <div class="film-header">
-    <span class="film-label">Photography</span>
-    <span class="film-hint">drag to explore · click to open</span>
-  </div>
-  <div class="film-stage">
-    <div class="film-strip-outer" id="filmOuter">
-      <div class="film-strip" id="filmStrip"></div>
+  <!-- Landing: big film frame -->
+  <div class="photo-landing" id="photo-landing">
+    <div>
+      <div class="film-big-frame" onclick="goToGallery()">
+        <div class="film-big-sprockets top" id="film-sprockets-top"></div>
+        <div class="film-big-image" id="film-big-image">
+          <div class="film-placeholder">
+            <span class="film-placeholder-num" id="film-ph-num">01</span>
+            <span class="film-placeholder-loc" id="film-ph-loc">—</span>
+          </div>
+        </div>
+        <div class="film-big-sprockets bottom" id="film-sprockets-bottom"></div>
+        <div class="film-big-caption">
+          <span class="film-caption-text" id="film-cap-text">—</span>
+          <span class="film-caption-counter" id="film-cap-counter">01 / 10</span>
+        </div>
+      </div>
+      <div class="film-nav">
+        <span class="film-nav-arrow dim" id="film-prev" onclick="filmNav(-1)">←</span>
+        <div class="film-dots" id="film-dots"></div>
+        <span class="film-nav-arrow" id="film-next" onclick="filmNav(1)">→</span>
+      </div>
+      <div class="film-gallery-btn" onclick="goToGallery()">View all photos ↗</div>
     </div>
+  </div>
+
+  <!-- Gallery grid (revealed on click) -->
+  <div class="photo-gallery" id="photo-gallery">
+    <div class="gallery-back" onclick="backToLanding()">← Photography</div>
+    <div class="gallery-grid" id="gallery-grid"></div>
   </div>
 </div>
 
@@ -1266,47 +1337,77 @@ function updateBookNav(){
 
 window.openBook = openBook;
 window.closeBook = closeBook;
+
+/* ═══ RENDER FILM ═══ */
+let filmIdx = 0;
+
+function buildSprockets(el){
+  for(let i=0;i<18;i++){
+    const h = document.createElement('div');
+    h.className = 'film-sprocket-hole';
+    el.appendChild(h);
+  }
+}
+
 function renderFilm(){
-  const strip = document.getElementById('filmStrip');
+  buildSprockets(document.getElementById('film-sprockets-top'));
+  buildSprockets(document.getElementById('film-sprockets-bottom'));
 
-  // Build strip with sprocket-like top/bottom borders via CSS
-  strip.style.cssText = `
-    display:flex;gap:3px;align-items:stretch;
-    width:max-content;
-    border-top:20px solid var(--off);
-    border-bottom:20px solid var(--off);
-    padding:4px 0;
-    box-shadow:inset 0 8px 0 var(--faint), inset 0 -8px 0 var(--faint);
-  `;
-
-  PHOTOS.forEach((p,i)=>{
-    const frame = document.createElement('div');
-    frame.className = 'film-frame';
-    if(p.src){
-      frame.innerHTML = `<img src="${p.src}" alt="${p.cap}"><div class="film-frame-label">${p.cap}</div>`;
-    } else {
-      frame.innerHTML = `
-        <div class="film-ph">
-          <span class="film-ph-num">${String(i+1).padStart(2,'0')}</span>
-          <span class="film-ph-loc">${p.label}</span>
-        </div>
-        <div class="film-frame-label">${p.cap}</div>`;
-    }
-    frame.onclick = ()=>openLB(i);
-    strip.appendChild(frame);
+  const dotsEl = document.getElementById('film-dots');
+  PHOTOS.forEach((_,i)=>{
+    const d = document.createElement('div');
+    d.className = 'film-dot' + (i===0?' active':'');
+    d.onclick = (e)=>{ e.stopPropagation(); goToFilm(i); };
+    dotsEl.appendChild(d);
   });
 
-  // Drag scroll
-  const outer = document.getElementById('filmOuter');
-  let down=false,sx,sl;
-  outer.addEventListener('mousedown',e=>{down=true;sx=e.pageX-outer.offsetLeft;sl=outer.scrollLeft;outer.style.cursor='grabbing';});
-  outer.addEventListener('mouseleave',()=>{down=false;outer.style.cursor='grab';});
-  outer.addEventListener('mouseup',()=>{down=false;outer.style.cursor='grab';});
-  outer.addEventListener('mousemove',e=>{if(!down)return;e.preventDefault();outer.scrollLeft=sl-(e.pageX-outer.offsetLeft-sx);});
-  let tx;
-  outer.addEventListener('touchstart',e=>{tx=e.touches[0].clientX;sl=outer.scrollLeft;},{passive:true});
-  outer.addEventListener('touchmove',e=>{outer.scrollLeft=sl-(e.touches[0].clientX-tx);},{passive:true});
+  const grid = document.getElementById('gallery-grid');
+  PHOTOS.forEach((p,i)=>{
+    const item = document.createElement('div');
+    item.className = 'gallery-item';
+    if(p.src){
+      item.innerHTML = `<img src="${p.src}" alt="${p.cap}">`;
+    } else {
+      item.innerHTML = `<div class="gallery-item-ph"><span>${String(i+1).padStart(2,'0')}</span><span>${p.label}</span></div>`;
+    }
+    item.onclick = ()=>openLB(i);
+    grid.appendChild(item);
+  });
+
+  goToFilm(0);
 }
+
+function goToFilm(i){
+  filmIdx = i;
+  const p = PHOTOS[i];
+  const imgEl = document.getElementById('film-big-image');
+  if(p.src){
+    imgEl.innerHTML = `<img src="${p.src}" alt="${p.cap}" style="width:100%;height:100%;object-fit:cover;">`;
+  } else {
+    imgEl.innerHTML = `<div class="film-placeholder"><span class="film-placeholder-num">${String(i+1).padStart(2,'0')}</span><span class="film-placeholder-loc">${p.label}</span></div>`;
+  }
+  document.getElementById('film-cap-text').textContent = p.cap;
+  document.getElementById('film-cap-counter').textContent = `${String(i+1).padStart(2,'0')} / ${String(PHOTOS.length).padStart(2,'0')}`;
+  document.querySelectorAll('.film-dot').forEach((d,j)=>d.classList.toggle('active', j===i));
+  document.getElementById('film-prev').classList.toggle('dim', i===0);
+  document.getElementById('film-next').classList.toggle('dim', i===PHOTOS.length-1);
+}
+
+window.filmNav = function(dir){
+  const next = filmIdx + dir;
+  if(next < 0 || next >= PHOTOS.length) return;
+  goToFilm(next);
+};
+
+window.goToGallery = function(){
+  document.getElementById('photo-landing').style.display = 'none';
+  document.getElementById('photo-gallery').classList.add('open');
+};
+
+window.backToLanding = function(){
+  document.getElementById('photo-landing').style.display = 'flex';
+  document.getElementById('photo-gallery').classList.remove('open');
+};
 
 let lbI = 0;
 function openLB(i){ lbI=i; updateLB(); document.getElementById('lb').classList.add('open'); document.body.style.overflow='hidden'; }
@@ -1495,8 +1596,25 @@ function goTo(id){
   if(pg) pg.classList.add('active');
   const nl = document.getElementById(`nl-${id}`);
   if(nl) nl.classList.add('active');
-  window.scrollTo(0,0);
-  setTimeout(observe, 80);
+  // instant reset, then smooth scroll to content start (below nav)
+  window.scrollTo({top:0, behavior:'instant'});
+  if(id !== 'home'){
+    setTimeout(()=>{
+      const pg = document.getElementById(`page-${id}`);
+      if(!pg) return;
+      // scroll to just below nav so sec-head is visible
+      const navH = 56;
+      // scroll past nav + section header so content body is front and center
+      const firstContent = pg.querySelector('.sec-head, .proj-list, .book-scene, .photo-landing, .code-list, .about-grid, .shelf-row, .writing-shelf');
+      if(firstContent){
+        const top = firstContent.getBoundingClientRect().top + window.scrollY - 80;
+        window.scrollTo({top: Math.max(top, navH), behavior:'smooth'});
+      } else {
+        window.scrollTo({top: navH, behavior:'smooth'});
+      }
+    }, 80);
+  }
+  setTimeout(observe, 120);
 }
 
 /* ═══ SCROLL REVEAL ═══ */
@@ -1534,6 +1652,7 @@ renderFilm();
 renderCode();
 injectTSImages();
 setTimeout(observe,100);
+
 </script>
 </body>
 </html>
