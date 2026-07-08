@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Yewon Shin</title>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Space+Mono:ital@0;1&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400&display=swap" rel="stylesheet">
 <style>
 /* ── RESET ── */
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
@@ -62,10 +63,11 @@ img{display:block;max-width:100%;}
 /* ── PAGE SYSTEM ── */
 .page{display:none;min-height:100vh;padding-top:56px;}
 .page.active{display:block;}
+#page-home.active{display:flex;}
 
 /* ── HOME ── */
 #page-home{
-  display:flex;flex-direction:column;
+  display:none;flex-direction:column;
   align-items:center;justify-content:center;
   text-align:center;
   min-height:100vh;padding:0 56px 80px;
@@ -180,7 +182,7 @@ img{display:block;max-width:100%;}
   padding:4px 0 52px;
 }
 .d-gap{}
-.d-main{}
+.d-main{min-width:0;}
 .d-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:24px;}
 .d-tag{
   font-size:10px;letter-spacing:.1em;text-transform:uppercase;
@@ -208,6 +210,163 @@ img{display:block;max-width:100%;}
   padding-bottom:2px;transition:opacity .2s;
 }
 .d-link:hover{opacity:.5;}
+
+/* ── RUNWAY CAM ── */
+.runway-row{
+  display:flex;gap:16px;
+  overflow-x:auto;overflow-y:hidden;
+  padding-bottom:12px;margin:0 -2px;
+  scroll-snap-type:x mandatory;
+  -webkit-overflow-scrolling:touch;
+}
+.runway-row::-webkit-scrollbar{height:5px;}
+.runway-row::-webkit-scrollbar-thumb{background:rgba(17,17,17,.2);border-radius:3px;}
+.runway-card{
+  flex:0 0 auto;width:186px;margin:0;
+  scroll-snap-align:start;
+}
+.runway-card video{
+  width:186px;aspect-ratio:1280/2194;height:auto;
+  object-fit:cover;display:block;
+  background:#0e0e0e;
+  border-radius:2px;
+}
+.runway-card figcaption{
+  margin-top:9px;
+  font-family:var(--mono);font-size:10px;
+  letter-spacing:.08em;text-transform:uppercase;
+  color:var(--mid);
+  display:flex;align-items:baseline;gap:7px;
+}
+.runway-role{
+  font-size:8.5px;letter-spacing:.12em;
+  color:var(--taupe);
+  padding:2px 5px;border:1px solid var(--line);border-radius:2px;
+}
+
+/* ── AS SEEN ON (reels) ── */
+.d-reels{
+  display:flex;flex-wrap:wrap;align-items:center;gap:10px;
+  margin-top:22px;
+}
+.d-reels-label{
+  font-family:var(--mono);font-size:9px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--taupe);
+}
+.d-reel-chip{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:8px 13px;border:1px solid var(--line);border-radius:2px;
+  font-size:12px;color:var(--black);
+  transition:background .2s,border-color .2s;
+}
+.d-reel-chip span{font-family:var(--mono);font-size:9px;letter-spacing:.08em;color:var(--mid);}
+.d-reel-chip:hover{background:var(--off);border-color:var(--taupe);}
+
+/* ── CASE STUDY ── */
+.casestudy{
+  border-top:1px solid var(--line);
+  margin-top:8px;padding:52px 0 8px;
+}
+.cs-head{
+  display:flex;align-items:baseline;gap:16px;margin-bottom:44px;
+}
+.cs-kicker{
+  font-family:var(--mono);font-size:10px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--taupe);
+}
+.cs-title{
+  font-size:26px;font-weight:300;letter-spacing:-.02em;color:var(--black);
+}
+.cs-section{margin-bottom:64px;}
+.cs-section:last-child{margin-bottom:12px;}
+.cs-section-head{
+  display:flex;gap:18px;align-items:flex-start;
+  margin-bottom:22px;max-width:820px;
+}
+.cs-num{
+  font-family:var(--mono);font-size:11px;color:var(--taupe);
+  padding-top:5px;flex:0 0 auto;
+}
+.cs-label{
+  font-size:18px;font-weight:400;letter-spacing:-.01em;
+  color:var(--black);margin-bottom:6px;
+}
+.cs-note{
+  font-size:14px;line-height:1.7;font-weight:300;
+  color:rgba(17,17,17,.62);
+}
+.cs-grid{display:grid;gap:14px;align-items:start;}
+.cs-item{margin:0;}
+.cs-frame{
+  overflow:hidden;background:var(--off);
+  border:1px solid var(--line);border-radius:2px;
+}
+.cs-frame img{width:100%;height:auto;object-fit:contain;display:block;}
+.cs-item figcaption{
+  margin-top:9px;
+  font-family:var(--mono);font-size:9.5px;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--mid);
+}
+.cs-rowcap{
+  font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--taupe);margin:0 0 14px;
+}
+.cs-rowcap + .cs-grid{margin-bottom:34px;}
+
+/* MASONRY — mixed-ratio photos, no crop, no ragged gaps */
+.cs-masonry{
+  display:block;column-count:3;column-gap:14px;
+}
+.cs-masonry .cs-item{
+  break-inside:avoid;margin-bottom:18px;
+}
+
+/* TABLET screens — uniform landscape (all ~1.6), tidy auto-fit flow */
+.cs-tablet{grid-template-columns:repeat(auto-fill,minmax(230px,1fr));}
+.cs-tablet .cs-frame{aspect-ratio:8/5;background:#0e0e0e;border-color:rgba(255,255,255,.06);}
+.cs-tablet .cs-frame img{width:100%;height:100%;object-fit:cover;}
+
+/* DEVICES — transparent tablet mockups, no frame so the bezel reads */
+.cs-devices{grid-template-columns:repeat(2,1fr);align-items:start;}
+.cs-devices .cs-frame{background:transparent;border:none;border-radius:0;overflow:visible;}
+.cs-devices .cs-frame img{width:100%;height:auto;object-fit:contain;}
+
+/* WIDE — single hero screen, full width, contained on dark */
+.cs-wide{grid-template-columns:1fr;}
+.cs-wide .cs-frame{background:#0e0e0e;border-color:rgba(255,255,255,.06);}
+.cs-wide .cs-frame img{width:100%;height:auto;}
+
+/* CENTER — single supporting image, contained, centered */
+.cs-center{grid-template-columns:1fr;justify-items:center;}
+.cs-center .cs-item{max-width:560px;width:100%;}
+.cs-center .cs-frame{background:var(--off);display:flex;align-items:center;justify-content:center;}
+.cs-center .cs-frame img{width:auto;height:auto;max-width:100%;max-height:460px;}
+
+/* QUAD — four labelled items, uniform square frames, nothing cropped */
+.cs-quad{grid-template-columns:repeat(4,1fr);}
+.cs-quad .cs-frame{
+  aspect-ratio:1/1;background:var(--off);
+  display:flex;align-items:center;justify-content:center;
+}
+.cs-quad .cs-frame img{width:100%;height:100%;object-fit:contain;}
+
+/* PHONE screens — uniform portrait, centered, kept small */
+.cs-phone{
+  display:flex;flex-wrap:wrap;gap:20px;justify-content:flex-start;
+}
+.cs-phone .cs-item{flex:0 0 auto;width:210px;}
+.cs-phone .cs-frame{aspect-ratio:288/624;background:#0e0e0e;border-color:rgba(255,255,255,.06);}
+.cs-phone .cs-frame img{width:100%;height:100%;object-fit:cover;}
+
+/* CLIPS — portrait operation videos, autoplay-in-view loop */
+.cs-clips{display:flex;flex-wrap:wrap;gap:20px;}
+.cs-clips .cs-item{flex:0 0 auto;width:220px;}
+.cs-clips .cs-frame{aspect-ratio:9/16;background:#0e0e0e;border-color:rgba(255,255,255,.06);}
+.cs-clips .cs-frame video{width:100%;height:100%;object-fit:cover;display:block;}
+
+/* diagrams / screenshots: full-width, contained on light */
+.cs-diagrams{grid-template-columns:1fr;gap:22px;}
+.cs-diagrams .cs-frame{background:#fff;}
 
 .d-side{padding-top:2px;}
 .d-period{
@@ -419,6 +578,93 @@ img{display:block;max-width:100%;}
 #page-photo.active{
   display:flex;flex-direction:column;
 }
+
+/* ── ROLL SHELF ── */
+.roll-shelf{
+  display:flex;flex-wrap:wrap;gap:44px;
+  padding:64px 56px 90px;
+  align-items:flex-end;
+}
+.roll-box{
+  width:196px;
+  cursor:pointer;
+  display:flex;flex-direction:column;
+  transition:transform .35s cubic-bezier(.16,1,.3,1), filter .35s;
+  transform-origin:bottom center;
+  filter:drop-shadow(0 8px 24px rgba(0,0,0,.10));
+}
+.roll-box:hover{
+  transform:translateY(-14px);
+  filter:drop-shadow(0 22px 42px rgba(0,0,0,.20));
+}
+/* the carton */
+.roll-carton{
+  height:272px;
+  background:var(--roll);
+  color:#fff;
+  border-radius:3px 3px 0 0;
+  padding:20px 20px 22px;
+  display:flex;flex-direction:column;
+  position:relative;overflow:hidden;
+}
+.roll-carton::after{
+  content:'';position:absolute;top:0;right:0;bottom:0;width:34%;
+  background:linear-gradient(105deg,rgba(255,255,255,0) 0%,rgba(255,255,255,.10) 55%,rgba(255,255,255,0) 100%);
+  pointer-events:none;
+}
+.roll-top{
+  display:flex;justify-content:space-between;align-items:center;
+  font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;
+  color:rgba(255,255,255,.72);
+}
+.roll-sprockets{
+  display:flex;gap:5px;margin:13px 0 auto;
+}
+.roll-sprockets i{
+  width:11px;height:8px;border-radius:1.5px;
+  background:rgba(255,255,255,.28);flex:0 0 auto;
+}
+.roll-tag{
+  font-family:var(--mono);font-size:9px;letter-spacing:.13em;text-transform:uppercase;
+  color:rgba(255,255,255,.8);margin-bottom:8px;
+}
+.roll-name{
+  font-size:30px;font-weight:400;line-height:1.02;
+  letter-spacing:-.02em;margin-bottom:14px;
+}
+.roll-name em{font-style:italic;font-weight:300;}
+.roll-foot{
+  display:flex;justify-content:space-between;align-items:baseline;
+  padding-top:13px;border-top:1px solid rgba(255,255,255,.28);
+}
+.roll-film{
+  font-family:var(--mono);font-size:8.5px;letter-spacing:.08em;text-transform:uppercase;
+  color:rgba(255,255,255,.72);
+}
+.roll-year{
+  font-family:var(--mono);font-size:10px;letter-spacing:.04em;
+  color:#fff;
+}
+/* film leader tongue peeking from the bottom */
+.roll-leader{
+  height:20px;margin:0 14px;
+  background:#161616;
+  border-radius:0 0 3px 3px;
+  display:flex;align-items:center;gap:8px;padding:0 12px;
+  box-shadow:0 6px 12px rgba(0,0,0,.14);
+}
+.roll-leader i{
+  width:9px;height:7px;border-radius:1.5px;
+  background:rgba(255,255,255,.85);flex:0 0 auto;
+}
+
+/* ── VIEWER NAV ── */
+.viewer-nav{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:16px 56px;
+  border-bottom:1px solid var(--line);
+}
+#photo-viewer{flex-direction:column;flex:1;}
 
 /* Landing: big film frame */
 .photo-landing{
@@ -806,6 +1052,9 @@ img{display:block;max-width:100%;}
   .book-right{padding:40px 24px;max-height:none;overflow-y:visible;}
   .detail-inner{grid-template-columns:1fr;}
   .d-gap{display:none;}
+  .cs-masonry{column-count:2;}
+  .cs-tablet{grid-template-columns:repeat(2,1fr);}
+  .cs-quad{grid-template-columns:repeat(2,1fr);}
   .about-grid{grid-template-columns:1fr;}
   .about-left{padding-right:0;border-right:none;padding-bottom:40px;border-bottom:1px solid var(--line);}
   .about-right{padding-left:0;padding-top:40px;}
@@ -900,36 +1149,51 @@ img{display:block;max-width:100%;}
 
 <!-- PHOTOGRAPHY -->
 <div class="page" id="page-photo">
-  <!-- Landing: big film frame -->
-  <div class="photo-landing" id="photo-landing">
-    <div>
-      <div class="film-big-frame" onclick="goToGallery()">
-        <div class="film-big-sprockets top" id="film-sprockets-top"></div>
-        <div class="film-big-image" id="film-big-image">
-          <div class="film-placeholder">
-            <span class="film-placeholder-num" id="film-ph-num">01</span>
-            <span class="film-placeholder-loc" id="film-ph-loc">—</span>
-          </div>
-        </div>
-        <div class="film-big-sprockets bottom" id="film-sprockets-bottom"></div>
-        <div class="film-big-caption">
-          <span class="film-caption-text" id="film-cap-text">—</span>
-          <span class="film-caption-counter" id="film-cap-counter">01 / 10</span>
-        </div>
-      </div>
-      <div class="film-nav">
-        <span class="film-nav-arrow dim" id="film-prev" onclick="filmNav(-1)">←</span>
-        <div class="film-dots" id="film-dots"></div>
-        <span class="film-nav-arrow" id="film-next" onclick="filmNav(1)">→</span>
-      </div>
-      <div class="film-gallery-btn" onclick="goToGallery()">View all photos ↗</div>
+  <!-- Roll shelf -->
+  <div id="photo-shelf">
+    <div class="sec-head">
+      <span class="sec-label">Photography</span>
+      <span class="sec-count" id="roll-count"></span>
     </div>
+    <div class="roll-shelf" id="roll-shelf"></div>
   </div>
 
-  <!-- Gallery grid (revealed on click) -->
-  <div class="photo-gallery" id="photo-gallery">
-    <div class="gallery-back" onclick="backToLanding()">← Photography</div>
-    <div class="gallery-grid" id="gallery-grid"></div>
+  <!-- Roll viewer: big film frame (scoped to a city) -->
+  <div id="photo-viewer" style="display:none;">
+    <div class="viewer-nav">
+      <button class="book-back-btn" onclick="closeRoll()">← Rolls</button>
+      <span class="book-chapter-label" id="viewer-roll-label">—</span>
+      <div class="film-gallery-btn" style="margin-top:0;" onclick="goToGallery()">View all ↗</div>
+    </div>
+    <div class="photo-landing" id="photo-landing">
+      <div>
+        <div class="film-big-frame" onclick="goToGallery()">
+          <div class="film-big-sprockets top" id="film-sprockets-top"></div>
+          <div class="film-big-image" id="film-big-image">
+            <div class="film-placeholder">
+              <span class="film-placeholder-num" id="film-ph-num">01</span>
+              <span class="film-placeholder-loc" id="film-ph-loc">—</span>
+            </div>
+          </div>
+          <div class="film-big-sprockets bottom" id="film-sprockets-bottom"></div>
+          <div class="film-big-caption">
+            <span class="film-caption-text" id="film-cap-text">—</span>
+            <span class="film-caption-counter" id="film-cap-counter">01 / 10</span>
+          </div>
+        </div>
+        <div class="film-nav">
+          <span class="film-nav-arrow dim" id="film-prev" onclick="filmNav(-1)">←</span>
+          <div class="film-dots" id="film-dots"></div>
+          <span class="film-nav-arrow" id="film-next" onclick="filmNav(1)">→</span>
+        </div>
+        <div class="film-gallery-btn" onclick="goToGallery()">View all frames ↗</div>
+      </div>
+    </div>
+    <!-- Gallery grid (revealed on click) -->
+    <div class="photo-gallery" id="photo-gallery">
+      <div class="gallery-back" id="gallery-back" onclick="backToLanding()">← Contact sheet</div>
+      <div class="gallery-grid" id="gallery-grid"></div>
+    </div>
   </div>
 </div>
 
@@ -948,7 +1212,7 @@ img{display:block;max-width:100%;}
 <div class="page" id="page-code">
   <div class="sec-head">
     <span class="sec-label">Code</span>
-    <span class="sec-count">4 projects</span>
+    <span class="sec-count">3 projects</span>
   </div>
   <div class="code-list" id="code-list"></div>
 </div>
@@ -997,19 +1261,98 @@ img{display:block;max-width:100%;}
 const PROJECTS = [
   { n:'01', yr:'2026', client:'Samsung × Disney · One RX',
     title:'Devil Wears Prada 2 — <em>Runway Cam</em>',
-    tags:['Fashion × Tech','Galaxy S26 Ultra','Glambot','Global Partnership'],
-    challenge:'[Update needed — project details to be revised]',
-    participation:'[Update needed]',
-    result:'174 celebrities and influencers filmed. Disney D23 co-post (1.94M followers). First-ever Galaxy glambot implementation.',
-    role:'Project Management\nCheil US Coordination\nOps Manual & Scheduling\nProduction Communications',
+    tags:['Fashion × Tech','Galaxy S26 Ultra','Glambot','End-to-End Build'],
+    challenge:'The world premiere of The Devil Wears Prada 2 — one stop on a global tour through Mexico City, Tokyo, Seoul and Shanghai — landed at Lincoln Center and streamed live worldwide on Disney+ and Hulu. On the most-photographed red carpet of the season, how does the Galaxy S26 Ultra stop being a sponsor logo and become the thing the carpet is actually built around?',
+    participation:`Ran the activation end to end over two months — from the glambot concept through experience planning, solution development, and on-site logistics — as the direct line to the client, Samsung's MX Partnership team. I sat in the client–Disney premiere meetings and carried the day-to-day communication, built the Runway Cam itself with Cheil's in-house solution team, and directed the Red-Heel × Galaxy-Lens key visual with the production team — a poster that ran not only on the on-site brand wall but as the thumbnail across Samsung's official premiere content.`,
+    hard:`On show day I stood on the carpet as the posing director — the person who, in the few seconds each of 174 arrivals gave the Runway Cam, had to read a stranger, call a pose, and pull a usable take before they moved on. No second takes, celebrities and their handlers watching, the whole activation only as good as the footage that came out of those seconds. It is the hardest thing I did on this project, and the part I am proudest of.`,
+    result:'174 celebrities and influencers filmed. Disney D23 co-post (1.94M followers). First-ever Galaxy glambot implementation, and the only partner to hold a solo Samsung Zone inside the red carpet.',
+    role:'End-to-End Project Lead\nClient & Disney Communications\nRunway Cam Solution Dev\nKey Visual Direction\nOn-site Posing Director',
     metrics:[{v:'174',l:'Filmed'},{v:'Disney D23',l:'1.94M Co-post'},{v:'1st',l:'Galaxy Glambot'}],
+    reels:[
+      {label:'Runway Cam on the carpet', href:'https://www.instagram.com/reel/DX6iMbISW9s/'},
+    ],
+    caseStudy:[
+      { kind:'photos', label:'Event Venue', layout:'masonry', note:'David Geffen Hall at Lincoln Center — the runway stage, plaza and red-carpet entrance built out for the premiere.',
+        images:[
+          {src:'photos/dwp/venue-stage.jpeg', cap:'The main runway stage'},
+          {src:'photos/dwp/venue-stage-wide.jpeg', cap:'Stage and runway, built out'},
+          {src:'photos/dwp/venue-exterior-dusk.jpeg', cap:'The plaza at dusk'},
+          {src:'photos/dwp/venue-redcarpet.jpeg', cap:'Red carpet and Runway Cam entrance'},
+        ]},
+      { kind:'diagrams', label:'Experience & System Planning', layout:'diagrams', note:'I mapped the full guest journey — from the moment a guest reached the cam to the finished video in their phone — and the system architecture underneath it.',
+        images:[
+          {src:'photos/dwp/ux-flow.png', cap:'Guest experience flow — carpet to delivered video'},
+          {src:'photos/dwp/ux-system.png', cap:'End-to-end system architecture'},
+        ]},
+      { kind:'ui', label:'Interface Design & Development', layout:'tablet', note:'The tablet app that ran the cam on the carpet — designed and developed with the solution team. The full operator flow, from attract loop to the guest\u2019s finished video.',
+        images:[
+          {src:'photos/dwp/ui-attract.png', cap:'Attract loop'},
+          {src:'photos/dwp/ui-start.png', cap:'Start'},
+          {src:'photos/dwp/ui-count.png', cap:'Countdown'},
+          {src:'photos/dwp/ui-processing.png', cap:'Processing the take'},
+          {src:'photos/dwp/ui-download.png', cap:'QR hand-off & download'},
+        ]},
+      { kind:'ui', label:'Video Gallery & Emailing Server', note:'A custom media viewer so the team could find any of the 174 takes on the spot — each tile with one-tap download and a built-in send-via-email server for instant delivery to talent and press.',
+        rows:[
+          { layout:'wide', images:[
+            {src:'photos/dwp/gallery-viewer.png', cap:'Media viewer — every take, searchable, download & email per tile'},
+          ]},
+          { layout:'center', caption:'Built-in emailing server', images:[
+            {src:'photos/dwp/gallery-email.png', cap:'Send-via-email — instant hand-off to talent & press'},
+          ]},
+        ]},
+      { kind:'photos', label:'Brand Visual Design', note:'I directed the Red-Heel × Galaxy-Lens key visual — a poster that ran not only on the on-site brand wall but as the thumbnail across Samsung\u2019s official premiere content. It carried across every branded surface on the carpet: the robot-arm base, the mounted device, the brand wall, and the finished result videos.',
+        rows:[
+          { layout:'center', caption:'The key visual — carried into Runway Cam content thumbnails', images:[
+            {src:'photos/dwp/bv-keyvisual.jpg', cap:'Red-Heel × Galaxy-Lens key visual'},
+          ]},
+          { layout:'quad', images:[
+            {src:'photos/dwp/bv-arm-base.png', cap:'Robot arm base'},
+            {src:'photos/dwp/bv-mobile.png', cap:'Mobile device'},
+            {src:'photos/dwp/bv-wall.png', cap:'Brand wall'},
+            {src:'photos/dwp/bv-results.png', cap:'Result videos'},
+          ]},
+        ]},
+      { kind:'photos', label:'Operation Management', note:'Two tablets ran the carpet in tandem — one driving the Runway Cam application, one running the Video Gallery web with built-in emailing for instant hand-off. Solution testing before doors, live operation through the night.',
+        rows:[
+          { layout:'masonry', images:[
+            {src:'photos/dwp/ops-studio.jpeg', cap:'Pre-event solution testing'},
+          ]},
+          { layout:'devices', caption:'Two tablets on the carpet', images:[
+            {src:'photos/dwp/ops-tablet1-app.png', cap:'Tablet 1 — Runway Cam application'},
+            {src:'photos/dwp/ops-tablet2-gallery.png', cap:'Tablet 2 — Video Gallery web (+ emailing)'},
+          ]},
+          { layout:'clips', caption:'Live operation — directing the pose, take by take', images:[
+            {src:'photos/dwp/ops-coco.mp4', cap:'Directing Coco Rocha'},
+            {src:'photos/dwp/ops-heidi.mp4', cap:'Directing Heidi Klum'},
+            {src:'photos/dwp/ops-creators.mp4', cap:'Two creators, one take — the carpet in full swing'},
+          ]},
+        ]},
+    ],
+    runwayLabel:'Runway Cam · #withGalaxy',
+    runwayNote:'The first-ever Runway Cam on a red carpet, shot on Galaxy S26 Ultra. A few of the 174 arrivals who stepped in front of it.',
+    runway:[
+      {name:'Lucy Liu', role:'Cast', src:'photos/runway-lucy-liu.mp4'},
+      {name:'Kenneth Branagh', role:'Cast', src:'photos/runway-kenneth-branagh.mp4'},
+      {name:'Simone Ashley', role:'Cast', src:'photos/runway-simone-ashley.mp4'},
+      {name:'B.J. Novak', role:'Cast', src:'photos/runway-bj-novak.mp4'},
+      {name:'Helen J. Shen', role:'Cast', src:'photos/runway-helen-shen.mp4'},
+      {name:'Caleb Hearon', role:'Cast', src:'photos/runway-caleb-hearon.mp4'},
+      {name:'Heidi Klum', role:'Model', src:'photos/runway-heidi-klum.mp4'},
+      {name:'Winnie Harlow', role:'Model', src:'photos/runway-winnie-harlow.mp4'},
+      {name:'Sofia Carson', role:'Guest', src:'photos/runway-sofia-carson.mp4'},
+      {name:'Coco Rocha', role:'Model', src:'photos/runway-coco-rocha.mp4'},
+      {name:'Haley Kalil', role:'Creator', src:'photos/runway-haley-kalil.mp4'},
+      {name:'Taylen Biggs', role:'Creator', src:'photos/runway-taylen-biggs.mp4'},
+    ],
     link:null, period:'Apr 20, 2026 · Lincoln Center, NYC' },
 
   { n:'02', yr:'2026', client:'Samsung Olympics · One RX',
     title:'Galaxy Z Flip7 Olympic Edition — <em>Open Station, Italy</em>',
     tags:['Global Sports Activation','On-site Operations','Athlete Engagement'],
-    challenge:'[Update needed]',
-    participation:'Deployed on-site in Antholz-Anterselva as local promotion operations lead for the Samsung Open Station. Coordinated charging station installation across two venues (Anterselva and Cortina). Supported content shoot management.',
+    challenge:'At a Winter Olympics, athletes run on adrenaline and zero spare minutes. How do you make a phone something they actually reach for between races — not one more thing to manage?',
+    participation:`Deployed on-site in Antholz-Anterselva as local promotion operations lead for the Samsung Open Station — coordinating charging-station installation across two venues (Anterselva and Cortina), supporting content-shoot management, and running day-to-day athlete engagement at the station.`,
+    hard:`The audience was Olympic athletes mid-competition — people with no time, no patience for marketing, and everything on the line. The station had to earn its place by being genuinely useful in the seconds between events, across two mountain venues in deep winter. Activation is straightforward in a controlled room; it is hard when the users are elite competitors and the room is an Alpine course.`,
     result:'Device activation rate +24pp (63→87%). Galaxy Athlete Card 4,202 users. Athletes\' village program TOP 1 in preference.',
     role:'Open Station Operations Lead\nCharging Station Coordination\nContent Shoot Management',
     metrics:[{v:'+24pp',l:'Activation Rate'},{v:'4,202',l:'Athlete Card Users'},{v:'TOP 1',l:'Village Program'}],
@@ -1018,8 +1361,9 @@ const PROJECTS = [
   { n:'03', yr:'2026', client:'Samsung The First Look 2026 · One RX',
     title:'The First Look 2026 — <em>VIP Tour Operations</em>',
     tags:['CES 2026','VIP Experience','Bilingual Operations'],
-    challenge:'[Update needed]',
-    participation:'Sourced and trained Tour Assistants via local staffing agency. Designed training framework for Korean and English sessions. Supervised on-site across all four days.',
+    challenge:'CES is overwhelming by design. How do you move a chairman, a cabinet minister, and a room of global C-suite guests through the noise and make each of them feel like the only person in it?',
+    participation:`Owned VIP tour operations across all four days — sourcing and training the Tour Assistant team through a local staffing agency, designing the training framework for both Korean and English sessions, and supervising the floor as guests moved through, from Euisun Chung and Korea's Minister of Land to global C-suite executives.`,
+    hard:`The tours ran in two languages, for guests at the very top of their industries, inside one of the most overloaded environments in tech. Assistants were hired locally and had only days to be ready. The whole experience depended on training a temporary bilingual team well enough that a chairman's tour felt effortless — and repeating that 208 times without a visible seam.`,
     result:'208 tours completed, 2,158 attendees. Surpassed target of 200 tours. Guests included Euisun Chung (Hyundai Chair), Korean Minister of Land, global C-suite.',
     role:'VIP Tour Operations Lead\nStaff Sourcing & Training\nOn-site Supervision\nBilingual Coordination',
     metrics:[{v:'208',l:'Tours (Target 200)'},{v:'2,158',l:'Attendees'},{v:'KO+EN',l:'Bilingual'}],
@@ -1030,8 +1374,9 @@ const PROJECTS = [
   { n:'04', yr:'2025', client:'Samsung Galaxy XR · One RX',
     title:'Galaxy XR — <em>Samsung Galaxy Event, New York</em>',
     tags:['Tech Launch','Keynote Production','Global Livestream','Google · Qualcomm'],
-    challenge:'[Update needed]',
-    participation:'[Update needed]',
+    challenge:'How do you introduce a device no one has worn yet — a whole new category, built with Google and Qualcomm — in a single livestreamed hour, to the entire world at once?',
+    participation:`Managed the keynote script through every revision, supported presenter rehearsals, and bridged the overseas production agency and local New York vendors to bring a global launch cleanly to air — the first Android XR device, co-developed with Google and Qualcomm.`,
+    hard:`You cannot demo a headset to a livestream the way you can a phone — the audience cannot see through it. The launch had to make an unworn, unfamiliar device legible in a single hour, in one language, to the whole world at once, with three companies' messaging to reconcile and no second take.`,
     result:'Galaxy XR launched globally via livestream. First Android XR device co-developed with Google and Qualcomm.',
     role:'Script Management\nPresenter Training Support\nOverseas Agency Coordination\nLocal Vendor Coordination',
     metrics:[{v:'Global',l:'Worldwide Livestream'},{v:'Oct 22',l:'NYC Launch'}],
@@ -1042,8 +1387,9 @@ const PROJECTS = [
   { n:'05', yr:'2024', client:'Tekla Fabrics · via TMN',
     title:'Seongsu Pop-Up — <em>PR Coordination</em>',
     tags:['PR','Press Activation','KOL Management'],
-    challenge:'[Update needed]',
-    participation:'Led PR coordination for Tekla\'s Seongsu pop-up. Hosted press breakfast and dinner. Managed editorial communications.',
+    challenge:'Seongsu gets a new pop-up almost every week. How do you make press and KOLs feel that Tekla\'s opening — a bedding brand, of all things — is the one worth clearing a morning for?',
+    participation:`Led PR for Tekla's Seongsu pop-up — hosting a press breakfast and dinner, managing editorial and KOL communications, and shaping how the opening was covered rather than merely attended.`,
+    hard:`Seongsu turns over pop-ups by the week, and press have seen every possible version of "come to our opening." The task was to make a bedding brand's launch feel like the morning genuinely worth clearing — through who was in the room and how it was hosted, not through spend.`,
     result:'141 attendees. 467 UGC posts. 1.38M estimated reach.',
     role:'PR Lead\nPress & KOL Coordination\nEvent Production',
     metrics:[{v:'1.38M',l:'Reach'},{v:'467',l:'UGC Posts'},{v:'141',l:'Attendees'}],
@@ -1054,8 +1400,9 @@ const PROJECTS = [
   { n:'06', yr:'2024', client:'Birkenstock Korea · via TMN',
     title:'Apgujeong Pop-Up — <em>Flagship Launch</em>',
     tags:['Pop-up','PR & Events','VIP Production'],
-    challenge:'[Update needed]',
-    participation:'Hosted VIP opening event — RSVPs, catering, live interpretation for global executives. Coordinated with Birkenstock international HQ.',
+    challenge:'Two floors to transform, a limited budget, and — at first — only two days to build. How do you turn a hard construction constraint into a flagship people line up to see?',
+    participation:`Reframed the remodel of a two-story building — persuading the landlord to extend the free build window from two days to four, repurposing existing fixtures, and adding a foot-care experience zone where guests could try the unreleased line first. Hosted the opening-day VIP event end to end, from invite list and catering to live interpretation for global executives, in coordination with Birkenstock HQ.`,
+    hard:`The first staging proposed simply did not survive contact with the construction reality — wrong for the timeline, wrong for the budget. Rather than shrink the idea, it was reworked with HQ, the production team, and outside partners until the constraints became the concept: imported display pieces, reused materials, and a hands-on foot-care zone that turned a limitation into the most memorable part of the room.`,
     result:'134 industry professionals. 33 key media editors.',
     role:'PR & Event Coordination\nVIP Production\nHQ Communications\nLive Interpretation',
     metrics:[{v:'134',l:'Industry Professionals'},{v:'33',l:'Key Media Editors'}],
@@ -1066,9 +1413,10 @@ const PROJECTS = [
   { n:'07', yr:'2024', client:'Tekla Fabrics · via TMN',
     title:'Talo Jeju — <em>Guesthouse Activation</em>',
     tags:['Brand Experience','Community Activation','Influencer Strategy'],
-    challenge:'[Update needed]',
-    participation:'Proposed and led Tekla\'s first guesthouse experience in Korea. Curated four creative guests (100K–300K followers, 3–5% engagement). Coordinated with Copenhagen HQ.',
-    result:'1.12M Instagram reach. Vogue Korea feature (8.1M circulation). Highest-performing community activation of Tekla\'s Korea year.',
+    challenge:'How do you introduce a Danish brand to Korea without translating it — letting people feel Tekla for themselves before anyone tells them what it is?',
+    participation:`Proposed and led Tekla's first guesthouse experience in Korea, a pre-launch activation ahead of the Seoul pop-up — owned it A-to-Z: renovated a traditional Jeju stone house into a Nordic-mood premium stay, curated four creative guests (100K–300K followers, 3–5% engagement), designed a two-day content journey with custom gifts and a local-florist breakfast, and ran the Copenhagen HQ liaison throughout.`,
+    hard:`Tekla had always promoted through press dinners and store invitations; a guesthouse was a departure with no template and a HQ to convince. The bet was counterintuitive — say nothing about the brand, and let four people simply live inside it for a weekend. Restraint was the risk: no messaging, no branding in frame, trusting the space to do the explaining.`,
+    result:`1.12M Instagram reach. Vogue Korea feature (8.1M circulation). Tekla's highest-performing community activation of the year — now under review as a model for global expansion.`,
     role:'Campaign Concept\nInfluencer Curation\nOn-site Production\nCopenhagen HQ Liaison',
     metrics:[{v:'1.12M',l:'Instagram Reach'},{v:'Vogue KR',l:'8.1M Circulation'}],
     link:'https://www.vogue.co.kr/?p=507800',
@@ -1078,9 +1426,10 @@ const PROJECTS = [
   { n:'08', yr:'2024', client:'Joopiter × G-Dragon · via TMN',
     title:'Collaborative Auction — <em>Joopiter × Peaceminusone</em>',
     tags:['Luxury Auction','Brand Localization','Cross-cultural Production'],
-    challenge:'[Update needed]',
-    participation:'Primary liaison between Joopiter (NYC) and G-Dragon\'s team (Seoul). Directed photoshoots for auction lots. Oversaw contract coordination through to launch.',
-    result:'Successful global launch Sep 2024.',
+    challenge:'How do you carry one artist\'s most personal objects between New York and Seoul — two teams, two languages, one deadline — without losing the thing that made them his?',
+    participation:`Primary liaison between Joopiter (NYC) and G-Dragon's team (Seoul) — directed the auction-lot photoshoots, handled translation and interpretation for global-team and artist meetings, and oversaw merch production, logistics, and contract coordination through to launch.`,
+    hard:`Requirements shifted constantly and new variables surfaced right up to the moment the auction went live — two teams, two languages, one artist's most personal objects, and no room to lose what made them his. It was not a clean process; holding it together across departments and time zones until launch was the entire job.`,
+    result:`Successful global launch, September 2024 — G-Dragon's personal items and Peaceminusone pieces carried intact between two cities.`,
     role:'Project Manager\nCreative Direction (Shoots)\nBrand Asset Localization\nNYC Liaison',
     metrics:[{v:'NYC↔SEL',l:'Cross-cultural'},{v:'Sep \'24',l:'Global Launch'}],
     link:'https://www.joopiter.com/auctions/g-dragon',
@@ -1091,7 +1440,8 @@ const PROJECTS = [
     title:'Dancing with A.I. — <em>Developer & Artist</em>',
     tags:['Generative Art','Machine Learning','Live Performance','p5.js'],
     challenge:'Can machine learning respond to a human body in real time — not as a tool, but as a co-performer?',
-    participation:'Developed real-time generative visual system using motion data and ML in p5.js. Performed as both developer and artist.',
+    participation:`Built the real-time generative visual system in p5.js, mapping live motion data to responsive visuals, and performed on stage as both the developer and one of the artists.`,
+    hard:`The system had to answer a moving body in real time, live, with no retries — code as a stage partner rather than a tool. Carrying both roles at once, the engineering problem and the choreographic one, in front of an audience, was the point and the difficulty.`,
     result:'Live performance, Seoul 2023.',
     role:'Developer\nGenerative Visual System\nLive Performance',
     metrics:[],
@@ -1103,7 +1453,8 @@ const PROJECTS = [
     title:'HopBox — <em>Co-Founder</em>',
     tags:['Product','UX/UI','Branding','Front-end'],
     challenge:'University students have nowhere affordable to store belongings during dorm move-out.',
-    participation:'Proposed service concept from user research. Designed UI/UX, co-developed front-end demo. Built full visual identity.',
+    participation:`Turned user research into the service concept — rent storage, not a place to sleep — then designed the UI and information architecture, co-built the front-end demo, and created the full visual identity.`,
+    hard:`An economics major who had switched into computer science only two years earlier, with no engineering background to lean on — building the demo meant learning by doing, under deadline. The same daily-office-hours stubbornness that landed a Dean's List spot that final semester went into shipping something real enough to take the Judges' Award.`,
     result:'Judges\' Award, 28 teams. $2,500 prize.',
     role:'Co-Founder\nStrategy & Product\nBrand Identity\nFront-end Dev',
     metrics:[{v:'$2,500',l:'Judges\' Award'},{v:'28',l:'Teams'}],
@@ -1128,12 +1479,39 @@ const WRITINGS = {
     },
     {
       chapter:2,
-      brand:'More coming',
-      sub:'Essays in progress',
-      logline:'Next: thinking about Aesop, Bottega Veneta, and what makes a brand untranslatable.',
-      title:'Next <em>chapter</em> coming soon',
-      body:`<p>I'm working on essays about brands I find genuinely interesting — not as a marketer, but as someone who thinks about how objects and spaces communicate meaning.</p>
-<p>Next up: Aesop's ritual of the mundane. Bottega Veneta's silence. And why some brands survive translation and others don't.</p>`
+      brand:'The Row',
+      sub:'New York · Founded 2006',
+      logline:'Mary-Kate and Ashley Olsen built a house on the idea that the most luxurious thing a brand can do is refuse to explain itself.',
+      title:'On <em>The Row</em>, and the Luxury of Disappearing',
+      body:`<p>The Row does not want to be recognized. No logo on the coat, no hardware announcing the bag, no monogram doing the talking. For an industry built entirely on the visible — on the thing other people can name — this is almost a provocation. The Olsens removed the name and kept the thing.</p>
+<p>What remains is harder to counterfeit than any logo: cut, weight, proportion, the fall of a fabric that never admits what it cost. You are meant to feel it before you can explain it — the same instinct that makes you stand straighter in a well-proportioned room.</p>
+<p>There is a strange second act hidden in the two founders. The most photographed children in America grew up and built a company whose entire premise is <em>not</em> being seen. It reads less like a pivot than a correction — a decision, after a lifetime of being looked at, to make objects that reward attention instead of demanding it.</p>
+<p>The Row gets filed under "quiet luxury," but quiet is the wrong word. Its clothes are not silent; they are addressed to a smaller room. <strong>The strategy is exclusion</strong> — not of who can buy, but of who can tell. A stranger cannot read your coat. Only someone fluent in the same code knows what they are looking at, and that fluency is the real product.</p>
+<p><strong>What other brands can learn:</strong> in a culture that rewards being loud, The Row proves there is a market — a devout, self-selecting one — for brands confident enough to withhold. A logo is a shortcut to status. Removing it is a bet that your work can carry meaning without a caption.</p>`
+    },
+    {
+      chapter:3,
+      brand:'Vitra Campus',
+      sub:'Weil am Rhein, Germany · Visited 2026',
+      logline:'A furniture company turned its factory grounds into an open-air museum of architecture. I went to see what happens when a brand builds its beliefs at full scale.',
+      title:'At <em>Vitra</em>, Where a Brand Becomes a Place',
+      body:`<p>Most brands express themselves in objects you can hold. Vitra decided to express itself in buildings you can walk through. On a stretch of former factory land in Weil am Rhein, where Germany, France, and Switzerland almost touch, the furniture company let the architects it admired build more or less whatever they wanted — and the result is less a headquarters than an argument made in concrete.</p>
+<p>The roster is almost absurd. Frank Gehry's first building in Europe. Zaha Hadid's first built work anywhere — a fire station so sharp it looks paused mid-motion. Herzog &amp; de Meuron stacked twelve house-shaped volumes into the VitraHaus. Tadao Ando set a low, still conference pavilion into the ground. You move between them and slowly realize the campus is a company telling you, without a single slogan, exactly what it believes design is for.</p>
+<p>What struck me is how little of it tries to sell you a chair. The chairs are there — but the real product is the conviction, the sense that a company will spend decades and a fortune standing behind a taste it can never fully monetize.</p>
+<p>You could call it the most expensive brand statement in furniture. I would call it the clearest. A pop-up says <em>look at us this month.</em> A campus says <em>this is who we have been for forty years, at full scale, in all weather.</em> The buildings will outlive every product launch they were built to frame.</p>
+<p><strong>What other brands can learn:</strong> experience does not have to be temporary to be powerful. Vitra treats permanence as its own kind of marketing — proof that a brand can hold a belief long enough to pour it into concrete, and trust people to make the trip.</p>`
+    },
+    {
+      chapter:4,
+      brand:'Art Basel & Frieze',
+      sub:'Basel · London · Seoul · New York',
+      logline:'Two art fairs, two temperaments. What the distance between Basel and Frieze says about the cities that host them — and the collectors they are built for.',
+      title:'Two <em>Fairs</em>, and the Cultures They Reveal',
+      body:`<p>An art fair is never only about art. It is a city's temperament compressed into a convention hall for a week — who it invites, how it behaves, what it thinks money is for. Spend time at Art Basel and then at Frieze and you are really studying two philosophies wearing the same trade-show carpet.</p>
+<p>Basel is old money's home fair: Swiss, discreet, blue-chip, the market taking itself completely seriously. The masterpieces are real and the transactions are quiet. Frieze, born in London in 2003 out of a magazine, arrived younger and louder — tented in a park, tilted toward living artists, as interested in the scene as the sale. One fair curates a canon; the other curates a moment.</p>
+<p>The map matters too. Basel planted flags in Miami Beach, Hong Kong, and Paris; Frieze moved into New York, Los Angeles, and — tellingly — Seoul. Choosing Seoul as its Asian anchor was Frieze reading culture, not just the market: a bet that the center of gravity in Asian contemporary art had shifted to a city that already exports its taste through music, film, and design.</p>
+<p>What I keep noticing is that the fair itself has become the thing people actually consume. Most visitors will never buy a piece. They come for the crowd, the after-parties, the brand activations parked just outside — the <em>experience</em> of the fair. The art is the reason it all exists and, increasingly, the backdrop everything else is staged against.</p>
+<p><strong>What this means for brands:</strong> every luxury house now wants a booth adjacent to a fair, because a fair confers something advertising cannot buy — the sense that you belong to culture rather than interrupt it. The risk is just as clear. Get it wrong and you are the logo nobody asked for at the edge of someone else's meaning.</p>`
     },
   ],
   personal: [
@@ -1157,27 +1535,93 @@ const WRITINGS = {
     },
     {
       chapter:2,
-      brand:'More soon',
-      sub:'Personal essays in progress',
-      logline:'Writing about living, traveling, and figuring things out in my mid-twenties.',
-      title:'More <em>soon</em>',
-      body:`<p>More personal essays coming. Check back.</p>`
+      brand:'The GR',
+      sub:'Ricoh GR · Everyday carry',
+      logline:'I produce experiences in enormous rooms for a living. My favorite camera fits in a coat pocket. I have been thinking about why.',
+      title:'The Camera <em>in My Pocket</em>',
+      body:`<p>The Ricoh GR is not an impressive camera to look at. A small black rectangle, easy to mistake for a point-and-shoot from fifteen years ago. No interchangeable lens, no flip screen worth mentioning, one fixed 28mm view of the world. And it is, at the moment, the object I reach for most.</p>
+<p>I spend my working life inside large, produced spaces — launches, pop-ups, rooms built to be photographed from exactly the right angle. Maybe that is why the GR feels like relief. It is the opposite of production. You cannot fuss with it. You pull it from a pocket, it wakes almost instantly, and you take the picture before the moment notices you were there.</p>
+<p>The fixed 28mm is a quiet discipline. You cannot zoom, so you have to move — closer, lower, into the thing instead of hovering above it. The frame stops being a decision and becomes a habit, and after a while you start seeing in that width even when the camera is still in your bag.</p>
+<p>There is an old line among photographers that the best camera is the one you have with you. The GR takes that idea seriously: give up the range, the lenses, the ceremony, and keep only the part that matters — being ready. Most of what I love never announced itself in advance. It just happened in front of me, at 28 millimeters, in a coat pocket I had not bothered to zip.</p>`
     },
   ]
 };
 
-const PHOTOS = [
-  {label:'Italy, 2026', cap:'Anterselva — between competitions'},
-  {label:'Jeju, 2024', cap:'Talo Guesthouse activation'},
-  {label:'Seoul, 2024', cap:'Seongsu pop-up, press morning'},
-  {label:'New York, 2026', cap:'World premiere, backstage'},
-  {label:'Seoul, 2025', cap:'Galaxy XR launch'},
-  {label:'Jeju, 2024', cap:'Stone house, early light'},
-  {label:'Italy, 2026', cap:'Cortina d\'Ampezzo'},
-  {label:'Seoul, 2023', cap:'Hitchhikers performance'},
-  {label:'Seoul, 2024', cap:'Birkenstock Apgujeong opening'},
-  {label:'Basel, 2026', cap:'Rhine, post-event evening'},
-  // Add: {label:'...', cap:'...', src:'photos/filename.jpg'}
+const ROLLS = [
+  {
+    id:'milan', city:'Milan', tag:'Italy', year:'2026',
+    film:'Ricoh GR III · 28mm', roll:'#B4924F',
+    photos:[
+      {label:'Milan, 2026', cap:'Galleria Vittorio Emanuele II', src:'photos/milan-galleria.jpg'},
+      {label:'Milan, 2026', cap:'Toward Piazza della Scala', src:'photos/milan-scala.jpg'},
+      {label:'Milan, 2026', cap:'Morning market in the piazza', src:'photos/milan-piazza.jpg'},
+      {label:'Milan, 2026', cap:'The park, first morning', src:'photos/milan-park.jpg'},
+      {label:'Milan, 2026', cap:'Corner shop, a small black car', src:'photos/milan-corner.jpg'},
+      {label:'Milan, 2026', cap:'Fruit stand, everything in its place', src:'photos/milan-market.jpg'},
+    ]
+  },
+  {
+    id:'anterselva', city:'Anterselva', tag:'South Tyrol · Italy', year:'2026',
+    film:'Ricoh GR III · 28mm', roll:'#7E92A0',
+    photos:[
+      {label:'Anterselva, 2026', cap:'First evening in the mountains', src:'photos/anterselva-dusk.jpg'},
+      {label:'Anterselva, 2026', cap:'The road out of the village', src:'photos/anterselva-road.jpg'},
+      {label:'Anterselva, 2026', cap:'A clear day over the valley', src:'photos/anterselva-valley.jpg'},
+      {label:'Anterselva, 2026', cap:'Woods after the snowfall', src:'photos/anterselva-woods.jpg'},
+      {label:'Anterselva, 2026', cap:'From the window, a chapel in the snow', src:'photos/anterselva-window.jpg'},
+      {label:'Anterselva, 2026', cap:'The chapel, full daylight', src:'photos/anterselva-chapel.jpg'},
+      {label:'Anterselva, 2026', cap:'The same chapel, in fog', src:'photos/anterselva-chapel-fog.jpg'},
+      {label:'Anterselva, 2026', cap:'Kettle, tins, afternoon light', src:'photos/anterselva-kettle.jpg'},
+      {label:'Anterselva, 2026', cap:'An empty stube before dinner', src:'photos/anterselva-stube.jpg'},
+      {label:'Anterselva, 2026', cap:'Breakfast, before the shift', src:'photos/anterselva-breakfast.jpg'},
+      {label:'Anterselva, 2026', cap:'Dinner, South Tyrol', src:'photos/anterselva-dinner.jpg'},
+      {label:'Anterselva, 2026', cap:'Pizza with the crew', src:'photos/anterselva-pizza.jpg'},
+      {label:'Anterselva, 2026', cap:'A gathering, and a three-wheeler', src:'photos/anterselva-village.jpg'},
+      {label:'Anterselva, 2026', cap:'The last light over the peaks', src:'photos/anterselva-bluehour.jpg'},
+      {label:'Anterselva, 2026', cap:'Hotel Bad Salomonsbrunn, after dark', src:'photos/anterselva-hotel-night.jpg'},
+      {label:'Anterselva, 2026', cap:'The hotel, after hours', src:'photos/anterselva-hotel.jpg'},
+      {label:'Anterselva, 2026', cap:'Walking back in the dark', src:'photos/anterselva-night.jpg'},
+      {label:'Anterselva, 2026', cap:'A friend, in a red coat', src:'photos/anterselva-puppy.jpg'},
+    ]
+  },
+  {
+    id:'basel', city:'Basel', tag:'Art Basel · Switzerland', year:'2026',
+    film:'Ricoh GR III · 28mm', roll:'#A65648',
+    photos:[
+      {label:'Basel, 2026', cap:'Along the Rhine, midday', src:'photos/basel-rhine.jpg'},
+      {label:'Basel, 2026', cap:'A poster column on the corner', src:'photos/basel-column.jpg'},
+      {label:'Basel, 2026', cap:'Fair posters in the arched windows', src:'photos/basel-posters.jpg'},
+      {label:'Basel, 2026', cap:'An antiquarian bookshop, and a small dog', src:'photos/basel-bookshop.jpg'},
+      {label:'Basel, 2026', cap:'Geraniums on a window grille', src:'photos/basel-geraniums.jpg'},
+      {label:'Basel, 2026', cap:'Art Basel, from the loading side', src:'photos/basel-fair-back.jpg'},
+      {label:'Basel, 2026', cap:'Opening day, inside the hall', src:'photos/basel-fair-crowd.jpg'},
+      {label:'Basel, 2026', cap:'A wall of small works', src:'photos/basel-fair-wall.jpg'},
+      {label:'Basel, 2026', cap:'A single canvas, a room to itself', src:'photos/basel-canvas.jpg'},
+      {label:'Basel, 2026', cap:'A leaning mirror, three visitors', src:'photos/basel-mirror.jpg'},
+      {label:'Basel, 2026', cap:'Evening traffic along the tram line', src:'photos/basel-evening.jpg'},
+      {label:'Basel, 2026', cap:'The Rhine at dusk', src:'photos/basel-rhine-dusk.jpg'},
+    ]
+  },
+  {
+    id:'vitra', city:'Vitra', tag:'Vitra Campus · Weil am Rhein', year:'2026',
+    film:'Ricoh GR III · 28mm', roll:'#4C4C4E',
+    photos:[
+      {label:'Vitra Campus, 2026', cap:'A curved facade in full sun', src:'photos/vitra-facade.jpg'},
+      {label:'Vitra Campus, 2026', cap:'The geodesic dome over the meadow', src:'photos/vitra-dome.jpg'},
+      {label:'Vitra Campus, 2026', cap:'The meadow, a house-shape beyond', src:'photos/vitra-meadow.jpg'},
+      {label:'Vitra Campus, 2026', cap:'The garden path through wildflowers', src:'photos/vitra-path.jpg'},
+      {label:'Vitra Campus, 2026', cap:'The pond, umbrellas on a grey day', src:'photos/vitra-pond.jpg'},
+      {label:'Vitra Campus, 2026', cap:'Chairs set out on the gravel', src:'photos/vitra-chairs.jpg'},
+      {label:'Vitra Campus, 2026', cap:'A skylit gallery, two floors', src:'photos/vitra-skylight.jpg'},
+      {label:'Vitra Campus, 2026', cap:'Inside, an orange corridor', src:'photos/vitra-orange.jpg'},
+      {label:'Vitra Campus, 2026', cap:'The stair, seen from above', src:'photos/vitra-stair.jpg'},
+      {label:'Vitra Campus, 2026', cap:'The café, yellow tables', src:'photos/vitra-aalto.jpg'},
+      {label:'Vitra Campus, 2026', cap:'A vitrine of small objects', src:'photos/vitra-table.jpg'},
+      {label:'Vitra Campus, 2026', cap:'Green benches under a black relief', src:'photos/vitra-chair.jpg'},
+      {label:'Vitra Campus, 2026', cap:'The Vitra Slide Tower', src:'photos/vitra-slide.jpg'},
+      {label:'Vitra Campus, 2026', cap:'A tour, umbrellas up', src:'photos/vitra-umbrellas.jpg'},
+    ]
+  },
 ];
 
 /* ═══ RENDER PROJECTS ═══ */
@@ -1209,10 +1653,28 @@ function renderProjects(){
               <div class="d-block-label">My Participation</div>
               <div class="d-block-text">${p.participation}</div>
             </div>
+            ${p.hard ? `<div class="d-block">
+              <div class="d-block-label">The Hard Part</div>
+              <div class="d-block-text">${p.hard}</div>
+            </div>` : ''}
             <div class="d-block">
               <div class="d-block-label">Result</div>
               <div class="d-block-text">${p.result}</div>
             </div>
+            ${p.runway ? `<div class="d-block">
+              <div class="d-block-label">${p.runwayLabel||'Runway Cam'}</div>
+              ${p.runwayNote ? `<div class="d-block-text" style="margin-bottom:18px;">${p.runwayNote}</div>` : ''}
+              <div class="runway-row">
+                ${p.runway.map(v=>`<figure class="runway-card">
+                  <video src="${v.src}" loop muted playsinline preload="none"></video>
+                  <figcaption>${v.name}${v.role?`<span class="runway-role">${v.role}</span>`:''}</figcaption>
+                </figure>`).join('')}
+              </div>
+            </div>` : ''}
+            ${p.reels ? `<div class="d-reels">
+              <span class="d-reels-label">As seen on</span>
+              ${p.reels.map(r=>`<a class="d-reel-chip" href="${r.href}" target="_blank" rel="noopener">▶ ${r.label} <span>Instagram ↗</span></a>`).join('')}
+            </div>` : ''}
             ${p.link ? `<a class="d-link" href="${p.link}" target="_blank">${p.linkLabel} ↗</a>` : ''}
           </div>
           <div class="d-side">
@@ -1221,9 +1683,41 @@ function renderProjects(){
             <div class="d-metrics">${p.metrics.map(m=>`<div class="d-metric"><div class="d-mval">${m.v}</div><div class="d-mlabel">${m.l}</div></div>`).join('')}</div>
           </div>
         </div>
+        ${p.caseStudy ? `<div class="casestudy">
+          <div class="cs-head">
+            <span class="cs-kicker">Case Study</span>
+            <span class="cs-title">Inside the Build</span>
+          </div>
+          ${p.caseStudy.map((s,si)=>`<section class="cs-section">
+            <div class="cs-section-head">
+              <span class="cs-num">${String(si+1).padStart(2,'0')}</span>
+              <div>
+                <h4 class="cs-label">${s.label}</h4>
+                ${s.note?`<p class="cs-note">${s.note}</p>`:''}
+              </div>
+            </div>
+            ${(s.rows ? s.rows : [{layout:s.layout||'grid', images:s.images}]).map(r=>`
+              ${r.caption?`<div class="cs-rowcap">${r.caption}</div>`:''}
+              <div class="cs-grid cs-${r.layout}">
+                ${r.images.map(im=>`<figure class="cs-item">
+                  <div class="cs-frame">${/\.mp4$/.test(im.src)?`<video src="${im.src}" loop muted playsinline preload="none"></video>`:`<img src="${im.src}" alt="${im.cap||''}" loading="lazy">`}</div>
+                  ${im.cap?`<figcaption>${im.cap}</figcaption>`:''}
+                </figure>`).join('')}
+              </div>`).join('')}
+          </section>`).join('')}
+        </div>` : ''}
       </div>`;
     c.appendChild(row);
   });
+  // Lazy-play runway videos: only play cards currently in view
+  const rio = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      const v = e.target;
+      if(e.isIntersecting){ if(v.paused) v.play().catch(()=>{}); }
+      else { if(!v.paused) v.pause(); }
+    });
+  }, {threshold:0.35});
+  c.querySelectorAll('.runway-card video, .cs-item video').forEach(v=>rio.observe(v));
 }
 
 window.toggleProj = function(i){
@@ -1338,10 +1832,13 @@ function updateBookNav(){
 window.openBook = openBook;
 window.closeBook = closeBook;
 
-/* ═══ RENDER FILM ═══ */
+/* ═══ RENDER FILM ROLLS ═══ */
 let filmIdx = 0;
+let PHOTOS = [];            // photos of the currently open roll
+let currentRoll = null;
 
 function buildSprockets(el){
+  el.innerHTML = '';
   for(let i=0;i<18;i++){
     const h = document.createElement('div');
     h.className = 'film-sprocket-hole';
@@ -1349,11 +1846,47 @@ function buildSprockets(el){
   }
 }
 
-function renderFilm(){
+function renderRolls(){
+  document.getElementById('roll-count').textContent =
+    `${ROLLS.length} rolls · ${ROLLS.reduce((n,r)=>n+r.photos.length,0)} frames`;
+  const shelf = document.getElementById('roll-shelf');
+  shelf.innerHTML = '';
+  ROLLS.forEach(r=>{
+    const box = document.createElement('div');
+    box.className = 'roll-box';
+    box.onclick = ()=>openRoll(r.id);
+    const sprk = Array.from({length:8},()=>'<i></i>').join('');
+    const lead = Array.from({length:9},()=>'<i></i>').join('');
+    box.innerHTML = `
+      <div class="roll-carton" style="--roll:${r.roll}">
+        <div class="roll-top"><span>35 mm</span><span>${r.photos.length} exp</span></div>
+        <div class="roll-sprockets">${sprk}</div>
+        <div class="roll-tag">${r.tag}</div>
+        <div class="roll-name">${r.city}</div>
+        <div class="roll-foot"><span class="roll-film">${r.film}</span><span class="roll-year">${r.year}</span></div>
+      </div>
+      <div class="roll-leader">${lead}</div>`;
+    shelf.appendChild(box);
+  });
+}
+
+function openRoll(id){
+  currentRoll = ROLLS.find(r=>r.id===id);
+  if(!currentRoll) return;
+  PHOTOS = currentRoll.photos;
+  filmIdx = 0;
+
+  document.getElementById('viewer-roll-label').textContent =
+    `${currentRoll.city} · ${currentRoll.year}`;
+  document.getElementById('gallery-back').textContent =
+    `← ${currentRoll.city} contact sheet`;
+
   buildSprockets(document.getElementById('film-sprockets-top'));
   buildSprockets(document.getElementById('film-sprockets-bottom'));
 
+  // dots
   const dotsEl = document.getElementById('film-dots');
+  dotsEl.innerHTML = '';
   PHOTOS.forEach((_,i)=>{
     const d = document.createElement('div');
     d.className = 'film-dot' + (i===0?' active':'');
@@ -1361,31 +1894,40 @@ function renderFilm(){
     dotsEl.appendChild(d);
   });
 
+  // gallery grid
   const grid = document.getElementById('gallery-grid');
+  grid.innerHTML = '';
   PHOTOS.forEach((p,i)=>{
     const item = document.createElement('div');
     item.className = 'gallery-item';
-    if(p.src){
-      item.innerHTML = `<img src="${p.src}" alt="${p.cap}">`;
-    } else {
-      item.innerHTML = `<div class="gallery-item-ph"><span>${String(i+1).padStart(2,'0')}</span><span>${p.label}</span></div>`;
-    }
+    item.innerHTML = `<img src="${p.src}" alt="${p.cap}">`;
     item.onclick = ()=>openLB(i);
     grid.appendChild(item);
   });
 
+  // show viewer, reset to landing
+  document.getElementById('photo-shelf').style.display = 'none';
+  document.getElementById('photo-viewer').style.display = 'flex';
+  document.getElementById('photo-landing').style.display = 'flex';
+  document.getElementById('photo-gallery').classList.remove('open');
   goToFilm(0);
+  window.scrollTo({top:56, behavior:'instant'});
 }
+
+window.openRoll = openRoll;
+
+window.closeRoll = function(){
+  document.getElementById('photo-viewer').style.display = 'none';
+  document.getElementById('photo-shelf').style.display = 'block';
+  currentRoll = null;
+  window.scrollTo({top:56, behavior:'instant'});
+};
 
 function goToFilm(i){
   filmIdx = i;
   const p = PHOTOS[i];
   const imgEl = document.getElementById('film-big-image');
-  if(p.src){
-    imgEl.innerHTML = `<img src="${p.src}" alt="${p.cap}" style="width:100%;height:100%;object-fit:cover;">`;
-  } else {
-    imgEl.innerHTML = `<div class="film-placeholder"><span class="film-placeholder-num">${String(i+1).padStart(2,'0')}</span><span class="film-placeholder-loc">${p.label}</span></div>`;
-  }
+  imgEl.innerHTML = `<img src="${p.src}" alt="${p.cap}" style="width:100%;height:100%;object-fit:cover;">`;
   document.getElementById('film-cap-text').textContent = p.cap;
   document.getElementById('film-cap-counter').textContent = `${String(i+1).padStart(2,'0')} / ${String(PHOTOS.length).padStart(2,'0')}`;
   document.querySelectorAll('.film-dot').forEach((d,j)=>d.classList.toggle('active', j===i));
@@ -1531,9 +2073,6 @@ function renderCode(){
     { n:'03', lang:'p5.js · Machine Learning', name:'Dancing with A.I.',
       desc:'Real-time generative visual system responding to dancer motion data. Hitchhikers live performance, Seoul 2023.',
       link:'https://youtu.be/i16nxyii728?si=oz-7CjlSFvGxQiVB&t=1837', label:'Watch Performance' },
-    { n:'04', lang:'HTML · CSS · JavaScript', name:'This Site — <em>Hand-coded</em>',
-      desc:'Personal creative space. Single-page application with book-flip writing system, film-strip gallery, and project archive.',
-      link:'https://github.com/yeoneshin', label:'View Source' },
   ];
 
   simpleItems.forEach(p=>{
@@ -1594,6 +2133,12 @@ function goTo(id){
   document.querySelectorAll('.nav-links li').forEach(l=>l.classList.remove('active'));
   const pg = document.getElementById(`page-${id}`);
   if(pg) pg.classList.add('active');
+  // photography always returns to the roll shelf
+  if(id==='photo' && currentRoll){
+    document.getElementById('photo-viewer').style.display='none';
+    document.getElementById('photo-shelf').style.display='block';
+    currentRoll=null;
+  }
   const nl = document.getElementById(`nl-${id}`);
   if(nl) nl.classList.add('active');
   // instant reset, then smooth scroll to content start (below nav)
@@ -1648,11 +2193,180 @@ document.addEventListener('keydown',e=>{
 /* ═══ INIT ═══ */
 renderProjects();
 renderWriting();
-renderFilm();
+renderRolls();
 renderCode();
 injectTSImages();
 setTimeout(observe,100);
 
+</script>
+
+<!-- ══ TWEAK THE FEEL ══ -->
+<style>
+/* Display type — reshape the personality of every heading */
+body.type-serif .home-name,
+body.type-serif .proj-title-s,
+body.type-serif .c-name-s,
+body.type-serif .c-simple-name,
+body.type-serif .shelf-book-title,
+body.type-serif .book-brand-name,
+body.type-serif .book-essay-title,
+body.type-serif .about-intro{
+  font-family:'Newsreader',Georgia,serif;font-weight:400;letter-spacing:-.01em;
+}
+body.type-serif .home-name{font-weight:400;letter-spacing:-.005em;}
+body.type-mono .home-name,
+body.type-mono .proj-title-s,
+body.type-mono .c-name-s,
+body.type-mono .c-simple-name,
+body.type-mono .shelf-book-title,
+body.type-mono .book-brand-name,
+body.type-mono .book-essay-title,
+body.type-mono .about-intro{
+  font-family:'Space Mono',monospace;font-weight:400;letter-spacing:-.035em;
+}
+
+/* Air — reshape the whole reading rhythm */
+body.air-airy .sec-head{padding-top:88px;padding-bottom:24px;}
+body.air-airy .proj-summary,body.air-airy .c-top{padding:30px 0;}
+body.air-airy .detail-inner{padding-bottom:64px;}
+body.air-airy .d-block{margin-bottom:26px;}
+body.air-airy .d-block-text{line-height:2.05;}
+body.air-airy .book-essay-body{line-height:2.3;}
+body.air-airy .book-essay-body p{margin-bottom:26px;}
+body.air-airy .home-desc{line-height:2.15;}
+body.air-airy .about-body,body.air-airy .about-intro{line-height:2.15;}
+body.air-tight .sec-head{padding-top:34px;padding-bottom:14px;}
+body.air-tight .proj-summary,body.air-tight .c-top{padding:13px 0;}
+body.air-tight .detail-inner{padding-bottom:36px;}
+body.air-tight .d-block{margin-bottom:14px;}
+body.air-tight .d-block-text{line-height:1.6;}
+body.air-tight .book-essay-body{line-height:1.7;}
+body.air-tight .book-essay-body p{margin-bottom:14px;}
+body.air-tight .home-desc{line-height:1.7;}
+body.air-tight .about-body{line-height:1.7;}
+
+/* Panel chrome */
+#tw-toggle{
+  position:fixed;right:22px;bottom:22px;z-index:320;
+  font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--black);background:var(--white);
+  border:1px solid var(--line);border-radius:2px;
+  padding:9px 14px;cursor:pointer;user-select:none;
+  box-shadow:0 6px 24px rgba(0,0,0,.08);transition:opacity .2s,transform .2s;
+}
+#tw-toggle:hover{transform:translateY(-1px);}
+#tw-panel{
+  position:fixed;right:22px;bottom:22px;z-index:321;width:280px;
+  background:var(--white);border:1px solid var(--line);border-radius:3px;
+  box-shadow:0 18px 60px rgba(0,0,0,.16);
+  padding:20px 20px 16px;
+  opacity:0;transform:translateY(8px) scale(.98);pointer-events:none;
+  transform-origin:bottom right;transition:opacity .25s,transform .25s;
+}
+#tw-panel.open{opacity:1;transform:translateY(0) scale(1);pointer-events:all;}
+.tw-head{
+  display:flex;justify-content:space-between;align-items:center;
+  font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--mid);padding-bottom:16px;margin-bottom:16px;border-bottom:1px solid var(--line);
+}
+#tw-close{cursor:pointer;color:var(--mid);transition:color .2s;font-size:11px;}
+#tw-close:hover{color:var(--black);}
+.tw-grp{margin-bottom:18px;}
+.tw-lbl{
+  font-family:var(--mono);font-size:9px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--taupe);margin-bottom:9px;
+}
+.tw-opts{display:flex;flex-wrap:wrap;gap:5px;}
+.tw-b{
+  all:unset;box-sizing:border-box;cursor:pointer;
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:11px;letter-spacing:.02em;color:var(--mid);
+  border:1px solid var(--line);border-radius:2px;
+  padding:7px 11px;transition:all .18s;
+  flex:1 0 auto;justify-content:center;
+}
+.tw-b:hover{border-color:var(--mid);color:var(--black);}
+.tw-b.on{background:var(--black);color:var(--white);border-color:var(--black);}
+.tw-b i{width:11px;height:11px;border-radius:50%;flex-shrink:0;display:block;box-shadow:inset 0 0 0 1px rgba(0,0,0,.12);}
+.tw-b.on i{box-shadow:inset 0 0 0 1px rgba(255,255,255,.35);}
+.tw-reset{
+  font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--mid);cursor:pointer;text-align:center;
+  padding-top:12px;border-top:1px solid var(--line);transition:color .2s;
+}
+.tw-reset:hover{color:var(--black);}
+@media(max-width:768px){#tw-panel{width:calc(100vw - 44px);}}
+</style>
+
+<div id="tw-toggle">✦ Tweak the feel</div>
+<div id="tw-panel" role="dialog" aria-label="Tweak the feel">
+  <div class="tw-head"><span>Tweak the feel</span><span id="tw-close">✕</span></div>
+  <div class="tw-grp">
+    <div class="tw-lbl">Palette</div>
+    <div class="tw-opts">
+      <button class="tw-b" data-tw="palette:taupe"><i style="background:#C9B99A"></i>Taupe</button>
+      <button class="tw-b" data-tw="palette:ink"><i style="background:#8A9098"></i>Ink</button>
+      <button class="tw-b" data-tw="palette:olive"><i style="background:#9A9A6B"></i>Olive</button>
+      <button class="tw-b" data-tw="palette:clay"><i style="background:#B5734F"></i>Clay</button>
+    </div>
+  </div>
+  <div class="tw-grp">
+    <div class="tw-lbl">Display type</div>
+    <div class="tw-opts">
+      <button class="tw-b" data-tw="type:sans">Sans</button>
+      <button class="tw-b" data-tw="type:serif">Serif</button>
+      <button class="tw-b" data-tw="type:mono">Mono</button>
+    </div>
+  </div>
+  <div class="tw-grp">
+    <div class="tw-lbl">Air</div>
+    <div class="tw-opts">
+      <button class="tw-b" data-tw="air:tight">Tight</button>
+      <button class="tw-b" data-tw="air:balanced">Balanced</button>
+      <button class="tw-b" data-tw="air:airy">Airy</button>
+    </div>
+  </div>
+  <div class="tw-reset" id="tw-reset">Reset to original</div>
+</div>
+
+<script>
+(function(){
+  const PALETTES={
+    taupe:{'--taupe':'#C9B99A','--taupe-light':'#EDE5D8','--off':'#F7F5F2','--faint':'#E8E5E0'},
+    ink:{'--taupe':'#8A9098','--taupe-light':'#E4E7EA','--off':'#F4F6F7','--faint':'#E5E8EB'},
+    olive:{'--taupe':'#9A9A6B','--taupe-light':'#E8E7D4','--off':'#F6F5EE','--faint':'#E7E6D8'},
+    clay:{'--taupe':'#B5734F','--taupe-light':'#EADBCE','--off':'#F8F3EF','--faint':'#EBE2DA'}
+  };
+  const DEFAULTS={palette:'taupe',type:'sans',air:'balanced'};
+  let state=Object.assign({},DEFAULTS);
+  try{const s=JSON.parse(localStorage.getItem('yshin-tweaks'));if(s)state=Object.assign(state,s);}catch(e){}
+
+  function apply(){
+    const p=PALETTES[state.palette]||PALETTES.taupe;
+    for(const k in p) document.documentElement.style.setProperty(k,p[k]);
+    document.body.classList.remove('type-sans','type-serif','type-mono','air-tight','air-balanced','air-airy');
+    document.body.classList.add('type-'+state.type,'air-'+state.air);
+    document.querySelectorAll('#tw-panel [data-tw]').forEach(function(b){
+      const parts=b.dataset.tw.split(':');
+      b.classList.toggle('on', state[parts[0]]===parts[1]);
+    });
+    try{localStorage.setItem('yshin-tweaks',JSON.stringify(state));}catch(e){}
+  }
+
+  document.querySelectorAll('#tw-panel [data-tw]').forEach(function(b){
+    b.addEventListener('click',function(){
+      const parts=b.dataset.tw.split(':');
+      state[parts[0]]=parts[1];
+      apply();
+    });
+  });
+  const panel=document.getElementById('tw-panel'),toggle=document.getElementById('tw-toggle');
+  toggle.addEventListener('click',function(){panel.classList.add('open');toggle.style.opacity='0';toggle.style.pointerEvents='none';});
+  document.getElementById('tw-close').addEventListener('click',function(){panel.classList.remove('open');toggle.style.opacity='';toggle.style.pointerEvents='';});
+  document.getElementById('tw-reset').addEventListener('click',function(){state=Object.assign({},DEFAULTS);apply();});
+
+  apply();
+})();
 </script>
 </body>
 </html>
