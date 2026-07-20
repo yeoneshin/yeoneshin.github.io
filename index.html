@@ -4,8 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Yewon Shin</title>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Space+Mono:ital@0;1&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="favicon-yw.png">
+<link href="https://fonts.googleapis.com/css2?family=Mrs+Saint+Delafield&display=swap" rel="stylesheet">
+
 <style>
 /* ── RESET ── */
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
@@ -13,13 +14,21 @@ html{font-size:16px;scroll-behavior:smooth;}
 body{
   background:#fff;
   color:#111;
-  font-family:'Plus Jakarta Sans',sans-serif;
+  font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;
   font-weight:300;
   -webkit-font-smoothing:antialiased;
   overflow-x:hidden;
 }
 a{color:inherit;text-decoration:none;}
 img{display:block;max-width:100%;}
+video{-webkit-touch-callout:none;-webkit-user-select:none;user-select:none;}
+
+/* ── DISPLAY TYPE — SERIF ── */
+.home-name,.proj-title-s,.c-name-s,.c-simple-name,
+.shelf-book-title,.book-brand-name,.book-essay-title,.about-intro{
+  font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-weight:400;letter-spacing:-.01em;
+}
+.home-name{font-weight:400;letter-spacing:-.005em;}
 
 /* ── TOKENS ── */
 :root{
@@ -31,8 +40,8 @@ img{display:block;max-width:100%;}
   --mid:#666666;
   --faint:#E8E5E0;
   --line:rgba(17,17,17,.1);
-  --sans:'Plus Jakarta Sans',sans-serif;
-  --mono:'Space Mono',monospace;
+  --sans:"Helvetica Neue",Helvetica,Arial,sans-serif;
+  --mono:"Helvetica Neue",Helvetica,Arial,sans-serif;
 }
 
 /* ── NAV ── */
@@ -47,9 +56,11 @@ img{display:block;max-width:100%;}
 }
 #nav.scrolled{border-color:var(--line);}
 .nav-logo{
-  font-family:var(--mono);font-size:12px;
-  letter-spacing:.05em;cursor:pointer;
+  font-family:'Mrs Saint Delafield',cursive;
+  font-size:27px;line-height:1;
+  cursor:pointer;
   color:var(--black);
+  padding-bottom:4px;
 }
 .nav-links{display:flex;gap:36px;list-style:none;}
 .nav-links li{
@@ -109,6 +120,8 @@ img{display:block;max-width:100%;}
   transition:color .2s, border-color .2s;
 }
 .home-nav-item:hover{color:var(--black);border-color:var(--black);}
+
+img,video{-webkit-user-drag:none;user-select:none;}
 
 /* ── SECTION HEADER ── */
 .sec-head{
@@ -297,6 +310,8 @@ img{display:block;max-width:100%;}
 }
 .cs-grid{display:grid;gap:14px;align-items:start;}
 .cs-item{margin:0;}
+/* every case-study layout is centered in the column */
+.cs-grid,.cs-masonry{margin-left:auto;margin-right:auto;}
 .cs-frame{
   overflow:hidden;background:var(--off);
   border:1px solid var(--line);border-radius:2px;
@@ -316,34 +331,37 @@ img{display:block;max-width:100%;}
 /* MASONRY — mixed-ratio photos, no crop, no ragged gaps */
 .cs-masonry{
   display:block;column-count:3;column-gap:14px;
+  max-width:600px;
 }
 .cs-masonry .cs-item{
   break-inside:avoid;margin-bottom:18px;
 }
 
-/* TABLET screens — uniform landscape (all ~1.6), tidy auto-fit flow */
-.cs-tablet{grid-template-columns:repeat(auto-fill,minmax(230px,1fr));}
+/* TABLET screens — uniform landscape (all ~1.6), tidy auto-fit flow.
+   Source ~580px wide, so keep tiles small to stay sharp. */
+.cs-tablet{grid-template-columns:repeat(auto-fill,minmax(250px,300px));max-width:1080px;justify-content:center;}
 .cs-tablet .cs-frame{aspect-ratio:8/5;background:#0e0e0e;border-color:rgba(255,255,255,.06);}
 .cs-tablet .cs-frame img{width:100%;height:100%;object-fit:cover;}
 
 /* DEVICES — transparent tablet mockups, no frame so the bezel reads */
-.cs-devices{grid-template-columns:repeat(2,1fr);align-items:start;}
+.cs-devices{grid-template-columns:repeat(2,1fr);align-items:start;max-width:560px;}
 .cs-devices .cs-frame{background:transparent;border:none;border-radius:0;overflow:visible;}
 .cs-devices .cs-frame img{width:100%;height:auto;object-fit:contain;}
 
-/* WIDE — single hero screen, full width, contained on dark */
-.cs-wide{grid-template-columns:1fr;}
+/* WIDE — single hero screen; never upscale past native (~1200px) */
+.cs-wide{grid-template-columns:1fr;justify-items:center;}
+.cs-wide .cs-item{max-width:560px;}
 .cs-wide .cs-frame{background:#0e0e0e;border-color:rgba(255,255,255,.06);}
 .cs-wide .cs-frame img{width:100%;height:auto;}
 
 /* CENTER — single supporting image, contained, centered */
 .cs-center{grid-template-columns:1fr;justify-items:center;}
-.cs-center .cs-item{max-width:560px;width:100%;}
+.cs-center .cs-item{max-width:420px;width:100%;}
 .cs-center .cs-frame{background:var(--off);display:flex;align-items:center;justify-content:center;}
-.cs-center .cs-frame img{width:auto;height:auto;max-width:100%;max-height:460px;}
+.cs-center .cs-frame img{width:auto;height:auto;max-width:100%;max-height:360px;}
 
 /* QUAD — four labelled items, uniform square frames, nothing cropped */
-.cs-quad{grid-template-columns:repeat(4,1fr);}
+.cs-quad{grid-template-columns:repeat(4,1fr);max-width:820px;}
 .cs-quad .cs-frame{
   aspect-ratio:1/1;background:var(--off);
   display:flex;align-items:center;justify-content:center;
@@ -352,23 +370,88 @@ img{display:block;max-width:100%;}
 
 /* PHONE screens — uniform portrait, centered, kept small */
 .cs-phone{
-  display:flex;flex-wrap:wrap;gap:20px;justify-content:flex-start;
+  display:flex;flex-wrap:wrap;gap:20px;justify-content:center;
 }
 .cs-phone .cs-item{flex:0 0 auto;width:210px;}
 .cs-phone .cs-frame{aspect-ratio:288/624;background:#0e0e0e;border-color:rgba(255,255,255,.06);}
 .cs-phone .cs-frame img{width:100%;height:100%;object-fit:cover;}
 
-/* CLIPS — portrait operation videos, autoplay-in-view loop */
-.cs-clips{display:flex;flex-wrap:wrap;gap:20px;}
-.cs-clips .cs-item{flex:0 0 auto;width:220px;}
+/* CLIPS — portrait operation videos, autoplay-in-view loop, horizontal scroll */
+.cs-clips{
+  display:flex;flex-wrap:nowrap;gap:20px;justify-content:center;justify-content:safe center;
+  overflow-x:auto;overflow-y:hidden;padding-bottom:12px;
+  scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;
+}
+.cs-clips::-webkit-scrollbar{height:5px;}
+.cs-clips::-webkit-scrollbar-thumb{background:rgba(17,17,17,.2);border-radius:3px;}
+.cs-clips .cs-item{flex:0 0 auto;width:220px;scroll-snap-align:start;}
 .cs-clips .cs-frame{aspect-ratio:9/16;background:#0e0e0e;border-color:rgba(255,255,255,.06);}
 .cs-clips .cs-frame video{width:100%;height:100%;object-fit:cover;display:block;}
+.cs-vidlink{position:relative;display:block;width:100%;height:100%;}
+.cs-vidlink video{width:100%;height:100%;object-fit:cover;display:block;}
+.cs-vidcta{
+  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  background:rgba(12,12,12,.45);color:#fff;
+  font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+  opacity:0;transition:opacity .25s;pointer-events:none;
+}
+.cs-vidlink:hover .cs-vidcta{opacity:1;}
 
-/* diagrams / screenshots: full-width, contained on light */
-.cs-diagrams{grid-template-columns:1fr;gap:22px;}
+/* OPSROW — testing photo + two tablet mockups, matched height in one row */
+.cs-opsrow{display:flex;flex-wrap:wrap;justify-content:center;align-items:flex-end;gap:22px;}
+.cs-opsrow .cs-item{flex:0 0 auto;}
+.cs-opsrow .cs-frame{height:230px;display:flex;align-items:center;justify-content:center;overflow:visible;}
+.cs-opsrow .cs-frame img{height:100%;width:auto;object-fit:contain;}
+.cs-opsrow .cs-item:first-child .cs-frame{background:var(--off);}
+.cs-opsrow .cs-item:not(:first-child) .cs-frame{background:transparent;border:none;border-radius:0;}
+.cs-zoomable{cursor:zoom-in;}
+
+/* CASE-STUDY ZOOM OVERLAY */
+.cs-zoom-overlay{
+  position:fixed;inset:0;z-index:9999;
+  background:rgba(12,12,12,.92);
+  display:none;align-items:center;justify-content:center;
+  padding:5vh 5vw;cursor:zoom-out;
+}
+.cs-zoom-overlay.open{display:flex;}
+.cs-zoom-overlay img{
+  max-width:100%;max-height:100%;
+  object-fit:contain;border-radius:2px;
+  box-shadow:0 30px 90px rgba(0,0,0,.5);
+}
+
+/* ROW4 — four uniform-ratio photos in a single row on large screens */
+.cs-row4{grid-template-columns:repeat(4,1fr);max-width:900px;}
+.cs-row4 .cs-frame{aspect-ratio:3/2;overflow:hidden;}
+.cs-row4 .cs-frame img{width:100%;height:100%;object-fit:cover;}
+
+/* UNIFORM — every photo the same size, cropped to a shared portrait ratio */
+.cs-uniform{grid-template-columns:repeat(4,1fr);max-width:1080px;}
+.cs-uniform .cs-frame{aspect-ratio:4/5;overflow:hidden;background:#0e0e0e;}
+.cs-uniform .cs-frame img{width:100%;height:100%;object-fit:cover;}
+
+/* PAIR — two landscape screens side by side, matched heights */
+.cs-pair{grid-template-columns:repeat(2,1fr);gap:22px;max-width:820px;align-items:stretch;}
+.cs-pair .cs-frame{aspect-ratio:16/9;background:#0e0e0e;border-color:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;}
+.cs-pair .cs-frame img{max-width:100%;max-height:100%;width:auto;height:auto;}
+
+/* diagrams / screenshots: contained on light, never upscaled past native */
+.cs-diagrams{grid-template-columns:1fr;gap:22px;max-width:760px;justify-items:center;}
+.cs-diagrams .cs-item{max-width:560px;}
 .cs-diagrams .cs-frame{background:#fff;}
+.cs-diagrams .cs-frame img{width:100%;height:auto;}
 
 .d-side{padding-top:2px;}
+.d-hero-reel{margin:0 0 26px;}
+.d-hero-reel .hr-frame{
+  position:relative;aspect-ratio:9/16;overflow:hidden;
+  border:1px solid var(--line);border-radius:2px;background:#0e0e0e;
+}
+.d-hero-reel figcaption{
+  margin-top:9px;
+  font-family:var(--mono);font-size:9.5px;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--mid);
+}
 .d-period{
   font-family:var(--mono);font-size:10px;
   color:var(--mid);margin-bottom:18px;line-height:1.7;
@@ -379,6 +462,16 @@ img{display:block;max-width:100%;}
   padding-left:12px;margin-bottom:20px;
   font-weight:400;
 }
+.d-sched{margin-bottom:22px;}
+.d-sched-row{
+  display:flex;gap:10px;align-items:baseline;
+  padding:5px 0;border-bottom:1px solid var(--line);
+}
+.d-sched-d{
+  font-family:var(--mono);font-size:9.5px;letter-spacing:.03em;
+  color:var(--taupe);flex:0 0 64px;
+}
+.d-sched-t{font-size:11px;line-height:1.5;color:var(--mid);}
 .d-metrics{display:flex;flex-direction:column;gap:2px;}
 .d-metric{
   background:var(--off);
@@ -1055,6 +1148,9 @@ img{display:block;max-width:100%;}
   .cs-masonry{column-count:2;}
   .cs-tablet{grid-template-columns:repeat(2,1fr);}
   .cs-quad{grid-template-columns:repeat(2,1fr);}
+  .cs-row4{grid-template-columns:repeat(2,1fr);}
+  .cs-uniform{grid-template-columns:repeat(2,1fr);}
+  .cs-pair{grid-template-columns:1fr;}
   .about-grid{grid-template-columns:1fr;}
   .about-left{padding-right:0;border-right:none;padding-bottom:40px;border-bottom:1px solid var(--line);}
   .about-right{padding-left:0;padding-top:40px;}
@@ -1064,12 +1160,117 @@ img{display:block;max-width:100%;}
   .film-strip-outer{padding:0 24px;}
 }
 </style>
+<style id="skin">
+/* ═══ SKIN A — GALLERY ═══ */
+:root{
+  --off:#FAFAFA;
+  --taupe:#8C8C8C;
+  --taupe-light:#E9E9E9;
+  --mid:#757575;
+  --faint:#EDEDED;
+  --line:rgba(0,0,0,.12);
+  --card:#fff;
+  --sans:"Helvetica Neue",Helvetica,Arial,sans-serif;
+  --mono:"Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+body{font-family:var(--sans);}
+#nav{height:52px;}
+.page{padding-top:52px;}
+.nav-links{gap:30px;}
+.nav-links li{font-size:10px;letter-spacing:.18em;}
+/* home */
+#page-home{align-items:stretch;justify-content:flex-start;text-align:left;padding:52px 56px 0;position:relative;overflow:hidden;}
+.homeA{flex:1;display:flex;align-items:flex-end;justify-content:flex-end;position:relative;z-index:1;}
+.homeA-name{
+  font-family:'Mrs Saint Delafield',cursive;font-weight:400;
+  font-size:clamp(48px,7.5vw,110px);line-height:1.15;letter-spacing:0;
+  text-align:right;padding-bottom:5vh;
+  opacity:0;animation:fadeUp .9s .1s forwards;
+}
+.homeA-name em{font-style:normal;}
+.homeA-foot{
+  display:flex;justify-content:space-between;gap:16px;
+  padding-bottom:26px;position:relative;z-index:1;
+  font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--mid);
+  opacity:0;animation:fadeUp .9s .35s forwards;
+}
+
+/* flatten books */
+.shelf-row{padding:80px 56px;gap:32px;}
+.shelf-book{filter:none;}
+.shelf-book:hover{transform:none;filter:none;}
+.shelf-book-spine{display:none;}
+.shelf-book-cover,.shelf-book:nth-child(2) .shelf-book-cover{background:var(--card,#fff);border:1px solid var(--line);border-left:1px solid var(--line);border-radius:0;transition:background .25s;}
+.shelf-book:hover .shelf-book-cover,.shelf-book:nth-child(2):hover .shelf-book-cover{background:var(--off);}
+.shelf-book:nth-child(2) .shelf-book-title{color:var(--black);}
+.shelf-book:nth-child(2) .shelf-book-count{color:var(--mid);}
+.shelf-book-tag,.shelf-book:nth-child(2) .shelf-book-tag{color:var(--mid);}
+/* flatten rolls */
+.roll-shelf{padding:80px 56px;gap:24px;}
+.roll-box{filter:none;width:216px;}
+.roll-box:hover{transform:translateY(-4px);filter:none;}
+.roll-carton{background:var(--card,#fff);color:var(--black);border:1px solid var(--line);border-radius:0;height:236px;transition:background .25s;}
+.roll-box:hover .roll-carton{background:var(--off);}
+.roll-carton::after{display:none;}
+.roll-sprockets,.roll-leader{display:none;}
+.roll-top{color:var(--mid);margin-bottom:auto;}
+.roll-tag{color:var(--mid);}
+.roll-tag::before{content:'';display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--roll);margin-right:8px;vertical-align:0;}
+.roll-name{color:var(--black);}
+.roll-foot{border-top:1px solid var(--line);}
+.roll-film{color:var(--mid);}
+.roll-year{color:var(--black);}
+/* flatten film viewer */
+.film-big-sprockets{display:none;}
+.film-big-image{border-left:none;border-right:none;}
+.film-big-caption{background:transparent;padding:14px 2px 0;}
+.film-caption-text{color:var(--mid);}
+.film-caption-counter{color:var(--taupe);}
+@media(max-width:768px){
+  .shelf-row,.roll-shelf{padding:56px 24px;}
+}
+/* option switcher */
+.skin-switch{
+  position:fixed;bottom:18px;right:18px;z-index:500;
+  font-family:var(--mono);font-size:9px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--mid);background:var(--sw-bg,#fff);border:1px solid var(--line);
+  padding:8px 12px;transition:color .2s;
+}
+.skin-switch:hover{color:var(--black);}
+
+@media(max-width:768px){
+  #nav{padding:0 12px 0 20px;}
+  .nav-links{gap:13px;}
+  .nav-links li{font-size:9px;letter-spacing:.1em;}
+  #page-home{padding:52px 24px 0;}
+  .homeA-name{font-size:clamp(40px,11vw,64px);padding-bottom:4vh;}
+  .homeA-foot{flex-direction:column;gap:6px;padding-bottom:22px;}
+}
+
+/* CS horizontal scroll rows */
+.cs-scroll,.cs-scrollsm{
+  display:flex;flex-wrap:nowrap;gap:16px;justify-content:center;justify-content:safe center;
+  overflow-x:auto;overflow-y:hidden;padding-bottom:12px;
+  scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;
+  max-width:none;
+}
+.cs-scroll::-webkit-scrollbar,.cs-scrollsm::-webkit-scrollbar{height:5px;}
+.cs-scroll::-webkit-scrollbar-thumb,.cs-scrollsm::-webkit-scrollbar-thumb{background:rgba(17,17,17,.2);border-radius:3px;}
+.cs-scroll .cs-item,.cs-scrollsm .cs-item{flex:0 0 auto;scroll-snap-align:start;}
+.cs-scroll .cs-frame,.cs-scrollsm .cs-frame{height:300px;width:auto;background:var(--off);display:flex;align-items:center;justify-content:center;}
+.cs-scrollsm .cs-frame{height:170px;}
+.cs-scroll .cs-frame img,.cs-scrollsm .cs-frame img{height:100%;width:auto;object-fit:contain;}
+@media(max-width:768px){
+  .cs-scroll .cs-frame{height:210px;}
+  .cs-scrollsm .cs-frame{height:140px;}
+}
+</style>
 </head>
 <body>
 
 <!-- NAV -->
 <nav id="nav">
-  <div class="nav-logo" onclick="goTo('home')">Yewon Shin</div>
+  <div class="nav-logo" onclick="goTo('home')">Yw</div>
   <ul class="nav-links">
     <li onclick="goTo('work')" id="nl-work">Work</li>
     <li onclick="goTo('writing')" id="nl-writing">Writing</li>
@@ -1081,17 +1282,12 @@ img{display:block;max-width:100%;}
 
 <!-- HOME -->
 <div class="page active" id="page-home">
-  <div class="home-content">
-    <div class="home-eyebrow">Seoul — New York</div>
-    <h1 class="home-name">Yewon Shin</h1>
-    <p class="home-desc">Brand experience producer and photographer. Working at the intersection of culture, space, and brand.</p>
-    <div class="home-nav-row">
-      <span class="home-nav-item" onclick="goTo('work')">Work</span>
-      <span class="home-nav-item" onclick="goTo('writing')">Writing</span>
-      <span class="home-nav-item" onclick="goTo('photo')">Photography</span>
-      <span class="home-nav-item" onclick="goTo('code')">Code</span>
-      <span class="home-nav-item" onclick="goTo('about')">About</span>
-    </div>
+  <div class="homeA">
+    <h1 class="homeA-name">Yewon <em>Shin</em></h1>
+  </div>
+  <div class="homeA-foot">
+    <span>Brand Experience Producer &amp; Photographer</span>
+    <span>Seoul — New York</span>
   </div>
 </div>
 
@@ -1212,7 +1408,7 @@ img{display:block;max-width:100%;}
 <div class="page" id="page-code">
   <div class="sec-head">
     <span class="sec-label">Code</span>
-    <span class="sec-count">3 projects</span>
+    <span class="sec-count">2 projects</span>
   </div>
   <div class="code-list" id="code-list"></div>
 </div>
@@ -1259,20 +1455,139 @@ img{display:block;max-width:100%;}
 /* ═══ DATA ═══ */
 
 const PROJECTS = [
-  { n:'01', yr:'2026', client:'Samsung × Disney · One RX',
+  { n:'01', yr:'2026', client:'Samsung Art TV · One RX',
+    title:'Art Night with Samsung Art TV — <em>Art Basel Basel</em>',
+    tags:['Art × Tech','VIP & Influencer Event','Space Production','Global Operations'],
+    challenge:'Art Basel week is the most design-literate room in the world. How do you convince the global art crowd — artists, curators, creators — that a television belongs in it?',
+    participation:`Commissioned by Cheil Worldwide (HQ in Seoul) and delivered end to end by One RX — a private evening at Gare du Nord, the historic concert venue inside Badischer Bahnhof, built around Samsung Art TV and the Art Store. My lane was operations: I held the communication line to E.Style, the Germany-based agency we contracted for local production and installation, while the production design itself was developed in Korea. Deployed to Basel for the full build week — venue recce, fixture and material QC, promoter training, vendor operations meetings — then on-site supervision of the install through show day, teardown and site wrap-up.`,
+    extraBlocks:[
+      {label:'The Experience', text:`Guests moved through a keycap-collecting journey that pulled them from reception to the last raffle — each activity earning a piece of a collectible frame. Two participatory photo-zone booths carried the "frame within a frame" concept: Booth A in moss and flowers, Booth B in black-and-white line drawing, with an AI art recommendation (VAC) matching each guest to a zone by taste. The evening closed with a talk session — contemporary artist Daniel Arsham, Samsung Art Store curator Daria Greene, and ABP director Karim Crippa — followed by a raffle and group photo.`},
+      {label:'The Build', text:`The space was designed in alignment with the trade-fair exhibition halls — real marble finishes at exhibition quality, and a dedicated 'Art Night with Samsung Art TV' VIS applied across the space and print, placed along key guest pathways. Nearly every piece of event material, down to the stationery, was sourced in Korea and hand-carried; a domestic landscaping vendor was secured on short notice for Booth A — turning cost constraints into production efficiency.`},
+    ],
+    hard:`The project carried risk from day one — a newly formed internal team, tight margins, an AE budget squeezed by a weak exchange rate, a local partner change mid-stream, and a landscaping vendor sourced at the last minute. The answer was to over-prepare: ample buffer stock, hand-carried materials pre-packed and inspected, and domestic backup production for anything that changed on-site. The event ran end to end on the pre-set timeline.`,
+    result:`Samsung expressed thanks to One RX directly on-site — and again after the return. Recognized by Cheil as a one-team success, the project became the moment One RX's capability was made unmistakable to both client and agency.`,
+    schedule:[
+      {d:'Jun 12', t:'Depart Seoul — Basel in'},
+      {d:'Jun 12–16', t:'Venue recce · fixture & material QC · promoter training · overseas vendor meetings · install'},
+      {d:'Jun 17', t:'Final install & event day'},
+      {d:'Jun 18', t:'Teardown & site wrap-up'},
+      {d:'Jun 19–20', t:'Basel out — Seoul in'},
+    ],
+    role:'Project Management — Client–Production Coordination\nBudget Management\nPartner Agency Comms (E.Style, DE)\nOn-site Construction Supervision\nVenue Recce & Material QC\nPromoter Training\nInstall & Teardown Supervision',
+    metrics:[{v:'Jun 17',l:'Gare du Nord, Basel'},{v:'3',l:'VIP Speakers'},{v:'KR→CH',l:'Materials Hand-carried'}],
+    heroReel:{src:'photos/abb/official-reel.mp4', href:'https://www.instagram.com/reel/DZ15XQZh6Lb/', label:'Official reel — Art Night'},
+    caseStudy:[
+      { kind:'photos', label:'Bar du Nord', note:'The first room of the night: registration, Activity 1 on The Frame at the bar, welcome drinks, and the first photo zone — the marble welcome stand carrying the Art Night VIS. Every structure was designed in alignment with the venue\u2019s classic interior.',
+        rows:[
+          { layout:'scroll', images:[
+            {src:'photos/abb/render-bar-topview.png', cap:'Top view — welcome reception guest journey'},
+            {src:'photos/abb/render-bar-registration.png', cap:'Registration desk & program brief'},
+            {src:'photos/abb/render-bar-frame.png', cap:'Activity 1 — The Frame at the bar'},
+            {src:'photos/abb/render-bar-hall.png', cap:'The reception hall in full swing'},
+            {src:'photos/abb/render-bar-welcome-stand.png', cap:'Photo Zone 1 — marble welcome stand, Art Night VIS'},
+          ]},
+          { layout:'scroll', caption:'On site — event day', images:[
+            {src:'photos/abb/event-networking.jpg', cap:'Program brief desk & welcome stand — before doors'},
+            {src:'photos/abb/event-keycaps.jpg', cap:'Keycaps, trays & the raffle box'},
+            {src:'photos/abb/event-namecards.jpg', cap:'Name cards at reception'},
+            {src:'photos/abb/event-terrace.jpg', cap:'Catering on the terrace'},
+            {src:'photos/abb/event-vip-1.jpg', cap:'VIP room'},
+            {src:'photos/abb/event-vip-2.jpg', cap:'VIP room — window side'},
+          ]},
+        ]},
+      { kind:'photos', label:'Main Hall — Booths', note:'Activity 2 carried the \u201cframe within a frame\u201d concept: guests step into a world through the outer window frame, then explore the Art Store through the TV frame inside — Booth A in moss and flowers, Booth B in black-and-white line drawing.',
+        rows:[
+          { layout:'scroll', images:[
+            {src:'photos/abb/render-main-topview.png', cap:'Top view — booths, lounge & talk stage'},
+            {src:'photos/abb/render-booth-wall.png', cap:'Booths A & B — OLED with the ABB26 collection between'},
+            {src:'photos/abb/render-booth-a-ext.png', cap:'Booth A — The Frame Pro in the flower window'},
+            {src:'photos/abb/render-booth-a-int.png', cap:'Booth A — inside the garden'},
+            {src:'photos/abb/render-booth-b-ext.png', cap:'Booth B — the taxi-window angle'},
+            {src:'photos/abb/render-booth-b-int.png', cap:'Booth B — a city drawn in line'},
+            {src:'photos/abb/render-booth-a-frameview.png', cap:'Booth A — the lounge through the window'},
+            {src:'photos/abb/render-booth-b-frameview.png', cap:'Booth B — the lounge through the window'},
+          ]},
+          { layout:'scroll', caption:'On site — as built', images:[
+            {src:'photos/abb/event-booth-ab.jpg', cap:'Booths A & B, as built'},
+            {src:'photos/abb/event-booth-a-ext.jpg', cap:'Booth A & OLED — from the right'},
+            {src:'photos/abb/event-booth-a.jpg', cap:'Booth A — the flower window'},
+            {src:'photos/abb/event-booth-a-inside.jpg', cap:'Inside Booth A'},
+            {src:'photos/abb/event-booth-b.jpg', cap:'Booth B — the taxi window'},
+            {src:'photos/abb/event-booth-b-close.jpg', cap:'Inside Booth B'},
+          ]},
+          { layout:'scroll', caption:'Guest posts — the frame, in the wild', images:[
+            {src:'photos/abb/ig-anja.jpg', cap:'Booth A — IG @anjaschuschu'},
+            {src:'photos/abb/ig-cecilie.jpg', cap:'Welcome stand — IG @ceciliefresse'},
+          ]},
+        ]},
+      { kind:'photos', label:'Main Hall — Stage', note:'The networking lounge and the talk session under the concert hall dome — Micro RGB on a Samsung × Art Basel marble stage.',
+        rows:[
+          { layout:'scroll', images:[
+            {src:'photos/abb/render-main-lounge.png', cap:'Lounge under the dome'},
+            {src:'photos/abb/render-talk-stage.png', cap:'Samsung × Art Basel talk stage — Micro RGB'},
+          ]},
+          { layout:'scroll', caption:'On site — the talk session, live', images:[
+            {src:'photos/abb/event-talk-wide.jpg', cap:'The concert hall, mid-session'},
+            {src:'photos/abb/event-talk-close.jpg', cap:'Daniel Arsham, Daria Greene & Karim Crippa on stage'},
+          ]},
+        ]},
+      { kind:'photos', label:'Branding & Collaterals', note:'An original VIS created by the design team around the on-site concept — my part was commissioning and coordinating: briefing the designers, managing revisions with the client, and handling print production and QC across signage, name cards and photo props. Shown here to convey how deeply the identity ran through the space — not as my design work.',
+        rows:[
+          { layout:'scrollsm', caption:'Signage & print', images:[
+            {src:'photos/abb/brand-xbanner-registration.png', cap:'X-Banner — registration'},
+            {src:'photos/abb/brand-xbanner-mainhall.png', cap:'X-Banner — to the main hall'},
+            {src:'photos/abb/brand-a3-event.png', cap:'A3 POP — event & hours'},
+            {src:'photos/abb/brand-a3-welcome.png', cap:'A3 POP — welcome'},
+            {src:'photos/abb/brand-a3-wayfinding.png', cap:'A3 POP — wayfinding'},
+            {src:'photos/abb/brand-a4-welcome.png', cap:'A4 POP'},
+            {src:'photos/abb/brand-a5-cue.png', cap:'A5 cue card — Art Night VIS'},
+            {src:'photos/abb/brand-a4-menu.png', cap:'A4 bar menu'},
+            {src:'photos/abb/brand-a4-brief.png', cap:'A4 program brief — guest journey map'},
+          ]},
+          { layout:'scrollsm', caption:'Name cards', images:[
+            {src:'photos/abb/namecard-creator.png', cap:'Creator'},
+            {src:'photos/abb/namecard-samsung.png', cap:'Samsung'},
+            {src:'photos/abb/namecard-guest.png', cap:'Guest'},
+            {src:'photos/abb/namecard-artbasel.png', cap:'Art Basel'},
+          ]},
+          { layout:'scrollsm', caption:'Photo props & mic flag', images:[
+            {src:'photos/abb/brand-prop-artnight.png', cap:'#ArtNight'},
+            {src:'photos/abb/brand-prop-artstore.png', cap:'#SamsungArtStore'},
+            {src:'photos/abb/brand-prop-framepro.png', cap:'#TheFramePro'},
+            {src:'photos/abb/brand-prop-microrgb.png', cap:'#MicroRGB'},
+            {src:'photos/abb/brand-prop-arttv.png', cap:'#ArtTV'},
+            {src:'photos/abb/brand-prop-designtv.png', cap:'#DesignTV'},
+            {src:'photos/abb/brand-prop-logo.png', cap:'Art Night logo prop'},
+            {src:'photos/abb/brand-mic-flag.png', cap:'Samsung mic flag'},
+            {src:'photos/abb/event-props.jpg', cap:'On site — props, Polaroid & keycaps'},
+          ]},
+        ]},
+    ],
+    link:null, period:'Jun 12–20, 2026 · Basel, Switzerland' },
+  { n:'02', yr:'2026', client:'Samsung × Disney · One RX',
     title:'Devil Wears Prada 2 — <em>Runway Cam</em>',
     tags:['Fashion × Tech','Galaxy S26 Ultra','Glambot','End-to-End Build'],
     challenge:'The world premiere of The Devil Wears Prada 2 — one stop on a global tour through Mexico City, Tokyo, Seoul and Shanghai — landed at Lincoln Center and streamed live worldwide on Disney+ and Hulu. On the most-photographed red carpet of the season, how does the Galaxy S26 Ultra stop being a sponsor logo and become the thing the carpet is actually built around?',
-    participation:`Ran the activation end to end over two months — from the glambot concept through experience planning, solution development, and on-site logistics — as the direct line to the client, Samsung's MX Partnership team. I sat in the client–Disney premiere meetings and carried the day-to-day communication, built the Runway Cam itself with Cheil's in-house solution team, and directed the Red-Heel × Galaxy-Lens key visual with the production team — a poster that ran not only on the on-site brand wall but as the thumbnail across Samsung's official premiere content.`,
+    participation:`As Account Executive on the project, I ran the activation end to end over two months — the direct line between the client, Samsung's MX Partnership team, and Cheil's production. Samsung was the only brand granted a solo activation zone inside the red carpet: a roughly 3 × 3 m space set right beside the live-stream interview spot, and I owned what happened in it. The glambot concept, experience planning, solution development with Cheil's in-house team, on-site logistics, and the day-to-day client and Disney communication all ran through me. The Red-Heel × Galaxy-Lens key visual was designed by Cheil's creative director; my part was the production-side AE work — carrying feedback between the advertiser and the creative team and steering revisions until it was right.`,
+    extraBlocks:[
+      {label:'The Setting', text:`The premiere ran across a single evening at Lincoln Center — doors at 4 PM for two hours of red carpet (runway, photo zone, Runway Cam, press interviews and live stream), the film screening at 6, and a VVIP after-party from 9 to 11 that sat outside our scope. For those hours the carpet gathered New York's social set, film directors, fashion figures, media and celebrities in one place, streamed live worldwide on Disney+ and Hulu.`},
+      {label:'Logistics', text:`The robot arm came from a Korean manufacturer, so getting it to New York intact was its own project. The rig is extremely heavy and freight was a real cost — I coordinated the shipping schedule and oversaw the process on the ground, from load-in at the venue through to pickup at the end of the run.`},
+      {label:'Building the Solution', text:`On the software side we built a tool that took the phone-camera footage and rendered it automatically to slow motion at whatever duration we wanted. For the motion bot, we developed and tested three camera paths tuned to a runway-cam angle — the arm moving front-to-back and side-to-side in a mix dynamic enough to feel cinematic — and ran one of them live, with a tablet control to switch motion options on the fly.`},
+    ],
     hard:`On show day I stood on the carpet as the posing director — the person who, in the few seconds each of 174 arrivals gave the Runway Cam, had to read a stranger, call a pose, and pull a usable take before they moved on. No second takes, celebrities and their handlers watching, the whole activation only as good as the footage that came out of those seconds. It is the hardest thing I did on this project, and the part I am proudest of.`,
     result:'174 celebrities and influencers filmed. Disney D23 co-post (1.94M followers). First-ever Galaxy glambot implementation, and the only partner to hold a solo Samsung Zone inside the red carpet.',
-    role:'End-to-End Project Lead\nClient & Disney Communications\nRunway Cam Solution Dev\nKey Visual Direction\nOn-site Posing Director',
-    metrics:[{v:'174',l:'Filmed'},{v:'Disney D23',l:'1.94M Co-post'},{v:'1st',l:'Galaxy Glambot'}],
-    reels:[
-      {label:'Runway Cam on the carpet', href:'https://www.instagram.com/reel/DX6iMbISW9s/'},
+    schedule:[
+      {d:'Apr 16', t:'Depart Seoul'},
+      {d:'Apr 17–18', t:'Robot-arm pre-testing · studio'},
+      {d:'Apr 19', t:'Robot-arm install · venue'},
+      {d:'Apr 20', t:'Show day'},
+      {d:'Apr 21', t:'Depart New York (Seoul, Apr 22)'},
     ],
+    role:'Account Executive\nClient & Disney Communications\nRunway Cam Solution Dev\nKey Visual — Production Coordination\nLogistics & Load-in Supervision\nOn-site Posing Director',
+    metrics:[{v:'174',l:'Filmed'},{v:'Disney D23',l:'1.94M Co-post'},{v:'1st',l:'Galaxy Glambot'}],
+    heroReel:{src:'photos/dwp/official-reel.mp4', href:'https://www.instagram.com/reel/DX6iMbISW9s/', label:'Official reel — Runway Cam'},
     caseStudy:[
-      { kind:'photos', label:'Event Venue', layout:'masonry', note:'David Geffen Hall at Lincoln Center — the runway stage, plaza and red-carpet entrance built out for the premiere.',
+      { kind:'photos', label:'Event Venue', layout:'row4', note:'David Geffen Hall at Lincoln Center — the runway stage, plaza and red-carpet entrance built out for the premiere.',
         images:[
           {src:'photos/dwp/venue-stage.jpeg', cap:'The main runway stage'},
           {src:'photos/dwp/venue-stage-wide.jpeg', cap:'Stage and runway, built out'},
@@ -1292,33 +1607,27 @@ const PROJECTS = [
           {src:'photos/dwp/ui-processing.png', cap:'Processing the take'},
           {src:'photos/dwp/ui-download.png', cap:'QR hand-off & download'},
         ]},
-      { kind:'ui', label:'Video Gallery & Emailing Server', note:'A custom media viewer so the team could find any of the 174 takes on the spot — each tile with one-tap download and a built-in send-via-email server for instant delivery to talent and press.',
-        rows:[
-          { layout:'wide', images:[
-            {src:'photos/dwp/gallery-viewer.png', cap:'Media viewer — every take, searchable, download & email per tile'},
-          ]},
-          { layout:'center', caption:'Built-in emailing server', images:[
-            {src:'photos/dwp/gallery-email.png', cap:'Send-via-email — instant hand-off to talent & press'},
-          ]},
+      { kind:'ui', label:'Video Gallery & Emailing Server', layout:'pair', note:'A custom media viewer so the team could find any of the 174 takes on the spot — each tile with one-tap download and a built-in send-via-email server for instant delivery to talent and press.',
+        images:[
+          {src:'photos/dwp/gallery-viewer.png', cap:'Media viewer — every take, searchable, download & email per tile'},
+          {src:'photos/dwp/gallery-email.png', cap:'Built-in emailing server — instant hand-off to talent & press'},
         ]},
-      { kind:'photos', label:'Brand Visual Design', note:'I directed the Red-Heel × Galaxy-Lens key visual — a poster that ran not only on the on-site brand wall but as the thumbnail across Samsung\u2019s official premiere content. It carried across every branded surface on the carpet: the robot-arm base, the mounted device, the brand wall, and the finished result videos.',
+      { kind:'photos', label:'Brand Visual Design', note:'Branding showed up across several touchpoints on the carpet, each handled differently. The Red-Heel × Galaxy-Lens key visual — designed by Cheil\u2019s creative director, with me coordinating feedback and revisions from the production side — ran on the brand wall and as the thumbnail across Samsung\u2019s official premiere content. The robot-arm base carried the Samsung × The Devil Wears Prada 2 premiere composite logos, while the mounted device and the finished result videos each carried their own branding.',
         rows:[
-          { layout:'center', caption:'The key visual — carried into Runway Cam content thumbnails', images:[
-            {src:'photos/dwp/bv-keyvisual.jpg', cap:'Red-Heel × Galaxy-Lens key visual'},
+          { layout:'center', caption:'The key visual — on the brand wall and in content thumbnails', images:[
+            {src:'photos/dwp/bv-keyvisual.png', cap:'Red-Heel × Galaxy-Lens key visual'},
           ]},
           { layout:'quad', images:[
-            {src:'photos/dwp/bv-arm-base.png', cap:'Robot arm base'},
-            {src:'photos/dwp/bv-mobile.png', cap:'Mobile device'},
-            {src:'photos/dwp/bv-wall.png', cap:'Brand wall'},
+            {src:'photos/dwp/bv-arm-base.png', cap:'Robot-arm base — premiere composite logos'},
+            {src:'photos/dwp/bv-mobile.png', cap:'Mounted device'},
+            {src:'photos/dwp/bv-wall.png', cap:'Brand wall — key visual'},
             {src:'photos/dwp/bv-results.png', cap:'Result videos'},
           ]},
         ]},
       { kind:'photos', label:'Operation Management', note:'Two tablets ran the carpet in tandem — one driving the Runway Cam application, one running the Video Gallery web with built-in emailing for instant hand-off. Solution testing before doors, live operation through the night.',
         rows:[
-          { layout:'masonry', images:[
-            {src:'photos/dwp/ops-studio.jpeg', cap:'Pre-event solution testing'},
-          ]},
-          { layout:'devices', caption:'Two tablets on the carpet', images:[
+          { layout:'opsrow', images:[
+            {src:'photos/dwp/ops-studio.jpeg', cap:'Pre-event solution testing', zoom:true},
             {src:'photos/dwp/ops-tablet1-app.png', cap:'Tablet 1 — Runway Cam application'},
             {src:'photos/dwp/ops-tablet2-gallery.png', cap:'Tablet 2 — Video Gallery web (+ emailing)'},
           ]},
@@ -1347,57 +1656,142 @@ const PROJECTS = [
     ],
     link:null, period:'Apr 20, 2026 · Lincoln Center, NYC' },
 
-  { n:'02', yr:'2026', client:'Samsung Olympics · One RX',
-    title:'Galaxy Z Flip7 Olympic Edition — <em>Open Station, Italy</em>',
+  { n:'03', yr:'2026', client:'Samsung Olympics · One RX',
+    title:'Galaxy Z Flip7 Olympic Edition — <em>Open Station, Anterselva</em>',
     tags:['Global Sports Activation','On-site Operations','Athlete Engagement'],
     challenge:'At a Winter Olympics, athletes run on adrenaline and zero spare minutes. How do you make a phone something they actually reach for between races — not one more thing to manage?',
-    participation:`Deployed on-site in Antholz-Anterselva as local promotion operations lead for the Samsung Open Station — coordinating charging-station installation across two venues (Anterselva and Cortina), supporting content-shoot management, and running day-to-day athlete engagement at the station.`,
+    participation:`Deployed on-site in Antholz-Anterselva as local promotion operations lead for the Samsung Open Station — running Olympic Edition distribution and day-to-day athlete engagement at the station, coordinating charging-station installation across two venues (Anterselva and Cortina), and supporting content-shoot management.`,
+    extraBlocks:[
+      {label:'The Station', text:`Anterselva\u2019s Open Station sat on the ground floor of the Alpen Resort Bivio hotel, inside the athletes\u2019 village — serving the 210 athletes of the Anterselva OLV through the full journey: ID check on the IOC system, Olympic Edition package hand-out, Smart Switch data transfer and eSIM setup, activation support, and customer service. Around ten minutes per athlete, one athlete at a time.`},
+      {label:'Athlete Engagement', text:`Activation was only the first conversion — the station\u2019s real job was making the Z Flip7 the phone athletes actually reached for between races. Galaxy Athlete Card (a digital card athletes design and exchange by tapping phones together), social challenges, and the pin promotion with its gacha machine gave them reasons to keep coming back — small rituals sized to the seconds athletes actually have.`},
+    ],
     hard:`The audience was Olympic athletes mid-competition — people with no time, no patience for marketing, and everything on the line. The station had to earn its place by being genuinely useful in the seconds between events, across two mountain venues in deep winter. Activation is straightforward in a controlled room; it is hard when the users are elite competitors and the room is an Alpine course.`,
-    result:'Device activation rate +24pp (63→87%). Galaxy Athlete Card 4,202 users. Athletes\' village program TOP 1 in preference.',
-    role:'Open Station Operations Lead\nCharging Station Coordination\nContent Shoot Management',
-    metrics:[{v:'+24pp',l:'Activation Rate'},{v:'4,202',l:'Athlete Card Users'},{v:'TOP 1',l:'Village Program'}],
+    result:`Across all six Olympic Villages, the program lifted device activation by +24pp (63→87%) and reached 4,202 Galaxy Athlete Card users — Games-wide outcomes carried largely by the bigger villages. Anterselva\u2019s share was its 210 athletes, served one by one, day after day.`,
+    role:'Open Station Operations Lead\nOlympic Edition Distribution\nAthlete Engagement Programs\nCharging Station Coordination\nContent Shoot Management',
+    metrics:[{v:'210',l:'Athletes · Anterselva OLV'},{v:'Jan 30 – Feb 24',l:'Village Operation'}],
+    reels:[
+      {label:'Yuliia Dzhima (UKR) — at the station', href:'https://www.instagram.com/p/DVyDDa_jFYR/'},
+    ],
+    caseStudy:[
+      { kind:'photos', label:'Open Station — Anterselva', note:'The station on the ground floor of the Alpen Resort Bivio hotel: distribution desk, customer service, and the gacha machine — with Tina, the Games mascot, as the resident photo partner.',
+        rows:[
+          { layout:'scroll', caption:'The station', images:[
+            {src:'photos/olympics/station-desk.png', cap:'Distribution & CS desk, gacha machine'},
+            {src:'photos/olympics/station-desk-estonia.png', cap:'Customer service, athlete by athlete'},
+            {src:'photos/olympics/station-flip-mascot.png', cap:'Z Flip7 Olympic Edition'},
+            {src:'photos/olympics/station-photozone-pose.png', cap:'The photo corner'},
+          ]},
+          { layout:'scroll', caption:'Distribution & activation — one athlete at a time', images:[
+            {src:'photos/olympics/station-setup-czech.png', cap:'Setup support, one on one'},
+            {src:'photos/olympics/station-transfer.png', cap:'Smart Switch data transfer'},
+            {src:'photos/olympics/station-korea-unbox.png', cap:'Unboxing'},
+            {src:'photos/olympics/station-bulgaria-flip.png', cap:'Package collected'},
+            {src:'photos/olympics/station-ukraine-dzhima.png', cap:'Yuliia Dzhima (UKR)'},
+            {src:'photos/olympics/station-czech-mascot.png', cap:'With Tina, the mascot'},
+            {src:'photos/olympics/station-selfie-mascot.png', cap:'First selfie on the Flip'},
+            {src:'photos/olympics/station-mascot-box.png', cap:'Package in hand'},
+            {src:'photos/olympics/station-latvia-pins.png', cap:'Pin promotion — gacha pins'},
+          ]},
+        ]},
+    ],
     link:null, period:'Jan – Mar 2026 · Antholz-Anterselva, Italy' },
 
-  { n:'03', yr:'2026', client:'Samsung The First Look 2026 · One RX',
+  { n:'04', yr:'2026', client:'Samsung The First Look 2026 · One RX',
     title:'The First Look 2026 — <em>VIP Tour Operations</em>',
-    tags:['CES 2026','VIP Experience','Bilingual Operations'],
-    challenge:'CES is overwhelming by design. How do you move a chairman, a cabinet minister, and a room of global C-suite guests through the noise and make each of them feel like the only person in it?',
-    participation:`Owned VIP tour operations across all four days — sourcing and training the Tour Assistant team through a local staffing agency, designing the training framework for both Korean and English sessions, and supervising the floor as guests moved through, from Euisun Chung and Korea's Minister of Land to global C-suite executives.`,
-    hard:`The tours ran in two languages, for guests at the very top of their industries, inside one of the most overloaded environments in tech. Assistants were hired locally and had only days to be ready. The whole experience depended on training a temporary bilingual team well enough that a chairman's tour felt effortless — and repeating that 208 times without a visible seam.`,
-    result:'208 tours completed, 2,158 attendees. Surpassed target of 200 tours. Guests included Euisun Chung (Hyundai Chair), Korean Minister of Land, global C-suite.',
-    role:'VIP Tour Operations Lead\nStaff Sourcing & Training\nOn-site Supervision\nBilingual Coordination',
+    tags:['Samsung First Look','Wynn Las Vegas','Promoter Management','Bilingual Ops'],
+    challenge:'The First Look is Samsung\u2019s own showcase during CES week — a Forbes five-star ballroom filled with chairmen, ministers and global C-suite. How do you move fifteen of them at a time through a dense product exhibition and make each feel like the only guest in the room?',
+    participation:`The First Look is Samsung's own invitation-only showcase at the Wynn Las Vegas — a separate, Samsung-hosted experience running alongside CES, not part of the show floor. Inside the Lafite Ballroom, a full product exhibition spanning VD, DA, MX and SmartThings sat beside a global First Look keynote stage, a media-and-influencer tech forum, a creators' space and the First Look Night. My remit was the VIP Tour that ran through the exhibition: as the on-site PIC I led the promoter team — ten Tour Assistants, two bilingual desk staff, guards and runners, sourced through a local agency — and I was the single point they reported to on the floor.`,
+    extraBlocks:[
+      {label:'The Operation', text:`Tours ran in Korean and English on a rolling 45-minute cadence — a 25-minute walk-through plus buffer to fit each group of up to fifteen with wireless headset receivers — across three scripted routes: a general version and VD- and DA-focused versions for key division accounts, with up to three groups departing at once without letting them overlap. I built the bilingual training framework and ran the team through three days of rehearsal before doors, then kept every assistant matched to their guide and moving cleanly once guests arrived.`},
+      {label:'The Guests', text:`The room held some of Samsung's most senior visitors — chairmen, a cabinet minister and global C-suite decision-makers, many travelling from Korea. On a floor that sensitive, every promoter had to anticipate needs, stay composed, and make a fifteen-person tour feel private.`},
+    ],
+    hard:`The team was temporary and bilingual, hired locally with only a few days to be ready, and the guests were at the very top of their industries. The whole experience rested on training that team well enough that a chairman's tour felt effortless — and repeating it, group after group, three days straight, without a visible seam.`,
+    result:'208 tours completed for 2,158 guests over three days, past the 200-tour target. Guests included Euisun Chung (Hyundai Motor Group Chair), Korea\u2019s Minister of Land, and global C-suite executives.',
+    role:'Promoter Team Lead (On-site PIC)\nTour Assistant Training\nBilingual Training Framework\nOn-site Floor Supervision',
     metrics:[{v:'208',l:'Tours (Target 200)'},{v:'2,158',l:'Attendees'},{v:'KO+EN',l:'Bilingual'}],
+    caseStudy:[
+      { kind:'photos', label:'On the Floor', note:'FSM guides leading VIP walk-throughs across the ballroom\u2019s scripted routes \u2014 and the team that ran it: tour guides, promoters, and Cheil \u00d7 One RX staff.',
+        rows:[
+          { layout:'scroll', caption:'VIP tours in progress', images:[
+            {src:'photos/fl/tour-vision-ai.jpg', cap:'FSM guide \u2014 Vision AI Companion zone'},
+            {src:'photos/fl/tour-music-studio.jpg', cap:'FSM guide \u2014 Music Studio by Erwan Bouroullec'},
+          ]},
+          { layout:'scroll', caption:'The team', images:[
+            {src:'photos/fl/team-guides.jpg', cap:'Tour guide team'},
+            {src:'photos/fl/team-all.jpg', cap:'Guides, promoters & Cheil \u00b7 One RX staff'},
+          ]},
+        ]},
+    ],
     link:'https://news.samsung.com/kr/%ec%82%bc%ec%84%b1%ec%a0%84%ec%9e%90-ces-2026%ec%84%9c-%ec%a0%84%ec%8b%9c%e2%88%99%ec%bd%98%ed%8d%bc%eb%9f%b0%ec%8a%a4-%ed%86%b5%ed%95%a9%ed%95%9c-%eb%8d%94-%ed%8d%bc%ec%8a%a4%ed%8a%b8%eb%a3%a9',
     linkLabel:'Samsung Newsroom',
-    period:'Jan 2026 · Las Vegas, CES 2026' },
+    period:'Jan 5–7, 2026 · Wynn Las Vegas' },
 
-  { n:'04', yr:'2025', client:'Samsung Galaxy XR · One RX',
+  { n:'05', yr:'2025', client:'Samsung Galaxy XR · One RX',
     title:'Galaxy XR — <em>Samsung Galaxy Event, New York</em>',
     tags:['Tech Launch','Keynote Production','Global Livestream','Google · Qualcomm'],
     challenge:'How do you introduce a device no one has worn yet — a whole new category, built with Google and Qualcomm — in a single livestreamed hour, to the entire world at once?',
-    participation:`Managed the keynote script through every revision, supported presenter rehearsals, and bridged the overseas production agency and local New York vendors to bring a global launch cleanly to air — the first Android XR device, co-developed with Google and Qualcomm.`,
+    participation:`Worked inside the keynote production team for the Galaxy XR launch — managing the master script with the scriptwriting team through every revision, joining speaker script training in coordination with the trainer, and assisting the keynote production lead through the build — for the first Android XR device, co-developed with Google and Qualcomm.`,
+    extraBlocks:[
+      {label:'The Script', text:`Owned the master script alongside the scriptwriting team — consolidating every revision from stakeholders into a single source of truth — and joined the speakers' script training sessions, coordinating between presenters and the delivery trainer.`},
+      {label:'The Production', text:`Assisted the keynote production lead day to day, and supported communication with Amplify, the New York–based lead local agency for the event, across email threads and calls — keeping the Seoul production team and the on-the-ground agency moving as one. <a href="https://www.weareamplify.com/work/us/samsung-galaxy-xr-worlds-wide-open" target="_blank" rel="noopener" style="border-bottom:1px solid currentColor">Amplify — Worlds Wide Open ↗</a>`},
+    ],
     hard:`You cannot demo a headset to a livestream the way you can a phone — the audience cannot see through it. The launch had to make an unworn, unfamiliar device legible in a single hour, in one language, to the whole world at once, with three companies' messaging to reconcile and no second take.`,
     result:'Galaxy XR launched globally via livestream. First Android XR device co-developed with Google and Qualcomm.',
-    role:'Script Management\nPresenter Training Support\nOverseas Agency Coordination\nLocal Vendor Coordination',
+    role:'Master Script Management\nSpeaker Training Coordination\nKeynote Production Support\nLocal Agency Liaison (Amplify)',
     metrics:[{v:'Global',l:'Worldwide Livestream'},{v:'Oct 22',l:'NYC Launch'}],
     link:'https://news.samsung.com/kr/%ec%98%81%ec%83%81-%eb%a9%80%ed%8b%b0%eb%aa%a8%eb%8b%ac-ai-%ec%8b%9c%eb%8c%80%ec%9d%98-%ec%83%88%eb%a1%9c%ec%9a%b4-%eb%b9%84%ec%a0%84-%ec%82%bc%ec%84%b1-%ea%b0%a4%eb%9f%ad%ec%8b%9c',
     linkLabel:'Watch Event',
     period:'Oct 22, 2025 · New York' },
 
-  { n:'05', yr:'2024', client:'Tekla Fabrics · via TMN',
+  { n:'06', yr:'2024', client:'Tekla Fabrics · via TMN',
     title:'Seongsu Pop-Up — <em>PR Coordination</em>',
     tags:['PR','Press Activation','KOL Management'],
     challenge:'Seongsu gets a new pop-up almost every week. How do you make press and KOLs feel that Tekla\'s opening — a bedding brand, of all things — is the one worth clearing a morning for?',
-    participation:`Led PR for Tekla's Seongsu pop-up — hosting a press breakfast and dinner, managing editorial and KOL communications, and shaping how the opening was covered rather than merely attended.`,
+    participation:`Led PR for &lt;Tekla Seongsu&gt;, the brand's first Korean pop-up at 29 Seongsu — a Nordic-calm space carrying the core bedding, towels and pajamas alongside a Korea-exclusive patchwork homewear collection. Hosted the press breakfast and KOL dinner, arranged co-founder interviews, and managed editorial and KOL communications — shaping how the opening was covered rather than merely attended.`,
+    extraBlocks:[
+      {label:'Press Breakfast', text:`Held inside 29 Seongsu, the pop-up venue, with Seoul café Wildduck serving a Copenhagen-style breakfast. The room held chief editors from the Korean editions of the major fashion titles — Vogue, Marie Claire, Noblesse and more.`},
+      {label:'KOL Dinner', text:`A dinner with chef Youngbin Kim of Mater, Seoul's Nordic-cuisine restaurant — hosted at a separate Seongsu venue within walking distance of the pop-up, so the evening stayed inside the neighborhood the brand had just moved into.`},
+      {label:'Founder Interviews', text:`Arranged interviews with Kristoffer Juhl, Tekla's co-founder, during the pop-up run — pairing the major magazine titles with Seoul's newly rising web- and social-based magazines.`},
+      {label:'Coffee Collaboration', text:`Seoul coffee shop Cappy ran the in-store café, brewing beans from Danish specialty roaster Prologue — with cinnamon buns, Copenhagen's signature dessert, on the menu.`},
+    ],
     hard:`Seongsu turns over pop-ups by the week, and press have seen every possible version of "come to our opening." The task was to make a bedding brand's launch feel like the morning genuinely worth clearing — through who was in the room and how it was hosted, not through spend.`,
     result:'141 attendees. 467 UGC posts. 1.38M estimated reach.',
-    role:'PR Lead\nPress & KOL Coordination\nEvent Production',
+    role:'PR Lead\nPress & KOL Coordination\nFounder Interview Coordination\nEvent Production',
+    reels:[
+      {label:'Fast Paper — Web Magazine', href:'https://www.instagram.com/reel/DAF8WS9pbmk/'},
+    ],
     metrics:[{v:'1.38M',l:'Reach'},{v:'467',l:'UGC Posts'},{v:'141',l:'Attendees'}],
+    caseStudy:[
+      { kind:'photos', label:'The Pop-Up — 29 Seongsu', layout:'uniform', note:'Tekla\u2019s first Korean pop-up inside 29 Seongsu: a Nordic-calm space carrying the core bedding, towels and pajamas, plus the Korea-exclusive patchwork homewear \u2014 down to the TEKLA-embossed glassware.',
+        images:[
+          {src:'photos/tekla-seongsu/popup-storefront.png', cap:'29CM Seongsu \u2014 the storefront'},
+          {src:'photos/tekla-seongsu/popup-pillows.png', cap:'Pillow mountain under the TEKLA wall'},
+          {src:'photos/tekla-seongsu/popup-pajamas.png', cap:'The sleep room \u2014 pajamas & bedding'},
+          {src:'photos/tekla-seongsu/popup-towels.png', cap:'Towel wall \u2014 the core range'},
+          {src:'photos/tekla-seongsu/popup-chair.png', cap:'Bedding & Terry on a lounge chair'},
+          {src:'photos/tekla-seongsu/popup-print.jpg', cap:'Percale bedding \u2014 in-store print'},
+          {src:'photos/tekla-seongsu/popup-glass.jpg', cap:'TEKLA-embossed glassware'},
+          {src:'photos/tekla-seongsu/popup-team.jpg', cap:'The team, on site'},
+        ]},
+      { kind:'photos', label:'Press Breakfast — with Wildduck', layout:'uniform', note:'A Copenhagen-style breakfast by Seoul caf\u00e9 Wildduck, held inside the pop-up for chief editors from the Korean editions of Vogue, Marie Claire, Noblesse and more \u2014 with Cappy pouring Danish specialty beans from Prologue.',
+        images:[
+          {src:'photos/tekla-seongsu/breakfast-spread.jpg', cap:'Copenhagen breakfast \u2014 soft egg, ham & cheese'},
+          {src:'photos/tekla-seongsu/breakfast-prep.jpg', cap:'Plating the breakfast service'},
+          {src:'photos/tekla-seongsu/breakfast-cafe.jpg', cap:'The Cappy caf\u00e9 counter'},
+          {src:'photos/tekla-seongsu/breakfast-prologue.jpg', cap:'Prologue \u2014 Danish specialty beans'},
+        ]},
+      { kind:'photos', label:'KOL Dinner — with Mater', layout:'uniform', note:'A dinner with chef Youngbin Kim of Mater, Seoul\u2019s Nordic-cuisine restaurant \u2014 hosted at a separate Seongsu venue within walking distance of the pop-up.',
+        images:[
+          {src:'photos/tekla-seongsu/dinner-table.jpg', cap:'The table, set \u2014 Mater \u00d7 Tekla menu'},
+          {src:'photos/tekla-seongsu/dinner-course.jpg', cap:'A course by chef Youngbin Kim'},
+          {src:'photos/tekla-seongsu/dinner-champagne.jpg', cap:'Welcome champagne pour'},
+        ]},
+    ],
     link:'https://teklafabrics.com/projects/tekla-seongsu',
     linkLabel:'View Project',
-    period:'Sep 2024 · Seongsu, Seoul' },
+    period:'Sep 20 – Oct 27, 2024 · 29 Seongsu, Seoul' },
 
-  { n:'06', yr:'2024', client:'Birkenstock Korea · via TMN',
+  { n:'07', yr:'2024', client:'Birkenstock Korea · via TMN',
     title:'Apgujeong Pop-Up — <em>Flagship Launch</em>',
     tags:['Pop-up','PR & Events','VIP Production'],
     challenge:'Two floors to transform, a limited budget, and — at first — only two days to build. How do you turn a hard construction constraint into a flagship people line up to see?',
@@ -1406,48 +1800,216 @@ const PROJECTS = [
     result:'134 industry professionals. 33 key media editors.',
     role:'PR & Event Coordination\nVIP Production\nHQ Communications\nLive Interpretation',
     metrics:[{v:'134',l:'Industry Professionals'},{v:'33',l:'Key Media Editors'}],
+    reels:[
+      {label:'Onnuk — Creator', href:'https://www.instagram.com/p/DBvrHVfzyJj/'},
+      {label:'Sunyoung — Creator', href:'https://www.instagram.com/p/DBwCIgsPAYl/'},
+      {label:'Hanyoung Seo — Creator', href:'https://www.instagram.com/p/DBvy7lFJ1iQ/'},
+      {label:'Web Magazine', href:'https://www.instagram.com/reel/DBvjc6ySaoQ/'},
+    ],
+    heroReel:{src:'photos/bstock/official-reel.mp4', href:'https://www.instagram.com/reel/DCEkbMrNGlP/', label:'Official reel — @birkenstockkr'},
+    caseStudy:[
+      { kind:'photos', label:'The Building — Before', note:'The two-story building as handed over: a former café in burgundy and raw plaster, brick steps at the entrance, a screening room upstairs — and, at first, only two days to turn all of it into a flagship.',
+        rows:[
+          { layout:'scroll', caption:'Street level — as found', images:[
+            {src:'photos/bstock/before-exterior.jpg', cap:'The corner facade, pre-build'},
+            {src:'photos/bstock/before-steps.jpg', cap:'Brick steps at the entrance'},
+            {src:'photos/bstock/before-entry.jpg', cap:'The entry, previous tenant\u2019s furniture in place'},
+          ]},
+          { layout:'scroll', caption:'Inside — ground & upper floors', images:[
+            {src:'photos/bstock/before-lounge.jpg', cap:'Ground-floor lounge'},
+            {src:'photos/bstock/before-window.jpg', cap:'Shuttered window bay'},
+            {src:'photos/bstock/before-counter.jpg', cap:'The caf\u00e9 counter \u2014 later repurposed'},
+            {src:'photos/bstock/before-stairs.jpg', cap:'Stairs to the second floor'},
+            {src:'photos/bstock/before-room.jpg', cap:'Upper floor, cleared'},
+            {src:'photos/bstock/before-risers.jpg', cap:'Built-in risers, upper floor'},
+            {src:'photos/bstock/before-screen.jpg', cap:'The screening room'},
+          ]},
+        ]},
+      { kind:'photos', label:'The Flagship — After', note:'Four build days later: a 250th-anniversary flagship over two floors — imported display pieces, reused fixtures, the Birkenstock Post archive, and the hands-on foot-care zone that turned the tightest constraint into the most memorable room.',
+        rows:[
+          { layout:'scroll', caption:'Storefront & identity', images:[
+            {src:'photos/bstock/after-facade.jpg', cap:'The facade \u2014 Birkenstock on the brick steps'},
+            {src:'photos/bstock/after-window-250.jpg', cap:'250 years \u2014 window vinyl'},
+            {src:'photos/bstock/after-250-banner.jpg', cap:'Tradition since 1774 \u2014 anniversary banner'},
+          ]},
+          { layout:'scroll', caption:'The retail floor', images:[
+            {src:'photos/bstock/after-display-table.jpg', cap:'Display table, ground floor'},
+            {src:'photos/bstock/after-clogs.jpg', cap:'The unreleased line, first try-on in Korea'},
+            {src:'photos/bstock/after-1774-wall.jpg', cap:'1774 heritage wall'},
+            {src:'photos/bstock/after-podiums.jpg', cap:'Podium displays \u2014 imported pieces'},
+            {src:'photos/bstock/after-archive-room.jpg', cap:'The archive room'},
+            {src:'photos/bstock/after-workshop.jpg', cap:'The workshop corner \u2014 pegboard & pallet counter'},
+          ]},
+          { layout:'scroll', caption:'Birkenstock Post & the foot-care zone', images:[
+            {src:'photos/bstock/after-post-drawers.jpg', cap:'Birkenstock Post \u2014 archive drawers'},
+            {src:'photos/bstock/after-post-prints.jpg', cap:'Birkenstock Post \u2014 prints'},
+            {src:'photos/bstock/after-footcare-zone.jpg', cap:'Foot-care experience zone'},
+            {src:'photos/bstock/after-footcare-live.jpg', cap:'The foot-care ritual, live'},
+          ]},
+          { layout:'scroll', caption:'VIP opening \u2014 catering & coffee', images:[
+            {src:'photos/bstock/after-catering-spread.jpg', cap:'Catering \u2014 madeleines & flagged sandwiches'},
+            {src:'photos/bstock/after-catering-table.jpg', cap:'The catering table, under the archive prints'},
+            {src:'photos/bstock/after-footbeds.jpg', cap:'Footbed cookies'},
+            {src:'photos/bstock/after-coffee.jpg', cap:'Birkenstock 250 \u2014 coffee cup'},
+          ]},
+        ]},
+    ],
     link:'https://www.birkenstock.com/kr/pop-up-store/',
     linkLabel:'View Pop-Up',
     period:'Oct 2024 · Apgujeong, Seoul' },
 
-  { n:'07', yr:'2024', client:'Tekla Fabrics · via TMN',
+  { n:'08', yr:'2024', client:'Tekla Fabrics · via TMN',
     title:'Talo Jeju — <em>Guesthouse Activation</em>',
     tags:['Brand Experience','Community Activation','Influencer Strategy'],
     challenge:'How do you introduce a Danish brand to Korea without translating it — letting people feel Tekla for themselves before anyone tells them what it is?',
     participation:`Proposed and led Tekla's first guesthouse experience in Korea, a pre-launch activation ahead of the Seoul pop-up — owned it A-to-Z: renovated a traditional Jeju stone house into a Nordic-mood premium stay, curated four creative guests (100K–300K followers, 3–5% engagement), designed a two-day content journey with custom gifts and a local-florist breakfast, and ran the Copenhagen HQ liaison throughout.`,
+    extraBlocks:[
+      {label:'The Invitation', text:`Each guest received a translated digital invitation ahead of the stay, and a printed Tekla invitation card on arrival — the itinerary for both days, with a QR code linking to a curated Tekla playlist to set the mood of the house. Day 1: arrival with a curated sleepwear set, board games and the soundtrack through the afternoon, dinner at Doldame, a local Jeju restaurant, and a night routine of cotton towels and bathrobes in Tekla bedding. Day 2: a farm-to-table breakfast and calming Tekla tea to close the stay.`},
+      {label:'Gifting & Deliverables', text:`No posting requirements were set — the bet was on organic UGC. Guests took home curated seeding sets (sleepwear for adults and kids, beach bags, Tekla tea, a Philip Messmann book and a board game), and after the final stay Tekla gifted Talo Jeju items across every core category — bedding, Terry, kitchen and mohair blankets — so the experience would outlast the activation.`},
+    ],
     hard:`Tekla had always promoted through press dinners and store invitations; a guesthouse was a departure with no template and a HQ to convince. The bet was counterintuitive — say nothing about the brand, and let four people simply live inside it for a weekend. Restraint was the risk: no messaging, no branding in frame, trusting the space to do the explaining.`,
     result:`1.12M Instagram reach. Vogue Korea feature (8.1M circulation). Tekla's highest-performing community activation of the year — now under review as a model for global expansion.`,
     role:'Campaign Concept\nInfluencer Curation\nOn-site Production\nCopenhagen HQ Liaison',
+    schedule:[
+      {d:'Jun 4', t:'Invite copy & KOL list finalised · inviting begins'},
+      {d:'Jun 11', t:'Final guests confirmed + product sizing'},
+      {d:'Jun 13', t:'Warehouse order — direct shipment to Talo Jeju'},
+      {d:'Jun 25', t:'Venue set-up & dressing'},
+      {d:'Jun 26 – Jul 3', t:'Activation — four stays, one group at a time'},
+      {d:'Jul 18', t:'Vogue Korea feature published'},
+    ],
     metrics:[{v:'1.12M',l:'Instagram Reach'},{v:'Vogue KR',l:'8.1M Circulation'}],
+    reels:[
+      {label:'Mulan & Yoonji Bae — Model', href:'https://www.instagram.com/p/C-cUCqtxk2n/'},
+      {label:'Mulan & Yoonji Bae — II', href:'https://www.instagram.com/p/C-Xf_ExyuyT/'},
+      {label:'Mulan & Yoonji Bae — III', href:'https://www.instagram.com/p/C_sGHWuy-V1/'},
+      {label:'Minjoo Park — Creator', href:'https://www.instagram.com/p/C88h1vKpnyj/'},
+      {label:'Minjoo Park — II', href:'https://www.instagram.com/p/C89MsevJMAB/'},
+      {label:'Hasisi Park — Photographer', href:'https://www.instagram.com/p/C8yxk5Zu4Vz/'},
+      {label:'Hasisi Park & Taegyu Bong', href:'https://www.instagram.com/p/C84hj1xyL2E/'},
+    ],
+    caseStudy:[
+      { kind:'photos', label:'Invitation', note:'A translated digital invitation sent ahead of arrival, and a printed card waiting in the house — the two-day itinerary with a QR code linking to a curated Tekla playlist.',
+        rows:[
+          { layout:'scroll', images:[
+            {src:'photos/talo/invite-kr.jpg', cap:'Digital invitation — sent ahead of the stay (KR)', zoom:true},
+            {src:'photos/talo/invite-en.jpg', cap:'Invitation — original English version', zoom:true},
+            {src:'photos/talo/invite-card.jpg', cap:'Printed card on arrival — itinerary + QR playlist', zoom:true},
+          ]},
+        ]},
+      { kind:'photos', label:'Space Imagery', note:'A traditional Jeju stone house in Aewol, furnished with vintage Artek pieces and dressed head to toe in Tekla — bedding, sleepwear, Terry, kitchen and blankets — for a 360° brand experience.',
+        rows:[
+          { layout:'scroll', caption:'Bedrooms & living', images:[
+            {src:'photos/talo/space-00.jpg', cap:'Pink percale bedding'},
+            {src:'photos/talo/space-01.jpg', cap:'Striped bedding — the second room'},
+            {src:'photos/talo/space-06.jpg', cap:'Pillows, mixed stripes'},
+            {src:'photos/talo/space-04.jpg', cap:'Mohair blanket on an Artek chair'},
+            {src:'photos/talo/space-10.jpg', cap:'Blue mohair — lounge chair'},
+            {src:'photos/talo/space-02.jpg', cap:'Tekla canvas bag'},
+          ]},
+          { layout:'scroll', caption:'Kitchen & bath', images:[
+            {src:'photos/talo/space-03.jpg', cap:'Morning tray'},
+            {src:'photos/talo/space-07.jpg', cap:'Farm-to-table breakfast, local produce'},
+            {src:'photos/talo/space-08.jpg', cap:'The kitchen window'},
+            {src:'photos/talo/space-09.jpg', cap:'Kitchen towels'},
+            {src:'photos/talo/space-05.jpg', cap:'Terry robes, hung'},
+            {src:'photos/talo/space-11.jpg', cap:'Bath — Terry towels'},
+          ]},
+        ]},
+      { kind:'photos', label:'Behind the Scenes', note:'Shot on my phone during the production trip — dressing the house, styling the breakfast, and the space-imagery shoot in progress with photographer and tethered review.',
+        rows:[
+          { layout:'scrollsm', images:[
+            {src:'photos/talo/bts-04.jpg', cap:'Setting the bedroom shot'},
+            {src:'photos/talo/bts-02.jpg', cap:'Shoot in progress'},
+            {src:'photos/talo/bts-03.jpg', cap:'Kitchen scene, mid-setup'},
+            {src:'photos/talo/bts-00.jpg', cap:'Styling the breakfast — local produce'},
+            {src:'photos/talo/bts-06.jpg', cap:'Dining room, dressed'},
+            {src:'photos/talo/bts-07.jpg', cap:'Tekla canvas bag, staged'},
+            {src:'photos/talo/bts-08.jpg', cap:'Garden view from the entry'},
+            {src:'photos/talo/bts-09.jpg', cap:'Tethered review with the photographer'},
+          ]},
+        ]},
+      { kind:'photos', label:'Press — Vogue Korea', note:'A stand-alone organic feature — “‘Doing nothing’ is possible here” by Kwon Min-ji, Vogue.co.kr, 18 July 2024. 8.1M online circulation.',
+        rows:[
+          { layout:'center', images:[
+            {src:'photos/talo/press-vogue.jpg', cap:'Vogue Korea, online — 18 Jul 2024 · click to read', href:'https://www.vogue.co.kr/?p=507800'},
+          ]},
+        ]},
+      { kind:'photos', label:'Social Clippings — Instagram Stories', note:'36 stories and 19 feed posts against a target of 20 and 5 — all organic, no posting requirements. A selection of the story clippings below.',
+        rows:[
+          { layout:'scrollsm', caption:'Guests', images:[
+            {src:'photos/talo/story-p3-0.jpg', cap:'Hasisi Park — @sisi_wonji'},
+            {src:'photos/talo/story-p3-1.jpg', cap:'Hasisi Park — @sisi_wonji'},
+            {src:'photos/talo/story-p3-2.jpg', cap:'Hasisi Park — @sisi_wonji'},
+            {src:'photos/talo/story-p4-0.jpg', cap:'Yoon Young Bae — @mulan_bae'},
+            {src:'photos/talo/story-p4-1.jpg', cap:'Yoon Young Bae — @mulan_bae'},
+            {src:'photos/talo/story-p4-2.jpg', cap:'Yoon Young Bae — @mulan_bae'},
+            {src:'photos/talo/story-p4-3.jpg', cap:'Yoon Young Bae — @mulan_bae'},
+            {src:'photos/talo/story-p4-4.jpg', cap:'Yoon Young Bae — @mulan_bae'},
+            {src:'photos/talo/story-p5-0.jpg', cap:'Minju Park — @mjbypp'},
+            {src:'photos/talo/story-p5-1.jpg', cap:'Minju Park — @mjbypp'},
+            {src:'photos/talo/story-p5-2.jpg', cap:'Minju Park — @mjbypp'},
+            {src:'photos/talo/story-p5-3.jpg', cap:'Minju Park — @mjbypp'},
+            {src:'photos/talo/story-p5-4.jpg', cap:'Minju Park — @mjbypp'},
+            {src:'photos/talo/story-p6-0.jpg', cap:'Minju Park — @mjbypp'},
+            {src:'photos/talo/story-p6-1.jpg', cap:'Minju Park — @mjbypp'},
+            {src:'photos/talo/story-p6-2.jpg', cap:'Minju Park — @mjbypp'},
+            {src:'photos/talo/story-p6-3.jpg', cap:'Minju Park — @mjbypp'},
+            {src:'photos/talo/story-p6-4.jpg', cap:'Minju Park — @mjbypp'},
+            {src:'photos/talo/story-p7-0.jpg', cap:'Yoonji Bae — @baeyj98'},
+            {src:'photos/talo/story-p7-1.jpg', cap:'Yoonji Bae — @baeyj98'},
+            {src:'photos/talo/story-p7-2.jpg', cap:'Yoonji Bae — @baeyj98'},
+          ]},
+          { layout:'scrollsm', caption:'Venue & press channels', images:[
+            {src:'photos/talo/story-p8-0.jpg', cap:'Talo Jeju — @talojeju'},
+            {src:'photos/talo/story-p9-0.jpg', cap:'Vogue Korea — @voguekorea'},
+            {src:'photos/talo/story-p9-1.jpg', cap:'Vogue Korea — @voguekorea'},
+          ]},
+        ]},
+    ],
     link:'https://www.vogue.co.kr/?p=507800',
     linkLabel:'Vogue Korea Feature',
     period:'Jul 2024 · Jeju, Korea' },
 
-  { n:'08', yr:'2024', client:'Joopiter × G-Dragon · via TMN',
+  { n:'09', yr:'2024', client:'Joopiter × G-Dragon · via TMN',
     title:'Collaborative Auction — <em>Joopiter × Peaceminusone</em>',
     tags:['Luxury Auction','Brand Localization','Cross-cultural Production'],
-    challenge:'How do you carry one artist\'s most personal objects between New York and Seoul — two teams, two languages, one deadline — without losing the thing that made them his?',
-    participation:`Primary liaison between Joopiter (NYC) and G-Dragon's team (Seoul) — directed the auction-lot photoshoots, handled translation and interpretation for global-team and artist meetings, and oversaw merch production, logistics, and contract coordination through to launch.`,
+    challenge:'How do you carry one artist\'s most personal objects between New York and Seoul — sourcing them, cataloguing them, shooting them, and moving them into a live auction — two teams, two languages, one deadline, without losing the thing that made them his?',
+    participation:`Coordinated the auction lots for Joopiter’s (NYC) collaborative sale with G-Dragon, staged at Paradise Art Night during Frieze Seoul. Sourced the pieces from the artist and his team, catalogued and organized each lot, art-directed the lot photoshoots, and coordinated the logistics that moved everything intact into the auction — while handling translation and interpretation across the global-team and artist meetings, and overseeing merch production and contract coordination through to launch. Lots ranged from G-Dragon’s own paintings and personal wardrobe — a Rick Owens tour jacket, Virgil Abloh sneakers, a hand-painted Chanel × Pharrell fanny pack, his M.O.T.T.E “throne” director’s chair, a one-of-one gold BIGBANG microphone — to private-collection art including Gwon Osang’s V&A-exhibited sculpture and a Robert Rauschenberg painting from the Urban Bourbon series. Ahead of the sale, all lots went on special exhibition at Daelim Museum in Seoul (through Sep 7), where the JOOPITER × PEACEMINUSONE and Post Archive Faction (PAF) collections were also sold. Our involvement sat on the artist-management side; the museum show and event operations were run by Daelim and a separate operator — our agency attended.`,
     hard:`Requirements shifted constantly and new variables surfaced right up to the moment the auction went live — two teams, two languages, one artist's most personal objects, and no room to lose what made them his. It was not a clean process; holding it together across departments and time zones until launch was the entire job.`,
-    result:`Successful global launch, September 2024 — G-Dragon's personal items and Peaceminusone pieces carried intact between two cities.`,
-    role:'Project Manager\nCreative Direction (Shoots)\nBrand Asset Localization\nNYC Liaison',
+    result:`Successful global launch, September 2024 — every lot sourced, catalogued, shot, and moved intact between two cities and into the sale at Paradise Art Night, Frieze Seoul.`,
+    role:'Auction Lot Coordination\nArt Sourcing & Cataloguing\nCreative Direction (Shoots)\nLogistics & NYC Liaison',
     metrics:[{v:'NYC↔SEL',l:'Cross-cultural'},{v:'Sep \'24',l:'Global Launch'}],
+    heroReel:{src:'photos/joopiter/official-reel.mp4', label:'Event sketch — Vogue Korea'},
+    caseStudy:[
+      { kind:'photos', label:'Identity & Venues', note:`Staged as part of Paradise Art Night for Frieze Seoul 2024, the auction — ‘Nothing But A ‘G’ Thang: The Art & Archive of G-Dragon’ — ran Sep 2–10 on JOOPITER, Pharrell Williams’ digital-first platform, with Paradise City as partner sponsor. Pharrell attended the opening on Sep 2; the lots were shown to the public at Paradise City Art House and on special exhibition at Daelim Museum.`,
+        rows:[
+          { layout:'scroll', images:[
+            {src:'photos/joopiter/poster-auction.png', cap:'Auction key poster — JOOPITER × G-Dragon', zoom:true},
+            {src:'photos/joopiter/poster-artnight.png', cap:'Paradise Art Night — after-party poster', zoom:true},
+            {src:'photos/joopiter/daelim-building.png', cap:'Daelim Museum — the exhibition facade', zoom:true},
+          ]},
+        ]},
+      { kind:'photos', label:'Daelim Museum — Special Exhibition', note:`Ahead of the auction, every lot went on special exhibition at Daelim Museum in Seoul — ‘Nothing But A ‘G’ Thang: The Art & Archive of G-Dragon’. G-Dragon’s fashion, contemporary art, design objects and career archive, plus works made specially for the sale. The museum show and event operations were run by Daelim and a separate operator; our team’s work sat on the artist-management side.`,
+        rows:[
+          { layout:'scroll', caption:'The galleries', images:[
+            {src:'photos/joopiter/exhibit-wide.png', cap:'Exhibition hall — chair plinth & suspended sneakers'},
+            {src:'photos/joopiter/exhibit-painting-jacket.png', cap:'G-Dragon paintings & a tour jacket in vitrine'},
+            {src:'photos/joopiter/exhibit-jackets.png', cap:'Stage jackets on plinths'},
+            {src:'photos/joopiter/exhibit-trunk.png', cap:'Hand-painted trunk & suspended sneakers'},
+            {src:'photos/joopiter/exhibit-vitrine.png', cap:'Archive vitrine — gold microphone & objects'},
+            {src:'photos/joopiter/exhibit-frames.png', cap:'Framed works on the gallery wall'},
+            {src:'photos/joopiter/exhibit-sneakers.png', cap:'Custom sneakers — AF1, crystal & printed pairs'},
+          ]},
+          { layout:'scroll', caption:'The opening', images:[
+            {src:'photos/joopiter/event-pharrell.png', cap:'Pharrell Williams at the JOOPITER opening'},
+          ]},
+        ]},
+    ],
     link:'https://www.joopiter.com/auctions/g-dragon',
     linkLabel:'View Auction',
     period:'May – Sep 2024 · Seoul' },
 
-  { n:'09', yr:'2023', client:'Hitchhikers Performance',
-    title:'Dancing with A.I. — <em>Developer & Artist</em>',
-    tags:['Generative Art','Machine Learning','Live Performance','p5.js'],
-    challenge:'Can machine learning respond to a human body in real time — not as a tool, but as a co-performer?',
-    participation:`Built the real-time generative visual system in p5.js, mapping live motion data to responsive visuals, and performed on stage as both the developer and one of the artists.`,
-    hard:`The system had to answer a moving body in real time, live, with no retries — code as a stage partner rather than a tool. Carrying both roles at once, the engineering problem and the choreographic one, in front of an audience, was the point and the difficulty.`,
-    result:'Live performance, Seoul 2023.',
-    role:'Developer\nGenerative Visual System\nLive Performance',
-    metrics:[],
-    link:'https://youtu.be/i16nxyii728?si=oz-7CjlSFvGxQiVB&t=1837',
-    linkLabel:'Watch Performance',
-    period:'Sep – Oct 2023 · Seoul' },
 
   { n:'10', yr:'2022–23', client:'HopBox · JHU Spark Showcase',
     title:'HopBox — <em>Co-Founder</em>',
@@ -1589,7 +2151,6 @@ const ROLLS = [
     film:'Ricoh GR III · 28mm', roll:'#A65648',
     photos:[
       {label:'Basel, 2026', cap:'Along the Rhine, midday', src:'photos/basel-rhine.jpg'},
-      {label:'Basel, 2026', cap:'A skylit gallery, two floors', src:'photos/basel-skylight.jpg'},
       {label:'Basel, 2026', cap:'A poster column on the corner', src:'photos/basel-column.jpg'},
       {label:'Basel, 2026', cap:'Fair posters in the arched windows', src:'photos/basel-posters.jpg'},
       {label:'Basel, 2026', cap:'An antiquarian bookshop, and a small dog', src:'photos/basel-bookshop.jpg'},
@@ -1613,9 +2174,10 @@ const ROLLS = [
       {label:'Vitra Campus, 2026', cap:'The garden path through wildflowers', src:'photos/vitra-path.jpg'},
       {label:'Vitra Campus, 2026', cap:'The pond, umbrellas on a grey day', src:'photos/vitra-pond.jpg'},
       {label:'Vitra Campus, 2026', cap:'Chairs set out on the gravel', src:'photos/vitra-chairs.jpg'},
+      {label:'Vitra Campus, 2026', cap:'A skylit gallery, two floors', src:'photos/vitra-skylight.jpg'},
       {label:'Vitra Campus, 2026', cap:'Inside, an orange corridor', src:'photos/vitra-orange.jpg'},
-      {label:'Vitra Campus, 2026', cap:'Tadao Ando', src:'photos/vitra-stair.jpg'},
-      {label:'Vitra Campus, 2026', cap:'Pattern on the chair', src:'photos/vitra-aalto.jpg'},
+      {label:'Vitra Campus, 2026', cap:'The stair, seen from above', src:'photos/vitra-stair.jpg'},
+      {label:'Vitra Campus, 2026', cap:'The café, yellow tables', src:'photos/vitra-aalto.jpg'},
       {label:'Vitra Campus, 2026', cap:'A vitrine of small objects', src:'photos/vitra-table.jpg'},
       {label:'Vitra Campus, 2026', cap:'Green benches under a black relief', src:'photos/vitra-chair.jpg'},
       {label:'Vitra Campus, 2026', cap:'The Vitra Slide Tower', src:'photos/vitra-slide.jpg'},
@@ -1653,6 +2215,10 @@ function renderProjects(){
               <div class="d-block-label">My Participation</div>
               <div class="d-block-text">${p.participation}</div>
             </div>
+            ${p.extraBlocks ? p.extraBlocks.map(b=>`<div class="d-block">
+              <div class="d-block-label">${b.label}</div>
+              <div class="d-block-text${b.italic?' italic':''}">${b.text}</div>
+            </div>`).join('') : ''}
             ${p.hard ? `<div class="d-block">
               <div class="d-block-label">The Hard Part</div>
               <div class="d-block-text">${p.hard}</div>
@@ -1666,7 +2232,7 @@ function renderProjects(){
               ${p.runwayNote ? `<div class="d-block-text" style="margin-bottom:18px;">${p.runwayNote}</div>` : ''}
               <div class="runway-row">
                 ${p.runway.map(v=>`<figure class="runway-card">
-                  <video src="${v.src}" loop muted playsinline preload="none"></video>
+                  <video src="${v.src}" loop muted playsinline preload="none" controlslist="nodownload noremoteplayback" disablepictureinpicture disableremoteplayback oncontextmenu="return false"></video>
                   <figcaption>${v.name}${v.role?`<span class="runway-role">${v.role}</span>`:''}</figcaption>
                 </figure>`).join('')}
               </div>
@@ -1678,8 +2244,16 @@ function renderProjects(){
             ${p.link ? `<a class="d-link" href="${p.link}" target="_blank">${p.linkLabel} ↗</a>` : ''}
           </div>
           <div class="d-side">
+            ${p.heroReel ? `<figure class="d-hero-reel">
+              <div class="hr-frame"><a class="cs-vidlink" href="${p.heroReel.href}" target="_blank" rel="noopener"><video src="${p.heroReel.src}" loop muted playsinline preload="none" controlslist="nodownload noremoteplayback" disablepictureinpicture disableremoteplayback oncontextmenu="return false"></video><span class="cs-vidcta">Click to view ↗</span></a></div>
+              <figcaption>${p.heroReel.label}</figcaption>
+            </figure>` : ''}
             <div class="d-period">${p.period}</div>
             <div class="d-role">${p.role.replace(/\n/g,'<br>')}</div>
+            ${p.schedule ? `<div class="d-sched">
+              <div class="d-block-label" style="margin-bottom:8px;">On-site Itinerary</div>
+              ${p.schedule.map(s=>`<div class="d-sched-row"><span class="d-sched-d">${s.d}</span><span class="d-sched-t">${s.t}</span></div>`).join('')}
+            </div>` : ''}
             <div class="d-metrics">${p.metrics.map(m=>`<div class="d-metric"><div class="d-mval">${m.v}</div><div class="d-mlabel">${m.l}</div></div>`).join('')}</div>
           </div>
         </div>
@@ -1700,7 +2274,7 @@ function renderProjects(){
               ${r.caption?`<div class="cs-rowcap">${r.caption}</div>`:''}
               <div class="cs-grid cs-${r.layout}">
                 ${r.images.map(im=>`<figure class="cs-item">
-                  <div class="cs-frame">${/\.mp4$/.test(im.src)?`<video src="${im.src}" loop muted playsinline preload="none"></video>`:`<img src="${im.src}" alt="${im.cap||''}" loading="lazy">`}</div>
+                  <div class="cs-frame">${/\.mp4$/.test(im.src)?`${im.href?`<a class="cs-vidlink" href="${im.href}" target="_blank" rel="noopener">`:''}<video src="${im.src}" loop muted playsinline preload="none" controlslist="nodownload noremoteplayback" disablepictureinpicture disableremoteplayback oncontextmenu="return false"></video>${im.href?`<span class="cs-vidcta">Click to view ↗</span></a>`:''}`:(im.href?`<a href="${im.href}" target="_blank" rel="noopener"><img src="${im.src}" alt="${im.cap||''}" loading="lazy" style="cursor:pointer"></a>`:`<img src="${im.src}" alt="${im.cap||''}" loading="lazy"${im.zoom?' class="cs-zoomable" onclick="csZoom(this)"':''}>`)}</div>
                   ${im.cap?`<figcaption>${im.cap}</figcaption>`:''}
                 </figure>`).join('')}
               </div>`).join('')}
@@ -1717,7 +2291,7 @@ function renderProjects(){
       else { if(!v.paused) v.pause(); }
     });
   }, {threshold:0.35});
-  c.querySelectorAll('.runway-card video, .cs-item video').forEach(v=>rio.observe(v));
+  c.querySelectorAll('.runway-card video, .cs-item video, .d-hero-reel video').forEach(v=>rio.observe(v));
 }
 
 window.toggleProj = function(i){
@@ -1728,7 +2302,11 @@ window.toggleProj = function(i){
   });
   el.classList.toggle('open');
   if(el.classList.contains('open')){
-    setTimeout(()=>el.scrollIntoView({behavior:'smooth',block:'nearest'}),50);
+    const row = el.closest('.proj-row');
+    setTimeout(()=>{
+      const y = row.getBoundingClientRect().top + window.scrollY - 64;
+      window.scrollTo({top:y, behavior:'smooth'});
+    },60);
   }
 };
 
@@ -1923,6 +2501,21 @@ window.closeRoll = function(){
   window.scrollTo({top:56, behavior:'instant'});
 };
 
+window.csZoom = function(imgEl){
+  let ov = document.getElementById('cs-zoom-overlay');
+  if(!ov){
+    ov = document.createElement('div');
+    ov.id = 'cs-zoom-overlay';
+    ov.className = 'cs-zoom-overlay';
+    ov.innerHTML = '<img alt="">';
+    ov.addEventListener('click', ()=>ov.classList.remove('open'));
+    document.body.appendChild(ov);
+    document.addEventListener('keydown', e=>{ if(e.key==='Escape') ov.classList.remove('open'); });
+  }
+  if(ov.classList.contains('open')){ ov.classList.remove('open'); return; }
+  ov.querySelector('img').src = imgEl.src;
+  ov.classList.add('open');
+};
 function goToFilm(i){
   filmIdx = i;
   const p = PHOTOS[i];
@@ -2070,9 +2663,6 @@ function renderCode(){
     { n:'02', lang:'JavaScript · React · HTML/CSS', name:'HopBox — <em>Web App</em>',
       desc:'Student storage marketplace. Co-built the front-end demo for the JHU Spark Showcase — Judges\' Award winner.',
       link:'https://drive.google.com/file/d/17kYbRaj9kNsG2u_GiwGp_cNMAgnbrb9l/view?usp=sharing', label:'View Demo Deck' },
-    { n:'03', lang:'p5.js · Machine Learning', name:'Dancing with A.I.',
-      desc:'Real-time generative visual system responding to dancer motion data. Hitchhikers live performance, Seoul 2023.',
-      link:'https://youtu.be/i16nxyii728?si=oz-7CjlSFvGxQiVB&t=1837', label:'Watch Performance' },
   ];
 
   simpleItems.forEach(p=>{
@@ -2099,18 +2689,22 @@ window.toggleCode = function(id){
   });
   el.classList.toggle('open');
   if(el.classList.contains('open')){
-    setTimeout(()=>el.scrollIntoView({behavior:'smooth',block:'nearest'}),50);
+    const row = el.previousElementSibling || el;
+    setTimeout(()=>{
+      const y = row.getBoundingClientRect().top + window.scrollY - 64;
+      window.scrollTo({top:y, behavior:'smooth'});
+    },60);
   }
 };
 
 /* ═══ INJECT TS IMAGES ═══ */
 function injectTSImages(){
   const experiments = [
-    {label:'01 Fabric (Knitted Wool)', inSrc:null, inCap:'72 × 72 px', outSrc:null, outCap:'128 × 128 px · r: 25'},
-    {label:'02 Text', inSrc:null, inCap:'76 × 76 px', outSrc:null, outCap:'128 × 128 px · r: 25'},
-    {label:'03 Brick', inSrc:null, inCap:'107 × 77 px', outSrc:null, outCap:'128 × 128 px · r: 25'},
-    {label:'05 Ceramic Tile', inSrc:null, inCap:'70 × 69 px', outSrc:null, outCap:'128 × 128 px · r: 25'},
-    {label:'06 Water Drops', inSrc:null, inCap:'123 × 123 px', outSrc:null, outCap:'256 × 256 px · r: 10'},
+    {label:'01 Fabric (Knitted Wool)', inSrc:'photos/ts/knit.png', inCap:'72 × 72 px', outSrc:'photos/ts/knit-out.png', outCap:'128 × 128 px · r: 25'},
+    {label:'02 Text', inSrc:'photos/ts/text.png', inCap:'76 × 76 px', outSrc:'photos/ts/text-out.png', outCap:'128 × 128 px · r: 25'},
+    {label:'03 Brick', inSrc:'photos/ts/brick.png', inCap:'107 × 77 px', outSrc:'photos/ts/brick-out.png', outCap:'128 × 128 px · r: 25'},
+    {label:'05 Ceramic Tile', inSrc:'photos/ts/tile.png', inCap:'70 × 69 px', outSrc:'photos/ts/tile-out.png', outCap:'128 × 128 px · r: 25'},
+    {label:'06 Water Drops', inSrc:'photos/ts/drops.png', inCap:'123 × 123 px', outSrc:'photos/ts/drops-out.png', outCap:'256 × 256 px · r: 10'},
   ];
 
   const container = document.getElementById('ts-experiments');
@@ -2119,7 +2713,7 @@ function injectTSImages(){
     const row = document.createElement('div');
     row.className = 'ts-exp-row';
     const makeCell = (src,cap,w,h)=>{
-      if(src) return `<div class="ts-img-cell"><img src="${src}" style="width:${w}px;height:${h}px;object-fit:cover;"><div class="ts-img-caption">${cap}</div></div>`;
+      if(src) return `<div class="ts-img-cell"><img src="${src}" style="width:${w}px;height:${h}px;object-fit:cover;image-rendering:pixelated;"><div class="ts-img-caption">${cap}</div></div>`;
       return `<div class="ts-img-cell"><div class="ts-img-ph" style="width:${w}px;height:${h}px;">${cap}</div></div>`;
     };
     row.innerHTML = `<div class="ts-exp-label">${e.label}</div>${makeCell(e.inSrc,e.inCap,80,80)}${makeCell(e.outSrc,e.outCap,120,120)}`;
@@ -2197,176 +2791,10 @@ renderRolls();
 renderCode();
 injectTSImages();
 setTimeout(observe,100);
+document.addEventListener('contextmenu',e=>{ if(e.target && e.target.closest && e.target.closest('img,video,.cs-frame,.cs-zoom-overlay,figure')) e.preventDefault(); });
+document.addEventListener('dragstart',e=>{ if(e.target && (e.target.tagName==='IMG'||e.target.tagName==='VIDEO')) e.preventDefault(); });
 
 </script>
 
-<!-- ══ TWEAK THE FEEL ══ -->
-<style>
-/* Display type — reshape the personality of every heading */
-body.type-serif .home-name,
-body.type-serif .proj-title-s,
-body.type-serif .c-name-s,
-body.type-serif .c-simple-name,
-body.type-serif .shelf-book-title,
-body.type-serif .book-brand-name,
-body.type-serif .book-essay-title,
-body.type-serif .about-intro{
-  font-family:'Newsreader',Georgia,serif;font-weight:400;letter-spacing:-.01em;
-}
-body.type-serif .home-name{font-weight:400;letter-spacing:-.005em;}
-body.type-mono .home-name,
-body.type-mono .proj-title-s,
-body.type-mono .c-name-s,
-body.type-mono .c-simple-name,
-body.type-mono .shelf-book-title,
-body.type-mono .book-brand-name,
-body.type-mono .book-essay-title,
-body.type-mono .about-intro{
-  font-family:'Space Mono',monospace;font-weight:400;letter-spacing:-.035em;
-}
-
-/* Air — reshape the whole reading rhythm */
-body.air-airy .sec-head{padding-top:88px;padding-bottom:24px;}
-body.air-airy .proj-summary,body.air-airy .c-top{padding:30px 0;}
-body.air-airy .detail-inner{padding-bottom:64px;}
-body.air-airy .d-block{margin-bottom:26px;}
-body.air-airy .d-block-text{line-height:2.05;}
-body.air-airy .book-essay-body{line-height:2.3;}
-body.air-airy .book-essay-body p{margin-bottom:26px;}
-body.air-airy .home-desc{line-height:2.15;}
-body.air-airy .about-body,body.air-airy .about-intro{line-height:2.15;}
-body.air-tight .sec-head{padding-top:34px;padding-bottom:14px;}
-body.air-tight .proj-summary,body.air-tight .c-top{padding:13px 0;}
-body.air-tight .detail-inner{padding-bottom:36px;}
-body.air-tight .d-block{margin-bottom:14px;}
-body.air-tight .d-block-text{line-height:1.6;}
-body.air-tight .book-essay-body{line-height:1.7;}
-body.air-tight .book-essay-body p{margin-bottom:14px;}
-body.air-tight .home-desc{line-height:1.7;}
-body.air-tight .about-body{line-height:1.7;}
-
-/* Panel chrome */
-#tw-toggle{
-  position:fixed;right:22px;bottom:22px;z-index:320;
-  font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
-  color:var(--black);background:var(--white);
-  border:1px solid var(--line);border-radius:2px;
-  padding:9px 14px;cursor:pointer;user-select:none;
-  box-shadow:0 6px 24px rgba(0,0,0,.08);transition:opacity .2s,transform .2s;
-}
-#tw-toggle:hover{transform:translateY(-1px);}
-#tw-panel{
-  position:fixed;right:22px;bottom:22px;z-index:321;width:280px;
-  background:var(--white);border:1px solid var(--line);border-radius:3px;
-  box-shadow:0 18px 60px rgba(0,0,0,.16);
-  padding:20px 20px 16px;
-  opacity:0;transform:translateY(8px) scale(.98);pointer-events:none;
-  transform-origin:bottom right;transition:opacity .25s,transform .25s;
-}
-#tw-panel.open{opacity:1;transform:translateY(0) scale(1);pointer-events:all;}
-.tw-head{
-  display:flex;justify-content:space-between;align-items:center;
-  font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
-  color:var(--mid);padding-bottom:16px;margin-bottom:16px;border-bottom:1px solid var(--line);
-}
-#tw-close{cursor:pointer;color:var(--mid);transition:color .2s;font-size:11px;}
-#tw-close:hover{color:var(--black);}
-.tw-grp{margin-bottom:18px;}
-.tw-lbl{
-  font-family:var(--mono);font-size:9px;letter-spacing:.18em;text-transform:uppercase;
-  color:var(--taupe);margin-bottom:9px;
-}
-.tw-opts{display:flex;flex-wrap:wrap;gap:5px;}
-.tw-b{
-  all:unset;box-sizing:border-box;cursor:pointer;
-  display:inline-flex;align-items:center;gap:6px;
-  font-size:11px;letter-spacing:.02em;color:var(--mid);
-  border:1px solid var(--line);border-radius:2px;
-  padding:7px 11px;transition:all .18s;
-  flex:1 0 auto;justify-content:center;
-}
-.tw-b:hover{border-color:var(--mid);color:var(--black);}
-.tw-b.on{background:var(--black);color:var(--white);border-color:var(--black);}
-.tw-b i{width:11px;height:11px;border-radius:50%;flex-shrink:0;display:block;box-shadow:inset 0 0 0 1px rgba(0,0,0,.12);}
-.tw-b.on i{box-shadow:inset 0 0 0 1px rgba(255,255,255,.35);}
-.tw-reset{
-  font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;
-  color:var(--mid);cursor:pointer;text-align:center;
-  padding-top:12px;border-top:1px solid var(--line);transition:color .2s;
-}
-.tw-reset:hover{color:var(--black);}
-@media(max-width:768px){#tw-panel{width:calc(100vw - 44px);}}
-</style>
-
-<div id="tw-toggle">✦ Tweak the feel</div>
-<div id="tw-panel" role="dialog" aria-label="Tweak the feel">
-  <div class="tw-head"><span>Tweak the feel</span><span id="tw-close">✕</span></div>
-  <div class="tw-grp">
-    <div class="tw-lbl">Palette</div>
-    <div class="tw-opts">
-      <button class="tw-b" data-tw="palette:taupe"><i style="background:#C9B99A"></i>Taupe</button>
-      <button class="tw-b" data-tw="palette:ink"><i style="background:#8A9098"></i>Ink</button>
-      <button class="tw-b" data-tw="palette:olive"><i style="background:#9A9A6B"></i>Olive</button>
-      <button class="tw-b" data-tw="palette:clay"><i style="background:#B5734F"></i>Clay</button>
-    </div>
-  </div>
-  <div class="tw-grp">
-    <div class="tw-lbl">Display type</div>
-    <div class="tw-opts">
-      <button class="tw-b" data-tw="type:sans">Sans</button>
-      <button class="tw-b" data-tw="type:serif">Serif</button>
-      <button class="tw-b" data-tw="type:mono">Mono</button>
-    </div>
-  </div>
-  <div class="tw-grp">
-    <div class="tw-lbl">Air</div>
-    <div class="tw-opts">
-      <button class="tw-b" data-tw="air:tight">Tight</button>
-      <button class="tw-b" data-tw="air:balanced">Balanced</button>
-      <button class="tw-b" data-tw="air:airy">Airy</button>
-    </div>
-  </div>
-  <div class="tw-reset" id="tw-reset">Reset to original</div>
-</div>
-
-<script>
-(function(){
-  const PALETTES={
-    taupe:{'--taupe':'#C9B99A','--taupe-light':'#EDE5D8','--off':'#F7F5F2','--faint':'#E8E5E0'},
-    ink:{'--taupe':'#8A9098','--taupe-light':'#E4E7EA','--off':'#F4F6F7','--faint':'#E5E8EB'},
-    olive:{'--taupe':'#9A9A6B','--taupe-light':'#E8E7D4','--off':'#F6F5EE','--faint':'#E7E6D8'},
-    clay:{'--taupe':'#B5734F','--taupe-light':'#EADBCE','--off':'#F8F3EF','--faint':'#EBE2DA'}
-  };
-  const DEFAULTS={palette:'taupe',type:'sans',air:'balanced'};
-  let state=Object.assign({},DEFAULTS);
-  try{const s=JSON.parse(localStorage.getItem('yshin-tweaks'));if(s)state=Object.assign(state,s);}catch(e){}
-
-  function apply(){
-    const p=PALETTES[state.palette]||PALETTES.taupe;
-    for(const k in p) document.documentElement.style.setProperty(k,p[k]);
-    document.body.classList.remove('type-sans','type-serif','type-mono','air-tight','air-balanced','air-airy');
-    document.body.classList.add('type-'+state.type,'air-'+state.air);
-    document.querySelectorAll('#tw-panel [data-tw]').forEach(function(b){
-      const parts=b.dataset.tw.split(':');
-      b.classList.toggle('on', state[parts[0]]===parts[1]);
-    });
-    try{localStorage.setItem('yshin-tweaks',JSON.stringify(state));}catch(e){}
-  }
-
-  document.querySelectorAll('#tw-panel [data-tw]').forEach(function(b){
-    b.addEventListener('click',function(){
-      const parts=b.dataset.tw.split(':');
-      state[parts[0]]=parts[1];
-      apply();
-    });
-  });
-  const panel=document.getElementById('tw-panel'),toggle=document.getElementById('tw-toggle');
-  toggle.addEventListener('click',function(){panel.classList.add('open');toggle.style.opacity='0';toggle.style.pointerEvents='none';});
-  document.getElementById('tw-close').addEventListener('click',function(){panel.classList.remove('open');toggle.style.opacity='';toggle.style.pointerEvents='';});
-  document.getElementById('tw-reset').addEventListener('click',function(){state=Object.assign({},DEFAULTS);apply();});
-
-  apply();
-})();
-</script>
 </body>
 </html>
