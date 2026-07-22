@@ -1346,6 +1346,9 @@ body{font-family:var(--sans);}
   .cs-hero{grid-template-columns:repeat(2,1fr);}
   .cs-hero .cs-item:first-child{grid-column:1 / -1;grid-row:auto;}
   .cs-hero4 .cs-item:first-child{grid-column:1 / -1;grid-row:auto;}
+  .cs-grid{max-width:100%;}
+  .cs-grid .cs-item,.cs-grid .cs-frame{min-width:0;}
+  .cs-hero .cs-item:first-child .cs-frame,.cs-hero4 .cs-item:first-child .cs-frame{aspect-ratio:4/5;}
   .cs-paper{grid-template-columns:repeat(2,1fr);}
   .cs-section-head{flex-wrap:wrap;gap:10px;}
   .cs-section{margin-bottom:48px;}
