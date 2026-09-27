@@ -570,6 +570,42 @@ img,video{-webkit-user-drag:none;user-select:none;}
   color:var(--mid);margin-top:3px;
 }
 
+
+/* ── DETAIL: visual-first layout ── */
+.vx{margin:6px 0 0;}
+.vx-hero{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:14px;height:min(64vh,640px);}
+.vx-hero.no-reel{grid-template-columns:minmax(0,1fr);}
+.vx-hero figure{margin:0;display:flex;flex-direction:column;min-height:0;}
+.vx-main img{flex:1;min-height:0;width:100%;object-fit:cover;display:block;background:var(--off);}
+.vx-reel .hr-frame{flex:1;min-height:0;aspect-ratio:9/16;position:relative;overflow:hidden;background:#0e0e0e;}
+.vx-reel video{width:100%;height:100%;object-fit:cover;display:block;}
+.vx-hero figcaption{margin-top:9px;font-family:var(--mono);font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--mid);}
+.vx-intro{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:48px;align-items:start;padding:34px 0 44px;}
+.vx-lede{font-size:clamp(17px,1.45vw,21px);line-height:1.55;font-weight:300;letter-spacing:-.005em;color:var(--black);margin:0 0 20px;max-width:760px;}
+.vx-lede b{font-weight:600;}
+.vx-metrics{display:grid;grid-template-columns:repeat(3,minmax(120px,auto));gap:2px;}
+.vx-story{margin:0;border-top:1px solid var(--line);}
+.vx-story summary{list-style:none;cursor:pointer;display:flex;align-items:baseline;gap:16px;padding:26px 0;font-size:22px;font-weight:300;letter-spacing:-.02em;color:var(--black);}
+.vx-story summary::-webkit-details-marker{display:none;}
+.vx-story summary::after{content:'+';margin-left:auto;font-size:22px;color:var(--mid);transition:transform .25s;}
+.vx-story[open] summary::after{transform:rotate(45deg);}
+.vx-more{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--taupe);}
+.vx-story .detail-inner{grid-template-columns:1fr 200px;padding-top:6px;}
+.vx-story .d-gap{display:none;}
+@media(max-width:768px){
+  .vx{display:flex;flex-direction:column;}
+  .vx-hero{display:contents;}
+  .vx-main{order:1;}
+  .vx-main img{aspect-ratio:4/3;flex:none;}
+  .vx-intro{order:2;}
+  .vx-reel{order:3;width:62%;align-self:center;margin-bottom:36px !important;}
+  .vx-reel .hr-frame{flex:none;width:100%;}
+  .vx-intro{grid-template-columns:1fr;gap:20px;padding:24px 0 32px;}
+  .vx-metrics{grid-template-columns:repeat(3,1fr);}
+  .vx-more{display:none;}
+  .vx-story .detail-inner{grid-template-columns:1fr;}
+}
+
 /* ── WRITING: SHELF (volumes + contents) ── */
 #page-writing{ padding-top:56px; min-height:100vh; background:var(--white); }
 
@@ -1810,6 +1846,9 @@ body{font-family:var(--sans);}
 const PROJECTS = [
   { n:'01', yr:'2026', client:'Samsung Art TV · One RX',
     title:'Art Night with Samsung Art TV, <em>Art Basel Basel</em>',
+    visual:true,
+    hero:{src:'photos/abb/event-booth-ab.jpg', cap:'Booth A and Booth B, Gare du Nord, event day'},
+    lede:`A private evening for Samsung Art TV during Art Basel week, inside the historic concert hall at Gare du Nord. <b>I led operations and managed a six-figure (USD) event budget</b>, linking the design team in Seoul with our production partner in Germany and directing on site from recce to teardown.`,
     tags:['Art × Tech','VIP & Influencer Event','Space Production','Global Operations'],
     challenge:`Art Basel week gathers the most design-literate audience in the world, and to that audience a television is an appliance. How do you make Samsung Art TV read as a way of looking at art, in a room full of people who look at art for a living?`,
     participation:`A private evening at Gare du Nord, the historic concert hall inside Badischer Bahnhof, built around Samsung Art TV and the Art Store. Commissioned by Cheil Worldwide and delivered end to end by One RX. <b>I led operations and managed a six-figure (USD) event budget</b>, optimizing resource allocation and vendor compliance across Seoul and Germany to drive brand engagement metrics. I was the link between the design team in Seoul and E.Style, our production partner in Germany, and led on-site direction in Basel from venue recce and material QC through install, show day and teardown.`,
@@ -3039,26 +3078,32 @@ window.openFromGrid = function(i){
   if(detail && !detail.classList.contains('open')) toggleProj(i);
   else if(summary){ const y = summary.getBoundingClientRect().top + window.scrollY - 64; window.scrollTo({top:y,behavior:'smooth'}); }
 };
+function visualTop(p){
+  const hr = p.heroReel;
+  return `<div class="vx">
+    <div class="vx-hero${hr?'':' no-reel'}">
+      <figure class="vx-main"><img src="${p.hero.src}" alt="${p.hero.cap||''}" class="cs-zoomable" onclick="csZoom(this)"><figcaption>${p.hero.cap||''}</figcaption></figure>
+      ${hr ? `<figure class="vx-reel"><div class="hr-frame">${hr.href?`<a class="cs-vidlink" href="${hr.href}" target="_blank" rel="noopener">`:''}<video src="${hr.src}" loop muted playsinline preload="metadata" controlslist="nodownload noremoteplayback" disablepictureinpicture disableremoteplayback oncontextmenu="return false"></video>${hr.href?`<span class="cs-vidcta">Click to view ↗</span></a>`:''}</div><figcaption>${hr.label}</figcaption></figure>` : ''}
+    </div>
+    <div class="vx-intro">
+      <div>
+        <p class="vx-lede">${p.lede}</p>
+        <div class="d-tags">${p.tags.map(t=>`<span class="d-tag">${t}</span>`).join('')}</div>
+      </div>
+      <div class="vx-metrics">${p.metrics.map(m=>`<div class="d-metric"><div class="d-mval">${m.v}</div><div class="d-mlabel">${m.l}</div></div>`).join('')}</div>
+    </div>
+  </div>`;
+}
 function renderProjects(){
   const c = document.getElementById('proj-list');
   let openP = null;
   PROJECTS.forEach((p,i)=>{
     const row = document.createElement('div');
     row.className = 'proj-row';
-    row.innerHTML = `
-      <div class="proj-summary" onclick="toggleProj(${i},this)">
-        <span class="proj-num">${p.n}</span>
-        <div>
-          <div class="proj-client-s">${p.client}</div>
-          <div class="proj-title-s">${p.title}</div>
-        </div>
-        <span class="proj-year-s">${p.yr}</span>
-      </div>
-      <div class="proj-detail" id="pd${i}">
-        <div class="detail-inner">
+    const inner = `<div class="detail-inner">
           <div class="d-gap"></div>
           <div class="d-main">
-            <div class="d-tags">${p.tags.map(t=>`<span class="d-tag">${t}</span>`).join('')}</div>
+            ${p.visual ? '' : `<div class="d-tags">${p.tags.map(t=>`<span class="d-tag">${t}</span>`).join('')}</div>`}
             <div class="d-block">
               <div class="d-block-label">The Challenge</div>
               <div class="d-block-text italic">${p.challenge}</div>
@@ -3096,7 +3141,7 @@ function renderProjects(){
             ${p.link ? `<a class="d-link" href="${p.link}" target="_blank">${p.linkLabel} ↗</a>` : ''}
           </div>
           <div class="d-side">
-            ${p.heroReel ? `<figure class="d-hero-reel">
+            ${(p.heroReel && !p.visual) ? `<figure class="d-hero-reel">
               <div class="hr-frame"><a class="cs-vidlink" href="${p.heroReel.href}" target="_blank" rel="noopener"><video src="${p.heroReel.src}" loop muted playsinline preload="none" controlslist="nodownload noremoteplayback" disablepictureinpicture disableremoteplayback oncontextmenu="return false"></video><span class="cs-vidcta">Click to view ↗</span></a></div>
               <figcaption>${p.heroReel.label}</figcaption>
             </figure>` : ''}
@@ -3106,9 +3151,20 @@ function renderProjects(){
               <div class="d-block-label" style="margin-bottom:8px;">On-site Itinerary</div>
               ${p.schedule.map(s=>`<div class="d-sched-row"><span class="d-sched-d">${s.d}</span><span class="d-sched-t">${s.t}</span></div>`).join('')}
             </div>` : ''}
-            <div class="d-metrics">${p.metrics.map(m=>`<div class="d-metric"><div class="d-mval">${m.v}</div><div class="d-mlabel">${m.l}</div></div>`).join('')}</div>
+            ${p.visual ? '' : `<div class="d-metrics">${p.metrics.map(m=>`<div class="d-metric"><div class="d-mval">${m.v}</div><div class="d-mlabel">${m.l}</div></div>`).join('')}</div>`}
           </div>
+        </div>`;
+    row.innerHTML = `
+      <div class="proj-summary" onclick="toggleProj(${i},this)">
+        <span class="proj-num">${p.n}</span>
+        <div>
+          <div class="proj-client-s">${p.client}</div>
+          <div class="proj-title-s">${p.title}</div>
         </div>
+        <span class="proj-year-s">${p.yr}</span>
+      </div>
+      <div class="proj-detail${p.visual?' visual':''}" id="pd${i}">
+        ${p.visual ? visualTop(p) : inner}
         ${p.caseStudy ? `<div class="casestudy">
           <div class="cs-head">
             <span class="cs-kicker">Case Study</span>
@@ -3132,6 +3188,7 @@ function renderProjects(){
               </div>`).join('')}
           </section>`).join('')}
         </div>` : ''}
+        ${p.visual ? `<details class="vx-story"><summary><span>The full story</span><span class="vx-more">Challenge, process, role &amp; itinerary</span></summary>${inner}</details>` : ''}
       </div>`;
     c.appendChild(row);
   });
@@ -3143,7 +3200,7 @@ function renderProjects(){
       else { if(!v.paused) v.pause(); }
     });
   }, {threshold:0.35});
-  c.querySelectorAll('.runway-card video, .cs-item video, .d-hero-reel video').forEach(v=>rio.observe(v));
+  c.querySelectorAll('.runway-card video, .cs-item video, .d-hero-reel video, .vx-reel video').forEach(v=>rio.observe(v));
 }
 
 window.toggleProj = function(i){
