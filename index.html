@@ -3174,13 +3174,20 @@ const WRITING_THUMBS = {
     ['photos/abb/event-booth-ab.jpg','photos/dwp/bv-wall.png'],
   ],
   personal: [
-    ['photos/basel-evening.jpg'],
-    ['photos/milan-park.jpg'],
-    ['photos/vitra-stair.jpg'],
+    ['uploads/thumb-dallas.jpg'],
+    ['uploads/thumb-istp.jpg'],
+    ['uploads/thumb-gr.jpg'],
     ['uploads/thumb-popcorn.jpg'],
   ],
 };
 const WP_TILT = ['-3deg','2deg','-1.5deg','3deg'];
+/* Notes on Living order: newest first. Keys are sortable dates by chapter. */
+const PERSONAL_DATE = {1:'2025-12-24', 2:'2022-08', 3:'2026-01', 4:'2026-09'};
+function wOrder(type){
+  const list = WRITINGS[type].map((w,i)=>({w,i}));
+  if(type==='personal') return list.sort((a,b)=>(PERSONAL_DATE[b.w.chapter]||'').localeCompare(PERSONAL_DATE[a.w.chapter]||''));
+  return list.reverse();
+}
 function wThumb(type,i,k){ const t=(WRITING_THUMBS[type]||[])[i]; return t ? (t[k]||t[0]) : ''; }
 
 function renderWriting(){
@@ -3189,7 +3196,7 @@ function renderWriting(){
   document.getElementById('personal-count').textContent = `${WRITINGS.personal.length} entries`;
   // Table of contents per volume (index view, both volumes)
   ['brand','personal'].forEach(type=>{
-    document.getElementById(`toc-${type}`).innerHTML = WRITINGS[type].map((w,i)=>({w,i})).reverse().map(({w,i})=>`
+    document.getElementById(`toc-${type}`).innerHTML = wOrder(type).map(({w,i})=>`
       <div class="wtoc-row" onclick="openBook('${type}',${i})">
         <span class="wtoc-num">0${w.chapter}</span>
         <span class="wtoc-thumb">${wThumb(type,i,0)?`<img src="${wThumb(type,i,0)}" alt="" loading="lazy">`:''}</span>
@@ -3202,7 +3209,7 @@ function renderWriting(){
   });
   // Both volumes: scrapbook cards (single-volume view)
   ['brand','personal'].forEach(type=>{
-  document.getElementById('cards-'+type).innerHTML = WRITINGS[type].map((w,i)=>({w,i})).reverse().map(({w,i},n)=>{
+  document.getElementById('cards-'+type).innerHTML = wOrder(type).map(({w,i},n)=>{
     const a=wThumb(type,i,0);
     return `
     <div class="wp-card" role="link" tabindex="0" onclick="openBook('${type}',${i})" onkeydown="if(event.key==='Enter')openBook('${type}',${i})">
