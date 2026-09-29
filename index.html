@@ -606,6 +606,53 @@ img,video{-webkit-user-drag:none;user-select:none;}
   .vx-story .detail-inner{grid-template-columns:1fr;}
 }
 
+
+/* ── DETAIL: project map (objective → impact) ── */
+.pm{border-top:1px solid var(--line);padding:48px 0 20px;}
+.pm-head{display:flex;align-items:baseline;gap:16px;margin-bottom:28px;}
+.pm-row{display:grid;grid-template-columns:200px minmax(0,1fr);gap:24px;padding:26px 0;border-top:1px solid var(--line);}
+.pm-row:first-of-type{border-top:none;}
+.pm-k{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--mid);display:flex;gap:12px;align-items:baseline;padding-top:4px;}
+.pm-n{color:var(--taupe);}
+.pm-obj{margin:0;font-size:clamp(18px,1.6vw,23px);line-height:1.45;font-weight:300;letter-spacing:-.01em;color:var(--black);max-width:820px;}
+.pm-road{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(var(--n),minmax(0,1fr));position:relative;}
+.pm-road::before{content:'';position:absolute;left:4px;right:calc(100% / var(--n) - 4px);top:27px;height:1px;background:var(--black);opacity:.25;}
+.pm-road li{display:flex;flex-direction:column;padding-right:18px;position:relative;}
+.pm-when{font-family:var(--mono);font-size:9.5px;letter-spacing:.06em;color:var(--taupe);height:18px;white-space:nowrap;}
+.pm-dot{width:9px;height:9px;border-radius:50%;background:var(--black);margin:4px 0 14px;position:relative;z-index:1;}
+.pm-road li:last-child .pm-dot{background:#fff;border:1.5px solid var(--black);width:12px;height:12px;margin-top:2px;margin-bottom:13px;}
+.pm-phase{font-size:15px;font-weight:500;color:var(--black);margin-bottom:6px;}
+.pm-what{font-size:12px;line-height:1.55;color:var(--mid);}
+.pm-note{margin-top:14px;font-family:var(--mono);font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--mid);}
+.pm-tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:2px;}
+.pm-tile{background:var(--off);padding:18px 18px 16px;}
+.pm-tv{font-size:24px;font-weight:300;letter-spacing:-.02em;line-height:1.1;color:var(--black);margin-bottom:8px;white-space:nowrap;}
+.pm-tl{font-size:12px;line-height:1.5;color:var(--mid);}
+.pm-cc{display:flex;flex-direction:column;gap:12px;}
+.pm-cc-item{display:grid;grid-template-columns:minmax(0,1fr) 28px minmax(0,1fr);align-items:center;border:1px solid var(--line);}
+.pm-cc-q{padding:14px 16px;font-size:13px;line-height:1.5;color:var(--mid);}
+.pm-cc-arrow{text-align:center;color:var(--taupe);}
+.pm-cc-a{padding:14px 16px;font-size:13px;line-height:1.5;color:var(--black);background:var(--off);height:100%;box-sizing:border-box;display:flex;align-items:center;}
+.pm-impact{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;}
+.pm-iv{font-size:clamp(34px,3.4vw,48px);font-weight:300;letter-spacing:-.03em;line-height:1;color:var(--black);}
+.pm-il{margin-top:10px;font-size:12px;line-height:1.5;color:var(--mid);max-width:220px;}
+@media(max-width:768px){
+  .pm{padding:36px 0 8px;}
+  .pm-head{flex-direction:column;gap:6px;}
+  .pm-road::before{right:auto;}
+  .pm-row{grid-template-columns:1fr;gap:14px;padding:22px 0;}
+  .pm-road{grid-template-columns:1fr;gap:0;}
+  .pm-road::before{left:4px;right:auto;top:6px;bottom:6px;width:1px;height:auto;}
+  .pm-road li{display:grid;grid-template-columns:9px 1fr;column-gap:16px;padding:0 0 18px;}
+  .pm-road li .pm-dot{grid-row:1 / span 3;margin:5px 0 0;}
+  .pm-road li:last-child .pm-dot{margin:3px 0 0 -1.5px;}
+  .pm-when{height:auto;grid-column:2;}
+  .pm-phase,.pm-what{grid-column:2;}
+  .pm-cc-item{grid-template-columns:1fr;}
+  .pm-cc-arrow{display:none;}
+  .pm-impact{grid-template-columns:1fr;gap:18px;}
+}
+
 /* ── WRITING: SHELF (volumes + contents) ── */
 #page-writing{ padding-top:56px; min-height:100vh; background:var(--white); }
 
@@ -1845,6 +1892,27 @@ body{font-family:var(--sans);}
 
 const PROJECTS = [
   { n:'01', yr:'2026', client:'Samsung Art TV · One RX',
+    map:{
+      objective:`Make Samsung Art TV read as a way of looking at art, not an appliance, to the most design-literate audience of Art Basel week.`,
+      roadmap:[
+        {p:'Plan', d:'Seoul', t:'Concept, guest journey and VIS with the Seoul design team'},
+        {p:'Produce', d:'Seoul ⇄ DE', t:'Booths built with E.Style and Rosso Como; print made in Korea, hand-carried'},
+        {p:'Prepare', d:'Jun 12–16', t:'Venue recce, material QC, promoter training, vendor meetings, install'},
+        {p:'Show', d:'Jun 17', t:'Final install and event day'},
+        {p:'Wrap', d:'Jun 18', t:'Teardown and site handover'},
+      ],
+      logic:[
+        {v:'Q → Zone', l:'Guests routed to Booth A or B by their answers to a short question set'},
+        {v:'1 per step', l:'A keycap for each activity, building a collectible frame from reception to raffle'},
+        {v:'Hand-carry', l:'Print made in Korea and checked piece by piece before it reached the room'},
+      ],
+      client:[
+        {q:'A TV brief, for an audience that looks at art for a living', a:'Never present the TV as an object: frame within a frame, the screen shows art, never specs'},
+        {q:'Design in Seoul, build in Germany, one install window', a:'Ran the link between both teams and closed QC on site before doors'},
+      ],
+      impact:[{v:'On time',l:'Ran end to end on the pre-set timeline'},{v:'3',l:'VIP speakers, incl. Daniel Arsham'},{v:'2',l:'Participatory booths'}],
+      impactNote:'Attendance and coverage figures sit with the client.',
+    },
     title:'Art Night with Samsung Art TV, <em>Art Basel Basel</em>',
     visual:true,
     hero:{src:'photos/abb/event-booth-ab.jpg', cap:'Booth A and Booth B, Gare du Nord, event day'},
@@ -1939,6 +2007,26 @@ const PROJECTS = [
     ],
     link:null, period:'Jun 12–20, 2026 · Basel, Switzerland' },
   { n:'02', yr:'2026', client:'Samsung × Disney · One RX',
+    map:{
+      objective:`Make the Galaxy S26 Ultra something the red carpet is built around, not a logo lost in the backdrop.`,
+      roadmap:[
+        {p:'Concept', d:'Month 1', t:'Glambot idea, guest flow and the 3 × 3 m solo zone'},
+        {p:'Build', d:'Month 2', t:'Slow-motion tool and three camera paths with Cheil in-house'},
+        {p:'Approve', d:'Month 2', t:'Key visual steered through Samsung and Disney review'},
+        {p:'Ship & test', d:'Apr 16–19', t:'Robot arm KR → NY, studio pre-test, venue install'},
+        {p:'Show', d:'Apr 20', t:'174 takes on the live-streamed carpet'},
+      ],
+      logic:[
+        {v:'3 → 1', l:'Camera paths developed; one run live, switchable by tablet'},
+        {v:'Auto', l:'Phone footage rendered to slow motion at a set duration'},
+        {v:'Seconds', l:'Per guest: read, call a pose that fits the path, land the take'},
+      ],
+      client:[
+        {q:'Three parties: Samsung MX, Disney, Cheil production', a:'One owner for concept, solution and on-site run across all three'},
+        {q:'Talent skips any stop that slows the carpet', a:'Posing director on the carpet for every take, sized to the seconds available'},
+      ],
+      impact:[{v:'174',l:'Celebrities & influencers filmed'},{v:'1.94M',l:'Disney D23 co-post reach (followers)'},{v:'1st',l:'Galaxy glambot, only solo brand zone on the carpet'}],
+    },
     title:'Devil Wears Prada 2, <em>Runway Cam</em>',
     tags:['Fashion × Tech','Galaxy S26 Ultra','Glambot','End-to-End Build'],
     challenge:`The world premiere of The Devil Wears Prada 2, one stop on a global tour through Mexico City, Tokyo, Seoul and Shanghai, landed at Lincoln Center and streamed live on Disney+ and Hulu. On the most-photographed carpet of the season, sponsor logos disappear into the backdrop. How does the Galaxy S26 Ultra become something the carpet is built around?`,
@@ -2029,6 +2117,27 @@ const PROJECTS = [
     link:null, period:'Apr 20, 2026 · Lincoln Center, NYC' },
 
   { n:'03', yr:'2026', client:'Samsung Olympics · One RX',
+    map:{
+      objective:`Get athletes to use the Olympic Edition phone during the Games (activate, shoot, post), not just collect it.`,
+      roadmap:[
+        {p:'ID check', d:'Step 1', t:'Verified on the IOC system'},
+        {p:'Hand-out', d:'Step 2', t:'Olympic Edition package'},
+        {p:'Switch', d:'Step 3', t:'Smart Switch data transfer and eSIM setup'},
+        {p:'Activate', d:'Step 4', t:'Activation support and customer service'},
+        {p:'Return', d:'Daily', t:'Athlete Card, social challenges, pin gacha'},
+      ],
+      roadmapNote:'Station flow, run Jan 30 – Feb 24',
+      logic:[
+        {v:'~10 min', l:'Per athlete, one at a time, setup done for them'},
+        {v:'2 + 2', l:'Promoters: two on service, two on activation and engagement'},
+        {v:'2 sites', l:'Charging stations across Anterselva and Cortina'},
+      ],
+      client:[
+        {q:'Samsung wanted use, not collection', a:'Made the station useful before promotional: setup first, marketing after'},
+        {q:'Athletes had no time, and some planned to give the phone away', a:'Engagement sized to the gaps between races, with reasons to come back'},
+      ],
+      impact:[{v:'+24pp',l:'Device activation, 63 → 87% (all six villages)'},{v:'4,202',l:'Galaxy Athlete Card users (Games-wide)'},{v:'210',l:'Athletes served, Anterselva OLV'}],
+    },
     title:'Galaxy Z Flip7 Olympic Edition, <em>Open Station, Anterselva</em>',
     tags:['Global Sports Activation','On-site Operations','Athlete Engagement'],
     challenge:'At a Winter Olympics, athletes run on adrenaline and zero spare minutes. How do you make a phone something they actually reach for between races, not one more thing to manage?',
@@ -2070,6 +2179,25 @@ const PROJECTS = [
     link:null, period:'Jan – Mar 2026 · Antholz-Anterselva, Italy' },
 
   { n:'04', yr:'2026', client:'Samsung The First Look 2026 · One RX',
+    map:{
+      objective:`Move full tour groups through a dense exhibition while making each senior guest feel like the only one in the room.`,
+      roadmap:[
+        {p:'Design', d:'Pre-show', t:'Three scripted routes and a bilingual training framework'},
+        {p:'Rehearse', d:'3 days', t:'Team drilled until every tour matched the first'},
+        {p:'Run', d:'3 show days', t:'Rolling departures, floor supervision, guide matching'},
+      ],
+      logic:[
+        {v:'45 min', l:'Rolling cadence: a 25-minute walk plus buffer'},
+        {v:'≤ 15', l:'Guests per group, on wireless headsets'},
+        {v:'3 routes', l:'General, VD-focused and DA-focused'},
+        {v:'≤ 3', l:'Groups out at once, staggered so they never meet'},
+        {v:'10 + 2', l:'Tour assistants and desk staff, Korean and English'},
+      ],
+      client:[
+        {q:'Chairmen, a cabinet minister and global C-suite on one floor', a:'Headset audio and staggered starts so every tour felt private'},
+      ],
+      impact:[{v:'208',l:'Tours, against a target of 200'},{v:'2,158',l:'Guests over three days'},{v:'104%',l:'Of tour target delivered'}],
+    },
     title:'The First Look 2026, <em>VIP Tour Operations</em>',
     tags:['Samsung First Look','Wynn Las Vegas','Promoter Management','Bilingual Ops'],
     challenge:'The First Look is Samsung\u2019s own showcase during CES week, a Forbes five-star ballroom that draws chairmen and ministers alongside thousands of CES badge-holders, designers, developers, investors and buyers across nearly every Samsung division. How do you move a full tour group through a dense product exhibition and make each guest feel like the only one in the room?',
@@ -2100,6 +2228,27 @@ const PROJECTS = [
     period:'Jan 5–7, 2026 · Wynn Las Vegas' },
 
   { n:'05', yr:'2025', client:'Samsung Galaxy XR · One RX',
+    map:{
+      objective:`Make a device no one had worn legible to the world in one livestreamed hour, with Samsung, Google and Qualcomm speaking as one.`,
+      roadmap:[
+        {p:'Draft', d:'Script', t:'Master script with the scriptwriting team'},
+        {p:'Align', d:'Revisions', t:'Every stakeholder revision consolidated into one source'},
+        {p:'Train', d:'Speakers', t:'Script training with presenters and the delivery trainer'},
+        {p:'Build', d:'Seoul ⇄ NY', t:'Keynote build with Amplify, the New York lead agency'},
+        {p:'Launch', d:'Oct 22', t:'Live to a worldwide audience, one take'},
+      ],
+      logic:[
+        {v:'1', l:'Master script as the single source of truth'},
+        {v:'3', l:'Companies’ messaging reconciled in one keynote'},
+        {v:'2 teams', l:'Seoul production and the NY team on one plan'},
+      ],
+      client:[
+        {q:'Three companies, three sets of messaging', a:'Every revision routed through one master script'},
+        {q:'A headset cannot be demoed through a livestream', a:'Speakers trained to make the unseen experience legible in words'},
+      ],
+      impact:[{v:'Global',l:'Worldwide livestream'},{v:'1st',l:'Android XR device'},{v:'1 take',l:'Delivered live'}],
+      impactNote:'Performance figures sit with the client.',
+    },
     title:'Galaxy XR, <em>Samsung Galaxy Event, New York</em>',
     tags:['Tech Launch','Keynote Production','Global Livestream','Google · Qualcomm'],
     challenge:'How do you introduce a device no one has worn yet, the first built jointly by Samsung, Google and Qualcomm, in a single livestreamed hour, to the entire world at once?',
@@ -3078,6 +3227,18 @@ window.openFromGrid = function(i){
   if(detail && !detail.classList.contains('open')) toggleProj(i);
   else if(summary){ const y = summary.getBoundingClientRect().top + window.scrollY - 64; window.scrollTo({top:y,behavior:'smooth'}); }
 };
+function mapHTML(p){
+  const m = p.map;
+  const row = (n,k,v)=>`<div class="pm-row"><div class="pm-k"><span class="pm-n">${n}</span>${k}</div><div class="pm-v">${v}</div></div>`;
+  return `<section class="pm">
+    <div class="pm-head"><span class="cs-kicker">Project Map</span><span class="cs-title">From objective to impact</span></div>
+    ${row('01','Objective',`<p class="pm-obj">${m.objective}</p>`)}
+    ${row('02','Roadmap',`<ol class="pm-road" style="--n:${m.roadmap.length}">${m.roadmap.map(r=>`<li><span class="pm-when">${r.d||''}</span><span class="pm-dot"></span><span class="pm-phase">${r.p}</span><span class="pm-what">${r.t}</span></li>`).join('')}</ol>${m.roadmapNote?`<div class="pm-note">${m.roadmapNote}</div>`:''}`)}
+    ${row('03','System logic',`<div class="pm-tiles">${m.logic.map(x=>`<div class="pm-tile"><div class="pm-tv">${x.v}</div><div class="pm-tl">${x.l}</div></div>`).join('')}</div>`)}
+    ${row('04','Client challenge',`<div class="pm-cc">${m.client.map(c=>`<div class="pm-cc-item"><div class="pm-cc-q">${c.q}</div><div class="pm-cc-arrow">→</div><div class="pm-cc-a">${c.a}</div></div>`).join('')}</div>`)}
+    ${row('05','Impact',`<div class="pm-impact">${m.impact.map(x=>`<div class="pm-imp"><div class="pm-iv">${x.v}</div><div class="pm-il">${x.l}</div></div>`).join('')}</div>${m.impactNote?`<div class="pm-note">${m.impactNote}</div>`:''}`)}
+  </section>`;
+}
 function visualTop(p){
   const hr = p.heroReel;
   return `<div class="vx">
@@ -3165,6 +3326,7 @@ function renderProjects(){
       </div>
       <div class="proj-detail${p.visual?' visual':''}" id="pd${i}">
         ${p.visual ? visualTop(p) : inner}
+        ${p.map ? mapHTML(p) : ''}
         ${p.caseStudy ? `<div class="casestudy">
           <div class="cs-head">
             <span class="cs-kicker">Case Study</span>
