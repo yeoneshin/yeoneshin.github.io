@@ -573,12 +573,14 @@ img,video{-webkit-user-drag:none;user-select:none;}
 
 /* ── DETAIL: visual-first layout ── */
 .vx{margin:6px 0 0;}
-.vx-hero{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:14px;height:min(64vh,640px);}
+.vx-hero{--hh:min(62vh,600px);display:grid;grid-template-columns:minmax(0,1fr) calc(var(--hh) * 9 / 16);gap:14px;height:var(--hh);}
 .vx-hero.no-reel{grid-template-columns:minmax(0,1fr);}
 .vx-hero figure{margin:0;display:flex;flex-direction:column;min-height:0;}
 .vx-main img{flex:1;min-height:0;width:100%;object-fit:cover;display:block;background:var(--off);}
-.vx-reel .hr-frame{flex:1;min-height:0;aspect-ratio:9/16;position:relative;overflow:hidden;background:#0e0e0e;}
-.vx-reel video{width:100%;height:100%;object-fit:cover;display:block;}
+.vx-reel{min-width:0;}
+.vx-reel .hr-frame{flex:1;min-height:0;width:100%;position:relative;overflow:hidden;background:#0e0e0e;}
+.vx-reel .cs-vidlink{position:absolute;inset:0;display:block;}
+.vx-reel video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;}
 .vx-hero figcaption{margin-top:9px;font-family:var(--mono);font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--mid);}
 .vx-intro{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:48px;align-items:start;padding:34px 0 44px;}
 .vx-lede{font-size:clamp(17px,1.45vw,21px);line-height:1.55;font-weight:300;letter-spacing:-.005em;color:var(--black);margin:0 0 20px;max-width:760px;}
@@ -599,7 +601,7 @@ img,video{-webkit-user-drag:none;user-select:none;}
   .vx-main img{aspect-ratio:4/3;flex:none;}
   .vx-intro{order:2;}
   .vx-reel{order:3;width:62%;align-self:center;margin-bottom:36px !important;}
-  .vx-reel .hr-frame{flex:none;width:100%;}
+  .vx-reel .hr-frame{flex:none;width:100%;aspect-ratio:9/16;}
   .vx-intro{grid-template-columns:1fr;gap:20px;padding:24px 0 32px;}
   .vx-metrics{grid-template-columns:repeat(3,1fr);}
   .vx-more{display:none;}
@@ -608,6 +610,15 @@ img,video{-webkit-user-drag:none;user-select:none;}
 
 
 /* ── DETAIL: project map (objective → impact) ── */
+.pm-mix{margin-top:34px;max-width:900px;}
+.pm-mix-h{display:flex;justify-content:space-between;font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--mid);margin-bottom:10px;}
+.pm-mix-bar{display:flex;height:14px;gap:2px;}
+.pm-mix-bar span,.pm-mix-legend i{background:hsl(30 8% calc(18% + var(--i) * 11%));}
+.pm-mix-legend{display:flex;flex-wrap:wrap;gap:8px 20px;margin-top:14px;font-size:12px;color:var(--mid);}
+.pm-mix-legend span{display:inline-flex;align-items:center;gap:7px;}
+.pm-mix-legend i{width:9px;height:9px;display:inline-block;}
+.pm-mix-legend b{font-weight:500;color:var(--black);}
+
 .pm{border-top:1px solid var(--line);padding:48px 0 20px;}
 .pm-head{display:flex;align-items:baseline;gap:16px;margin-bottom:28px;}
 .pm-row{display:grid;grid-template-columns:200px minmax(0,1fr);gap:24px;padding:26px 0;border-top:1px solid var(--line);}
@@ -1893,7 +1904,7 @@ body{font-family:var(--sans);}
 const PROJECTS = [
   { n:'01', yr:'2026', client:'Samsung Art TV · One RX',
     map:{
-      objective:`Make Samsung Art TV read as a way of looking at art, not an appliance, to the most design-literate audience of Art Basel week.`,
+      objective:`Make Samsung Art TV read as a way of looking at art, not an appliance: the starting point for finding one’s own taste, shown to the people who look at art for a living.`,
       roadmap:[
         {p:'Plan', d:'Seoul', t:'Concept, guest journey and VIS with the Seoul design team'},
         {p:'Produce', d:'Seoul ⇄ DE', t:'Booths built with E.Style and Rosso Como; print made in Korea, hand-carried'},
@@ -1910,22 +1921,27 @@ const PROJECTS = [
         {q:'A TV brief, for an audience that looks at art for a living', a:'Never present the TV as an object: frame within a frame, the screen shows art, never specs'},
         {q:'Design in Seoul, build in Germany, one install window', a:'Ran the link between both teams and closed QC on site before doors'},
       ],
-      impact:[{v:'On time',l:'Ran end to end on the pre-set timeline'},{v:'3',l:'VIP speakers, incl. Daniel Arsham'},{v:'2',l:'Participatory booths'}],
-      impactNote:'Attendance and coverage figures sit with the client.',
+      impact:[{v:'58',l:'Art-engaged guests, invite only'},{v:'8',l:'Samsung subsidiaries in the room'},{v:'On time',l:'Ran end to end on the pre-set timeline'}],
+      mix:{label:'Who was in the room', parts:[
+        {k:'Samsung subsidiaries', n:20},{k:'Influencers', n:15},{k:'Trade partners', n:6},{k:'Art Basel', n:6},
+        {k:'Galleries', n:5},{k:'Daniel Arsham studio', n:4},{k:'Media', n:2},
+      ]},
+      impactNote:'Coverage figures sit with the client.',
     },
     title:'Art Night with Samsung Art TV, <em>Art Basel Basel</em>',
     visual:true,
     hero:{src:'photos/abb/event-booth-ab.jpg', cap:'Booth A and Booth B, Gare du Nord, event day'},
-    lede:`A private evening for Samsung Art TV during Art Basel week, inside the historic concert hall at Gare du Nord. <b>I led operations and managed a six-figure (USD) event budget</b>, linking the design team in Seoul with our production partner in Germany and directing on site from recce to teardown.`,
+    lede:`An invite-only evening for Samsung Art TV during Art Basel week, inside the historic concert hall at Gare du Nord, for 58 art insiders: influencers, galleries, trade partners, media, Art Basel and colleagues from eight Samsung subsidiaries. <b>I led operations and managed a six-figure (USD) event budget</b>, linking the design team in Seoul with our production partner in Germany and directing on site from recce to teardown.`,
     tags:['Art × Tech','VIP & Influencer Event','Space Production','Global Operations'],
     challenge:`Art Basel week gathers the most design-literate audience in the world, and to that audience a television is an appliance. How do you make Samsung Art TV read as a way of looking at art, in a room full of people who look at art for a living?`,
     participation:`A private evening at Gare du Nord, the historic concert hall inside Badischer Bahnhof, built around Samsung Art TV and the Art Store. Commissioned by Cheil Worldwide and delivered end to end by One RX. <b>I led operations and managed a six-figure (USD) event budget</b>, optimizing resource allocation and vendor compliance across Seoul and Germany to drive brand engagement metrics. I was the link between the design team in Seoul and E.Style, our production partner in Germany, and led on-site direction in Basel from venue recce and material QC through install, show day and teardown.`,
     extraBlocks:[
-      {label:'The Experience', text:`Guests moved through a keycap-collecting journey that pulled them from reception to the last raffle, each activity earning a piece of a collectible frame. Two participatory photo-zone booths carried the "frame within a frame" concept: Booth A in moss and flowers, Booth B in black-and-white line drawing, guests routed to a zone by the answers they gave to a short set of questions along the way. The evening closed with a talk session, contemporary artist Daniel Arsham, Samsung Art Store curator Daria Greene, and ABP director Karim Crippa, followed by a raffle and group photo.`},
+      {label:'The Audience', text:`58 guests, all closely engaged with art: influencers, partners from eight Samsung subsidiaries, trade accounts, galleries, media, the Art Basel team and Daniel Arsham's studio. Every guest had hands-on time with Samsung Art TV and the Art Store, and the photo zones and F&amp;B were planned as the evening's social layer, built to be shared.`},
+      {label:'The Experience', text:`Guests moved through a keycap-collecting journey that pulled them from reception to the last raffle, each activity earning a piece of a collectible frame. Two participatory photo-zone booths carried the "frame within a frame" concept: Booth A in moss and flowers, Booth B in black-and-white line drawing, guests routed to a zone by the answers they gave to a short set of questions along the way. The evening closed with a talk session, contemporary artist Daniel Arsham, Samsung Art Store curator Daria Greene, and ABP director Karim Crippa, each looking at art from their own side of it. The message underneath: that Art TV's display and the Art Store's tailored curation are where enjoying art begins, and the start of finding one's own taste. A raffle and group photo closed the night.`},
       {label:'The Build', text:`The space was designed in alignment with the trade-fair exhibition halls. Interior film matched to real marble carried the finish, and a dedicated 'Art Night with Samsung Art TV' VIS ran across space and print along every key guest pathway. Booth A, the room that set the atmosphere of the night, was built by Rosso Como, the landscaping studio behind Samsung's First Look and IFA booths. Event material down to the stationery was produced in Korea and hand-carried to Basel, so every piece was checked before it reached the room.`},
     ],
     hard:`A screen framed like a product reads as equipment, and this audience would notice in seconds. So the evening <b>never presented the TV as an object</b>. The "frame within a frame" concept put guests inside a larger frame first, a flower window in Booth A, a line-drawn city in Booth B, and let them find the Art Store through the screen inside it. <b>The screen showed art, never specs.</b> The risk was that an art crowd would read the concept as a gimmick, which is why the materials, the identity and the talk programme all had to hold up at gallery standard.`,
-    result:`Daniel Arsham, Art Store curator Daria Greene and ABP director Karim Crippa closed the evening on stage under the concert-hall dome. Guests posted the booths as frames of their own. The event ran end to end on its pre-set timeline. Attendance and coverage figures sit with the client and are not public.`,
+    result:`Daniel Arsham, Art Store curator Daria Greene and ABP director Karim Crippa closed the evening on stage under the concert-hall dome. Guests posted the booths as frames of their own. The event ran end to end on its pre-set timeline for <b>58 guests</b>, including 15 influencers and partners from eight Samsung subsidiaries. Coverage figures sit with the client and are not public.`,
     schedule:[
       {d:'Jun 12', t:'Depart Seoul, Basel in'},
       {d:'Jun 12–16', t:'Venue recce · fixture & material QC · promoter training · overseas vendor meetings · install'},
@@ -1934,7 +1950,7 @@ const PROJECTS = [
       {d:'Jun 19–20', t:'Basel out, Seoul in'},
     ],
     role:'Project Management, Client–Production Coordination\nBudget Management\nPartner Agency Comms (E.Style, DE)\nOn-site Construction Supervision\nVenue Recce & Material QC\nPromoter Training\nInstall & Teardown Supervision',
-    metrics:[{v:'Six-Figure',l:'Event Budget (USD)'},{v:'3',l:'VIP Speakers'},{v:'2',l:'Participatory Booths'}],
+    metrics:[{v:'58',l:'Art-Engaged Guests'},{v:'Six-Figure',l:'Event Budget (USD)'},{v:'3',l:'VIP Speakers'}],
     heroReel:{src:'photos/abb/official-reel.mp4', href:'https://www.instagram.com/reel/DZ15XQZh6Lb/', label:'Official reel, Art Night'},
     caseStudy:[
       { kind:'photos', label:'Bar du Nord', note:'The first room of the night: registration, Activity 1 on The Frame at the bar, welcome drinks, and the first photo zone, the marble welcome stand carrying the Art Night VIS. Every structure was designed in alignment with the venue\u2019s classic interior.',
@@ -3227,6 +3243,12 @@ window.openFromGrid = function(i){
   if(detail && !detail.classList.contains('open')) toggleProj(i);
   else if(summary){ const y = summary.getBoundingClientRect().top + window.scrollY - 64; window.scrollTo({top:y,behavior:'smooth'}); }
 };
+function mixHTML(mx){
+  const tot = mx.parts.reduce((a,b)=>a+b.n,0);
+  return `<div class="pm-mix"><div class="pm-mix-h"><span>${mx.label}</span><span>${tot} guests</span></div>
+    <div class="pm-mix-bar">${mx.parts.map((x,i)=>`<span style="flex:${x.n};--i:${i}" title="${x.k}: ${x.n}"></span>`).join('')}</div>
+    <div class="pm-mix-legend">${mx.parts.map((x,i)=>`<span><i style="--i:${i}"></i>${x.k} <b>${x.n}</b></span>`).join('')}</div></div>`;
+}
 function mapHTML(p){
   const m = p.map;
   const row = (n,k,v)=>`<div class="pm-row"><div class="pm-k"><span class="pm-n">${n}</span>${k}</div><div class="pm-v">${v}</div></div>`;
@@ -3236,7 +3258,7 @@ function mapHTML(p){
     ${row('02','Roadmap',`<ol class="pm-road" style="--n:${m.roadmap.length}">${m.roadmap.map(r=>`<li><span class="pm-when">${r.d||''}</span><span class="pm-dot"></span><span class="pm-phase">${r.p}</span><span class="pm-what">${r.t}</span></li>`).join('')}</ol>${m.roadmapNote?`<div class="pm-note">${m.roadmapNote}</div>`:''}`)}
     ${row('03','System logic',`<div class="pm-tiles">${m.logic.map(x=>`<div class="pm-tile"><div class="pm-tv">${x.v}</div><div class="pm-tl">${x.l}</div></div>`).join('')}</div>`)}
     ${row('04','Client challenge',`<div class="pm-cc">${m.client.map(c=>`<div class="pm-cc-item"><div class="pm-cc-q">${c.q}</div><div class="pm-cc-arrow">→</div><div class="pm-cc-a">${c.a}</div></div>`).join('')}</div>`)}
-    ${row('05','Impact',`<div class="pm-impact">${m.impact.map(x=>`<div class="pm-imp"><div class="pm-iv">${x.v}</div><div class="pm-il">${x.l}</div></div>`).join('')}</div>${m.impactNote?`<div class="pm-note">${m.impactNote}</div>`:''}`)}
+    ${row('05','Impact',`<div class="pm-impact">${m.impact.map(x=>`<div class="pm-imp"><div class="pm-iv">${x.v}</div><div class="pm-il">${x.l}</div></div>`).join('')}</div>${m.mix?mixHTML(m.mix):''}${m.impactNote?`<div class="pm-note">${m.impactNote}</div>`:''}`)}
   </section>`;
 }
 function visualTop(p){
